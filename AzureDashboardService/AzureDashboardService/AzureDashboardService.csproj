@@ -226,7 +226,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
+    <ProjectReference Include="..\..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
       <Project>{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}</Project>
       <Name>Wp7AzureMgmt.DashboardFeeds</Name>
     </ProjectReference>
