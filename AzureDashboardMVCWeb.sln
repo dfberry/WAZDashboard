@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.DashboardFeeds", "Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj", "{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.DashboardFeeds.Test", "Wp7AzureMgmt.DashboardFeeds.Test\Wp7AzureMgmt.DashboardFeeds.Test.csproj", "{DA36C554-E472-4FEF-8F57-478759562D77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66A4BB28-A8FA-41D8-BEE5-CC1C6D90261F}"
+	ProjectSection(SolutionItems) = preProject
+		AzureDashboardMVCWeb.vsmdi = AzureDashboardMVCWeb.vsmdi
+		Local.testsettings = Local.testsettings
+		README.txt = README.txt
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureDashboardService", "AzureDashboardService\AzureDashboardService\AzureDashboardService.csproj", "{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AzureDashboardMVCWeb.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|x86.ActiveCfg = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

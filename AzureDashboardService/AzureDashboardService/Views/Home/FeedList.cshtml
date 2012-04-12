@@ -1,0 +1,52 @@
+﻿@model List<Wp7AzureMgmt.Dashboard.Models.RSSFeed>
+
+@{
+    ViewBag.Title = "FeedList";
+}
+
+
+<h2>Feed List</h2>
+
+    <table class="tablesorter">
+        <thead>
+            <th>#</th>
+            <th>Service</th>
+            <th>Location</th>
+            <th>Feed Code</th>
+            <th>RSS Feed</th>
+        </thead>
+    @if (@Model != null)
+    {
+        int i=0;
+        foreach (Wp7AzureMgmt.Dashboard.Models.RSSFeed feed in @Model)
+        {
+            i++;
+        <tr>
+            <td>@i</td>
+            <td>@feed.ServiceName</td>
+            <td>@feed.LocationName</td>
+            <td>@feed.FeedCode</td>
+            <td><a href="http://www.microsoft.com/windowsazure/support/status/@feed.RSSLink">http://www.microsoft.com/windowsazure/support/status/@feed.RSSLink</a></td>
+        </tr>
+        }
+    }
+    </table>
+    <div id="pager" class="formsorter">
+        <form>
+        <img src="@Url.Content("~/Content/images/first.png")" class="first" />
+        <img src="@Url.Content("~/Content/images/prev.png")" class="prev" />
+        <input type="text" class="pagedisplay" />
+        <img src="@Url.Content("~/Content/images/next.png")" class="next" />
+        <img src="@Url.Content("~/Content/images/last.png")" class="last" />
+        <select class="pagesize">
+            <option selected="selected" value="100">100</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="100">100</option>
+            </select>
+        </form>
+    </div>
+
+

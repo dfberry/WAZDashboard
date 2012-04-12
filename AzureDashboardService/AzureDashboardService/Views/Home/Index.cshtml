@@ -1,0 +1,24 @@
+@model AzureDashboardService.Models.DashboardModel
+
+@{
+    ViewBag.Title = "Azure Dashboard Service";
+}
+
+@section featured {
+<section class="featured">
+    <div class="content-wrapper">
+        <hgroup class="title">
+            <h1>@ViewBag.Title</h1>
+            <h2>@ViewBag.Message</h2>
+        </hgroup>
+        <p>
+        <a href="/Home/Download/">Downloads</a>: OPML file<br />
+        <a href="/Home/FeedList/">RSS Feed list</a><br />
+        </p>
+    </div>
+</section>
+}
+
+
+
+
