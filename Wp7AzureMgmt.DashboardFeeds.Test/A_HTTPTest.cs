@@ -72,17 +72,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// A test for SaveToFile.
         /// File exists and has a size > 0
         /// </summary>
-        /// <param name="filename">path and filename to save http response content to</param> 
-        [Test] public void SaveResponseContentToFileTest(string filename)
+        [Test] public void SaveResponseContentToFileTest()
         {
             // arrange
             Uri getUri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig());
             HTTP target = new HTTP(getUri);
-
-            if (string.IsNullOrEmpty(filename))
-            {
-                filename = DateTime.Now.Ticks + ".txt";
-            }
+            string filename = DateTime.Now.Ticks + ".html";
 
             string responsecontent = target.RequestGET();
 
