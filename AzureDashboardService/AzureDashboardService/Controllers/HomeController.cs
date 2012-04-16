@@ -11,8 +11,8 @@ namespace AzureDashboardService.Controllers
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Models;
-    using Wp7AzureMgmt.Dashboard;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
     
     /// <summary>
     /// Home controller page of the web site

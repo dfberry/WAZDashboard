@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.Dashboard.Models
+namespace Wp7AzureMgmt.DashboardFeeds.Models
 {
     using System;
 

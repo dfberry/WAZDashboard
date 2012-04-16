@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.Dashboard
+namespace Wp7AzureMgmt.DashboardFeeds
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace Wp7AzureMgmt.Dashboard
     using System.Linq;
     using System.Net.Mail;
     using System.Text;
-    using Wp7AzureMgmt.Dashboard.DataSources;
-    using Wp7AzureMgmt.Dashboard.Interfaces;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds.DataSources;
+    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// TODO: Update summary.
@@ -62,7 +62,7 @@ namespace Wp7AzureMgmt.Dashboard
                 this.azureDashboardURI = azureDashboardServiceURI;
             }
 
-            this.datasource = new WADashboard(new Uri(this.azureDashboardURI));
+            this.datasource = new Dashboard(new Uri(this.azureDashboardURI));
             this.feedList = new List<RSSFeed>();
             this.buildDate = DateTime.MinValue;
         }
@@ -91,6 +91,7 @@ namespace Wp7AzureMgmt.Dashboard
             if ((this.feedList == null) || (this.feedList.Count() == 0) || (forceRebuild == true))
             {
                 this.feedList = this.datasource.List();
+
                 this.buildDate = DateTime.Now;
             }
 

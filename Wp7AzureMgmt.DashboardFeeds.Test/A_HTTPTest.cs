@@ -9,25 +9,47 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.IO;
     using System.Net;
     using NUnit.Framework;
-    using Wp7AzureMgmt.Dashboard;
+    using Wp7AzureMgmt.DashboardFeeds;
     
     /// <summary>
     /// This is a test class for HTTPTest and is intended
     /// to contain all HTTPTest Unit Tests
     /// </summary>
-    [TestFixture] 
-    public class A_HTTPTest
+    [TestFixture]
+    public class A_HTTPTest 
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="A_HTTPTest" /> class.
+        /// </summary>
+        public A_HTTPTest()
+        {
+            DashboardConfiguration = new DashboardConfiguration();
+            DashboardHttp = new DashboardHttp(new Uri(DashboardConfiguration.GetDefaultUri));
+        }
+
+        /// <summary>
+        /// Gets or sets DashboardHttp object for 
+        /// web requests. 
+        /// </summary>
+        private DashboardHttp DashboardHttp { get; set; }
+
+        /// <summary>
+        /// Gets or sets dashboardConfiguration for App.Config
+        /// settings. 
+        /// </summary>
+        private DashboardConfiguration DashboardConfiguration { get; set; }
+
         /// <summary>
         /// A test for HTTP Constructor
         /// </summary>
         [Test] public void HTTPConstructorTest_Success()
         {
             // arrange
-            Uri getUri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig()); 
+            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration();
+            Uri getUri = new Uri(dashboardConfiguration.GetDefaultUri);
 
             // act
-            HTTP target = new HTTP(getUri);
+            DashboardHttp target = new DashboardHttp(getUri);
 
             // assert
             Assert.IsNotNull(target);
@@ -39,12 +61,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [Test] public void RequestGETTest()
         {
             // arrange
-            Uri getUri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig());
-            HTTP target = new HTTP(getUri); 
+            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration();
+            Uri getUri = new Uri(dashboardConfiguration.GetDefaultUri);
+            DashboardHttp target = new DashboardHttp(getUri);
             string actual = string.Empty; 
 
             // act
-            actual = target.RequestGET();
+            actual = target.GetRequest();
 
             // assert
             Assert.IsNotNullOrEmpty(actual);
@@ -56,8 +79,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [Test] public void HttpWebRequestTest()
         {
             // arrange
-            Uri getUri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig());
-            HTTP http = new HTTP(getUri); 
+            Uri getUri = new Uri(DashboardConfiguration.GetDefaultUri);
+            DashboardHttp http = new DashboardHttp(getUri); 
 
             // act
             HttpWebRequest target = http.HttpWebRequest;
@@ -75,11 +98,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [Test] public void SaveResponseContentToFileTest()
         {
             // arrange
-            Uri getUri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig());
-            HTTP target = new HTTP(getUri);
+            Uri getUri = new Uri(DashboardConfiguration.GetDefaultUri);
+            DashboardHttp target = new DashboardHttp(getUri); 
             string filename = DateTime.Now.Ticks + ".html";
 
-            string responsecontent = target.RequestGET();
+            string responsecontent = target.GetRequest();
 
             // act
             filename = target.SaveResponseContentToFile(filename);

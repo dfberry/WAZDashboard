@@ -4,13 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.Dashboard.Interfaces
+namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// Generic Actions Against Source of RSS Feeds

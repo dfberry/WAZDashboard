@@ -9,7 +9,7 @@ namespace AzureDashboardService.Models
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
     
     /// <summary>
     /// Dashboard Model

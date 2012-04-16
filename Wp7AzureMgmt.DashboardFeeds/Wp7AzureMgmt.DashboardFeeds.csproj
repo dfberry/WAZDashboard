@@ -48,14 +48,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DashboardConfiguration.cs" />
     <Compile Include="DashboardResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardResource.resx</DependentUpon>
     </Compile>
     <Compile Include="DashboardMgr.cs" />
-    <Compile Include="DataSources\WADashboard.cs" />
-    <Compile Include="HTTP.cs" />
+    <Compile Include="DataSources\Dashboard.cs" />
+    <Compile Include="Enums\ContentTag.cs" />
+    <Compile Include="Enums\FindBy.cs" />
+    <Compile Include="Enums\HTMLParserFeedItemType.cs" />
+    <Compile Include="Factories\DashboardFileFactory.cs" />
+    <Compile Include="Models\DashboardFile.cs" />
+    <Compile Include="DashboardHttp.cs" />
     <Compile Include="Interfaces\IRSSDataSource.cs" />
     <Compile Include="Models\HTMLParserFeedItem.cs" />
     <Compile Include="Models\HtmlParserFeedItemDefinition.cs" />

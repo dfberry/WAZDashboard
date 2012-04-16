@@ -24,6 +24,8 @@
 *.tli
 *.tlh
 *.tmp
+*.html
+*.txt
 *.vspscc
 .builds
 

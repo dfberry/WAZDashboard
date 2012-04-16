@@ -13,27 +13,59 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Text.RegularExpressions;
     using HtmlAgilityPack;
     using NUnit.Framework;
-    using Wp7AzureMgmt.Dashboard;
-    using Wp7AzureMgmt.Dashboard.DataSources;
-    using Wp7AzureMgmt.Dashboard.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Models;    
+    using Wp7AzureMgmt.DashboardFeeds;
+    using Wp7AzureMgmt.DashboardFeeds.DataSources;
+    using Wp7AzureMgmt.DashboardFeeds.Enums;
+    using Wp7AzureMgmt.DashboardFeeds.Factories;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// This is a test class for WADashboardTest and is intended
     /// to contain all WADashboardTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class B_WADashboardTest
+    public class B_WADashboardTest 
     {
-        /// <summary>
-        /// Known good version of Windows Azure Dashboard RSS Feeds html page
-        /// </summary>
-        private string testFileContents = null;
-
         /// <summary>
         /// Regardless of where feeds are from, how many should there be
         /// </summary>
-        private int lastknownRSSFeedCount = 0;
+        private int lastknownRSSFeedCount;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="B_WADashboardTest" /> class.
+        /// </summary>
+        public B_WADashboardTest()
+        {
+            DashboardConfiguration = new DashboardConfiguration();
+            DashboardHttp = new DashboardHttp(new Uri(DashboardConfiguration.GetAzureUri));
+            DashboardFileFactory = new DashboardFileFactory();
+            DashboardFile = new DashboardFile();
+
+            // set file name
+            DashboardFile.FileName = DashboardConfiguration.GetTestFileName;
+        }
+
+        /// <summary>
+        /// Gets or sets DashboardHttp object for 
+        /// web requests. 
+        /// </summary>
+        private DashboardHttp DashboardHttp { get; set; }
+
+        /// <summary>
+        /// Gets or sets DashboardConfiguration for App.Config
+        /// settings. 
+        /// </summary>
+        private DashboardConfiguration DashboardConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets DashboardFile
+        /// </summary>
+        private DashboardFile DashboardFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets DashboardFileFactory
+        /// </summary>
+        private DashboardFileFactory DashboardFileFactory { get; set; }  
         
         /// <summary>
         /// Get html content and count of expected feeds
@@ -41,8 +73,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [TestFixtureSetUp]
         public void Setup()
         {
-            this.ContentFrom();
-            this.lastknownRSSFeedCount = DashboardTestUtilities.ConfigFeedCount();
+            this.TestContent();
+            this.lastknownRSSFeedCount = DashboardConfiguration.GetFeedCount;
+
+            Uri getUri = new Uri(DashboardConfiguration.GetDefaultUri);
+            DashboardHttp target = new DashboardHttp(getUri); 
         }
 
          /// <summary>
@@ -52,22 +87,22 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public int FindFeedCountByRegEx()
         {
             RegexOptions options = RegexOptions.Multiline | RegexOptions.IgnoreCase;
-            MatchCollection matches = Regex.Matches(this.testFileContents, "<td class=\"cellStyleTodayService\">", options);
+            MatchCollection matches = Regex.Matches(this.DashboardFile.FileContents, "<td class=\"cellStyleTodayService\">", options);
 
             return matches.Count;
         }
 
         /// <summary>
-        /// A test for WADashboard Constructor
+        /// A test for Dashboard Constructor
         /// </summary>
         [Test]
         public void WADashboardConstructorUriTest()
         {
             // arrange
-            Uri uri = new Uri(DashboardTestUtilities.GrabDefaultUriFromConfig()); 
+            Uri uri = new Uri(DashboardConfiguration.GetDefaultUri);
 
             // act
-            WADashboard target = new WADashboard(uri);
+            Dashboard target = new Dashboard(uri);
 
             // assert
             Assert.IsNotNull(target);
@@ -75,7 +110,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// A test for WADashboard Constructor
+        /// A test for Dashboard Constructor
         /// </summary>
         [Test]
         public void WADashboardConstructorStringTest()
@@ -84,7 +119,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             string html = "hello there";
 
             // act
-            WADashboard target = new WADashboard(html);
+            Dashboard target = new Dashboard(html);
 
             // assert
             Assert.IsNotNull(target);
@@ -92,13 +127,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// A test for WADashboard Constructor
+        /// A test for Dashboard Constructor
         /// </summary>
         [Test]
         public void WADashboardConstructorDefaultTest()
         {
             // act
-            WADashboard target = new WADashboard();
+            Dashboard target = new Dashboard();
 
             // assert
             Assert.IsNotNull(target);
@@ -112,7 +147,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void BuildDateTestMinValue()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             DateTime actual;
             
             // act
@@ -129,7 +164,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void BuildDateTestNotMinValue()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             DateTime now = DateTime.Now;
             DateTime actual;
             target.List();
@@ -148,7 +183,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             int regexCount = this.FindFeedCountByRegEx();
-            int configfileCount = DashboardTestUtilities.ConfigFeedCount();
+            int configfileCount = DashboardConfiguration.GetFeedCount;
 
             // act/assert
             Assert.AreEqual(configfileCount, regexCount);
@@ -161,7 +196,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void ConvertFeedItemListToRSSFeedTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItem> list = this.GetHTMLParserFeedItemList();
 
@@ -183,7 +218,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FindFeedsTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             // act
             List<RSSFeed> actual = target.FindFeeds().ToList();
@@ -200,7 +235,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FindParseFeedItemValueLocationNameTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> list = this.GetHTMLParserFeedItemList();
 
             HTMLParserFeedItemType expectedType = HTMLParserFeedItemType.LocationName;
@@ -219,7 +254,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FindParseFeedItemValueRSSCodeTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> list = this.GetHTMLParserFeedItemList();
 
             HTMLParserFeedItemType expectedType = HTMLParserFeedItemType.RSSCode;
@@ -238,7 +273,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FindParseFeedItemValueRSSLinkTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> list = this.GetHTMLParserFeedItemList();
 
             HTMLParserFeedItemType expectedType = HTMLParserFeedItemType.RSSLink;
@@ -257,7 +292,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FindParseFeedItemValueServiceNameTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> list = this.GetHTMLParserFeedItemList(); 
 
             HTMLParserFeedItemType expectedType = HTMLParserFeedItemType.ServiceName;
@@ -276,7 +311,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents); 
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents); 
             HtmlNode node = null; 
             List<HTMLParserFeedItemDefinition> definitionList = null; 
             HTMLParserFeedItem expected = null; 
@@ -297,12 +332,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Success1()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
             string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hdnRSSFeedCode";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = TagContent.AttributeValue };
+            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue };
             HTMLParserFeedItemDefinition actual;
 
             // act
@@ -320,12 +355,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Success2()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
             string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_lblServiceName";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = TagContent.InnerHtml };
+            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml };
             HTMLParserFeedItemDefinition actual;
 
             // act
@@ -343,12 +378,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Success3()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
             string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hyperlinkRSS";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = TagContent.AttributeValue };
+            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue };
             HTMLParserFeedItemDefinition actual;
 
             // act
@@ -366,12 +401,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Success4()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
             string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_lblRegionName";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = TagContent.InnerHtml };
+            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml };
             HTMLParserFeedItemDefinition actual;
 
             // act
@@ -389,7 +424,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure1()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -411,7 +446,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure2()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -433,7 +468,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure3()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -455,7 +490,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure4()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -477,7 +512,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure5()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -499,7 +534,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetRSSFeedPropertyDefinitionTest_Failure6()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
 
             List<HTMLParserFeedItemDefinition> definitions = this.GetHTMLParserFeedItemDefintionList();
 
@@ -520,7 +555,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void ListTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents); 
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents); 
             IEnumerable<RSSFeed> actual;
 
             // act
@@ -538,7 +573,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void OPMLTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents); 
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents); 
             string actual;
 
             // act
@@ -564,14 +599,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // setup HTML Model
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             HtmlNode trnode = doc.CreateElement("tr");
             doc.OptionUseIdAttribute = true;
             trnode.Name = "tr";
             trnode.InnerHtml = RSSFeedResponseResource.TestTRFail1;
 
             // setup Test Object
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             RSSFeed actual;
 
             // act
@@ -591,14 +626,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // setup HTML Model
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             HtmlNode trnode = doc.CreateElement("tr");
             doc.OptionUseIdAttribute = true;
             trnode.Name = "tr";
             trnode.InnerHtml = RSSFeedResponseResource.TestTRSuccess1;
 
             // setup Test Object
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             RSSFeed actual;
 
             // act
@@ -622,14 +657,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // setup HTML Model
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             HtmlNode tdnode = doc.CreateElement("td");
             doc.OptionUseIdAttribute = true;
             tdnode.Name = "td";
             tdnode.InnerHtml = RSSFeedResponseResource.TestTDSuccess_cellStyleTodayDetails;
 
             // setup Test Object
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> actual;
 
             // act
@@ -650,14 +685,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // setup HTML Model
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             HtmlNode tdnode = doc.CreateElement("td");
             doc.OptionUseIdAttribute = true;
             tdnode.Name = "td";
             tdnode.InnerHtml = RSSFeedResponseResource.TestTDSuccess_cellStyleTodayService;
 
             // setup Test Object
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> actual;
 
             // act
@@ -680,14 +715,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // setup HTML Model
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             HtmlNode tdnode = doc.CreateElement("td");
             doc.OptionUseIdAttribute = true;
             tdnode.Name = "td";
             tdnode.InnerHtml = RSSFeedResponseResource.TestTDFail1;
 
             // setup Test Object
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             List<HTMLParserFeedItem> actual;
 
             // act
@@ -704,8 +739,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void ParseHtmlForUrlsTest()
         {
             // arrange
-            WADashboard target = new WADashboard(this.testFileContents);
-            string html = this.testFileContents;
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
+            string html = this.DashboardFile.FileContents;
             IEnumerable<RSSFeed> actual;
 
             // act
@@ -726,12 +761,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             doc.OptionUseIdAttribute = true;
             HtmlNode node = doc.CreateElement("a");
             node.SetAttributeValue("href", "RSSFeed.aspx?RSSFeedCode=NSACSEA");
 
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             string returnAttributeName = "href";
             string expected = "RSSFeed.aspx?RSSFeedCode=NSACSEA";
             string actual;
@@ -752,12 +787,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             doc.OptionUseIdAttribute = true;
             HtmlNode node = doc.CreateElement("input");
             node.SetAttributeValue("value", "NSACSSEA");
 
-            WADashboard target = new WADashboard(this.testFileContents);
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents);
             string returnAttributeName = "value";
             string expected = "NSACSSEA";
             string actual;
@@ -777,12 +812,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(this.testFileContents);
+            doc.LoadHtml(this.DashboardFile.FileContents);
             doc.OptionUseIdAttribute = true;
             HtmlNode node = doc.CreateElement("span");
             node.InnerHtml = "Access Control";
 
-            WADashboard target = new WADashboard(this.testFileContents); 
+            Dashboard target = new Dashboard(this.DashboardFile.FileContents); 
             string expected = "Access Control";
             string actual;
 
@@ -802,10 +837,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             List<HTMLParserFeedItemDefinition> definitions = new List<HTMLParserFeedItemDefinition>();
 
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = TagContent.InnerHtml });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = TagContent.InnerHtml });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = TagContent.AttributeValue });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = TagContent.AttributeValue });
+            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml });
+            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml });
+            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue });
+            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue });
 
             return definitions;
         }
@@ -826,39 +861,73 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             return list;
         }
 
-         /// <summary>
-        /// Determine if it is web or file
+        /// <summary>
+        /// Determine if it is web or file.
+        /// If web, grab copy to file so rest
+        /// of testing can go off file instead of
+        /// hitting Azure for remaining tests.
         /// </summary>
-        private void ContentFrom()
+        private void TestContent()
         {
-            string tempcontentfrom = DashboardTestUtilities.ConfigContentFrom();
+            string tempcontentfrom = DashboardConfiguration.GetContentFrom;
             if (string.IsNullOrEmpty(tempcontentfrom))
             {
                 throw new Exception("Expect config file to have AppSettings[\"ContentFrom\"] but not found");
             }
 
+            string filename = DateTime.Now.Ticks.ToString() + ".html";
+
             switch (tempcontentfrom)
             {
                 case "File":
-                    this.testFileContents = DashboardTestUtilities.TestFileContents();
+                    // for file: open & read contents to test framework
+                    this.DashboardFile.FileContents = this.DashboardFileFactory.Read(DashboardFile);
+                    this.DashboardFile.FileName = filename;
 
-                    // not keeping this around - just want to get the count from file
-                    WADashboard dashboard = new WADashboard(this.testFileContents);
-                    List<RSSFeed> list = dashboard.FindFeeds().ToList();
-                    DashboardTestUtilities.ChangeConfiguration("LastKnownRSSFeedCount", list.Count().ToString());
-                    break;
-                case "Mix":
+                    // set count of Feeds for test
+                    this.SetFeedListCount();
+
                     break;
                 case "Uri":
-                    this.testFileContents = DashboardTestUtilities.AZUriContents();
+                    // for web: open, read, set contents to test framework
+                    this.DashboardFile.FileName = filename;
+                    this.DashboardFile.FileContents = this.DashboardHttp.GetRequest();
+                    this.DashboardFileFactory.Save(this.DashboardFile);
+                    this.DashboardConfiguration.ChangeAppSettingsConfiguration("TestFile", this.DashboardFile.FileName);
 
-                    // not keeping this around - just want to get the count from file
-                    WADashboard dashboard2 = new WADashboard(this.testFileContents);
-                    List<RSSFeed> list2 = dashboard2.FindFeeds().ToList();
-                    DashboardTestUtilities.ChangeConfiguration("LastKnownRSSFeedCount", list2.Count().ToString());
+                    // set count of Feeds for test
+                    this.SetFeedListCount();
+
+                    break;
+                default:
+                    // for web: open, read, set contents to test framework
+                    this.DashboardFile.FileName = filename;
+                    this.DashboardFile.FileContents = this.DashboardHttp.GetRequest();
+                    this.DashboardFileFactory.Save(this.DashboardFile);
+                    this.DashboardConfiguration.ChangeAppSettingsConfiguration("TestFile", this.DashboardFile.FileName);
+
+                    // set count of Feeds for test
+                    this.SetFeedListCount();
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// Parse feeds (assuming this works), get count of list,
+        /// set list count to App.Config[LastKnownRSSFeedCount].
+        /// Tests will grab count to verify correctness of parse.
+        /// Recognize that this depends on successful parsing. If
+        /// parsing fails, count fails, so test parsing will fail and 
+        /// test verification will fail. 
+        /// TBD: Not the best way to do this. Think of something else.
+        /// </summary>
+        private void SetFeedListCount()
+        {
+            // not keeping this around - just want to get the count from file
+            Dashboard dashboard = new Dashboard(this.DashboardFile.FileContents);
+            List<RSSFeed> list = dashboard.FindFeeds().ToList();
+            DashboardConfiguration.ChangeAppSettingsConfiguration("LastKnownRSSFeedCount", list.Count().ToString());
         }
     }
 }

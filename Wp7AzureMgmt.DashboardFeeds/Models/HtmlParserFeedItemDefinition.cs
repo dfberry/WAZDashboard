@@ -10,7 +10,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Enums;
     
     /// <summary>
     /// After grabbed the parent object, this controls
@@ -31,7 +31,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         /// <summary>
         /// Gets or sets ContentType
         /// </summary>
-        public TagContent ContentType { get; set; }
+        public ContentTag ContentType { get; set; }
 
         /// <summary>
         /// Gets or sets ChildTag

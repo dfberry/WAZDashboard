@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HTTP.cs" company="Microsoft">
+// <copyright file="DashboardHttp.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.Dashboard
+namespace Wp7AzureMgmt.DashboardFeeds
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Wp7AzureMgmt.Dashboard
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    internal class HTTP
+    internal class DashboardHttp
     {
         /// <summary>
         /// URI to get
@@ -27,43 +27,44 @@ namespace Wp7AzureMgmt.Dashboard
         private Uri uri;
 
         /// <summary>
-        /// Timeout, default is 2 minutes
+        /// Timeout, default is 2 minutes.
         /// </summary>
         private TimeSpan timeSpan = new TimeSpan(0, 2, 0);
 
         /// <summary>
-        /// HttpWebRequest containing call instructions
+        /// HttpWebRequest containing call properties.
         /// </summary>
         private HttpWebRequest httpWebRequest;
 
         /// <summary>
-        /// content found in httpWebRequest
+        /// Response Content 
         /// </summary>
         private string responseContent = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HTTP" /> class.
+        /// Initializes a new instance of the <see cref="DashboardHttp" /> class.
         /// Given Uri and timeout, set Uri and timeout.
         /// If getUri is null, find default at 
         /// ConfigurationManager.AppSettings["AzureDashboardServiceURL"]
         /// </summary>
         /// <param name="getUri">URI to request</param>
-        public HTTP(Uri getUri)
+        public DashboardHttp(Uri getUri)
         {
+            // verify param
             if (getUri == null)
             {
                 throw new ArgumentNullException();
             }
-            else
-            {
-                this.uri = getUri;
-            }
 
+            // set uri
+            this.uri = getUri;
+
+            // set request properties
             this.httpWebRequest = this.BuildHttpGet();
         }
 
         /// <summary>
-        /// Gets HttpWebRequest Readonly.
+        /// Gets HttpWebRequest (read only).
         /// This is built in the constructor so any call after the 
         /// constructor should have valid values.
         /// </summary>
@@ -88,7 +89,7 @@ namespace Wp7AzureMgmt.Dashboard
         /// Bubbles up WebException.
         ///   </summary>
         /// <returns>string as HTTPResponse content</returns>
-        public string RequestGET()
+        public string GetRequest()
         {
             try
             {

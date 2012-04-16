@@ -11,16 +11,37 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Linq;
     using System.Text.RegularExpressions;
     using NUnit.Framework;
-    using Wp7AzureMgmt.Dashboard;
-    using Wp7AzureMgmt.Dashboard.Models;
+    using Wp7AzureMgmt.DashboardFeeds;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
     
     /// <summary>
     /// This is a test class for DashboardMgrTest and is intended
     /// to contain all DashboardMgrTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class C_DashboardMgrTest
+    public class C_DashboardMgrTest 
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="C_DashboardMgrTest" /> class.
+        /// </summary>
+        public C_DashboardMgrTest()
+        {
+            DashboardConfiguration = new DashboardConfiguration();
+            DashboardHttp = new DashboardHttp(new Uri(DashboardConfiguration.GetAzureUri));
+        }
+
+        /// <summary>
+        /// Gets or sets DashboardHttp object for 
+        /// web requests. 
+        /// </summary>
+        private DashboardHttp DashboardHttp { get; set; }
+
+        /// <summary>
+        /// Gets or sets DashboardConfiguration for App.Config
+        /// settings. 
+        /// </summary>
+        private DashboardConfiguration DashboardConfiguration { get; set; }
+
         /// <summary>
         /// A test for DashboardMgr Constructor
         /// </summary>
@@ -28,7 +49,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void DashboardMgrConstructorTest()
         {
             // act
-            DashboardMgr target = new DashboardMgr(DashboardTestUtilities.ConfigAZDashboardUriAsString());
+            DashboardMgr target = new DashboardMgr(DashboardConfiguration.GetAzureUri);
 
             // assert
             Assert.IsNotNull(target);
@@ -41,9 +62,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void AzureDashboardLocationTest()
         {
             // arrange
-            string expected = DashboardTestUtilities.ConfigAZDashboardUriAsString();
+            string expected = DashboardConfiguration.GetAzureUri;
             string actual;
-            DashboardMgr target = new DashboardMgr(DashboardTestUtilities.ConfigAZDashboardUriAsString());
+            DashboardMgr target = new DashboardMgr(DashboardConfiguration.GetAzureUri);
 
             // act
             actual = target.AzureDashboardLocation();
@@ -59,7 +80,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void AzureDashboardLocationNullParamTest()
         {
             // arrange
-            string expected = DashboardTestUtilities.ConfigAZDashboardUriAsString(); 
+            string expected = DashboardConfiguration.GetAzureUri; 
             DashboardMgr target = new DashboardMgr();
             string actual;
 
@@ -77,7 +98,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FeedDateTest()
         {
             // arrange
-            string azureDashboardServiceURI = DashboardTestUtilities.ConfigAZDashboardUriAsString(); 
+            string azureDashboardServiceURI = DashboardConfiguration.GetAzureUri; 
             DateTime expected = DateTime.Now; 
             DateTime actual;
             DashboardMgr target = new DashboardMgr(azureDashboardServiceURI);
@@ -98,7 +119,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FeedDateNullTest()
         {
             // arrange
-            string azureDashboardServiceURI = DashboardTestUtilities.ConfigAZDashboardUriAsString();
+            string azureDashboardServiceURI = DashboardConfiguration.GetAzureUri;
             DateTime actual;
             DashboardMgr target = new DashboardMgr(azureDashboardServiceURI);
 
@@ -117,7 +138,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FeedsTest()
         {
             // arrange
-            string azureDashboardServiceURI = DashboardTestUtilities.ConfigAZDashboardUriAsString();
+            string azureDashboardServiceURI = DashboardConfiguration.GetAzureUri;
             DateTime buildDate = DateTime.Now;
             DashboardMgr target = new DashboardMgr(azureDashboardServiceURI); 
             bool forceRebuild = false; 
@@ -127,7 +148,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // assert
             Assert.IsNotNull(actual);
-            Assert.AreEqual(DashboardTestUtilities.ConfigFeedCount(), actual.Count);
+            Assert.AreEqual(DashboardConfiguration.GetFeedCount, actual.Count);
             Assert.Greater(target.FeedDate().Ticks, buildDate.Ticks);
         }
 
@@ -138,7 +159,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void FeedsTestForceRebuild()
         {
             // arrange
-            string azureDashboardServiceURI = DashboardTestUtilities.ConfigAZDashboardUriAsString();
+            string azureDashboardServiceURI = DashboardConfiguration.GetAzureUri;
             DashboardMgr target = new DashboardMgr(azureDashboardServiceURI);
             bool forceRebuild = true;
             List<RSSFeed> actual1 = target.Feeds(forceRebuild).ToList();
@@ -150,7 +171,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // assert
             Assert.IsNotNull(actual2);
-            Assert.AreEqual(DashboardTestUtilities.ConfigFeedCount(), actual1.Count);
+            Assert.AreEqual(DashboardConfiguration.GetFeedCount, actual1.Count);
             Assert.Greater(buildDate2.Ticks, buildDate1.Ticks); 
         }
 
@@ -161,7 +182,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void OPMLTest()
         {
             // arrange
-            string azureDashboardServiceURI = DashboardTestUtilities.ConfigAZDashboardUriAsString();
+            string azureDashboardServiceURI = DashboardConfiguration.GetAzureUri;
             DashboardMgr target = new DashboardMgr(azureDashboardServiceURI);
 
             // act
@@ -174,7 +195,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             MatchCollection matches = Regex.Matches(actual, "<outline", options);
 
             Assert.IsTrue(actual.Contains("<outline"));
-            Assert.GreaterOrEqual(matches.Count, DashboardTestUtilities.ConfigFeedCount());
+            Assert.GreaterOrEqual(matches.Count, DashboardConfiguration.GetFeedCount);
         }
     }
 }

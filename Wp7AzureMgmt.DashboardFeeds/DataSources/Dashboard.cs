@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="WADashboard.cs" company="Microsoft">
+// <copyright file="Dashboard.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.Dashboard.DataSources
+namespace Wp7AzureMgmt.DashboardFeeds.DataSources
 {
     using System;
     using System.Collections.Generic;
@@ -14,15 +14,14 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
     using System.Threading.Tasks;
     using System.Web;
     using HtmlAgilityPack;
-    using Wp7AzureMgmt.Dashboard.Interfaces;
-    using Wp7AzureMgmt.Dashboard.Models;
-    using Wp7AzureMgmt.DashboardFeeds;
+    using Wp7AzureMgmt.DashboardFeeds.Enums;
+    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// This datasource fetches the list from Windows Azure Dashboard Service web page
     /// </summary>
-    internal class WADashboard : IRSSDataSource
+    internal class Dashboard : IRSSDataSource
     {
         /// <summary>
         /// Default Parallel Options to no limit
@@ -37,11 +36,6 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
         /// DateTime Feed list was returned from source
         /// </summary>
         private DateTime feedBuildDate = DateTime.MinValue;
-
-        ///// <summary>
-        ///// Defintiions of what to parse out of html
-        ///// </summary>
-        //private List<HTMLParserFeedItemDefinition> htmlDefinitions = null;
 
         /// <summary>
         /// Feedlist of Windows Azure Dashboard
@@ -64,11 +58,22 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
         private FindBy findby = FindBy.notset;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WADashboard" /> class.
+        /// Build definitions - how to parse html
+        /// </summary>
+        private HTMLParserFeedItemDefinition[] htmlDefinitions = new HTMLParserFeedItemDefinition[] 
+        {
+            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml },
+            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml },
+            new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue },
+            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue } 
+        };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Dashboard" /> class.
         /// /// find default Uri at 
         /// ConfigurationManager.AppSettings["AzureDashboardServiceURL"]
         /// </summary>
-        public WADashboard()
+        public Dashboard()
         {
             string tempUri = ConfigurationManager.AppSettings["AzureDashboardServiceURL"];
 
@@ -82,11 +87,11 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WADashboard" /> class.
+        /// Initializes a new instance of the <see cref="Dashboard" /> class.
         /// /// RSS Feed URI
         /// </summary>
         /// <param name="uri">Uri of Windows Azure Dashboard Feeds</param>
-        public WADashboard(Uri uri)
+        public Dashboard(Uri uri)
         {
             if (uri == null)
             {
@@ -100,11 +105,11 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WADashboard" /> class.
+        /// Initializes a new instance of the <see cref="Dashboard" /> class.
         /// /// Http Response Content as string
         /// </summary>
         /// <param name="uriresponescontent">html content of the page</param>
-        public WADashboard(string uriresponescontent)
+        public Dashboard(string uriresponescontent)
         {
             if (uriresponescontent == null)
             {
@@ -116,22 +121,6 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
                 this.findby = FindBy.stringprovided;
             }
         }
-
-        ///// <summary>
-        ///// Gets or sets HtmlDefinitions
-        ///// </summary>
-        ////public List<HTMLParserFeedItemDefinition> HtmlDefinitions
-        ////{
-        ////    get
-        ////    {
-        ////        return this.htmlDefinitions;
-        ////    }
-
-        ////    set
-        ////    {
-        ////        this.htmlDefinitions = value;
-        ////    }
-        ////}
 
         /// <summary>
         /// Get copy of list
@@ -233,15 +222,6 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
 
             List<RSSFeed> urls = new List<RSSFeed>();
 
-            //if (this.HtmlDefinitions == null)
-            //{
-            //    this.HtmlDefinitions = this.BuildDefinition();
-            //    if (this.HtmlDefinitions == null)
-            //    {
-            //        throw new Exception("BuildDefintion is null");
-            //    }
-            //}
-
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
 
@@ -251,6 +231,11 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
                 this.options,
                 trNode =>
                 {
+                    if (trNode == null)
+                    {
+                        throw new Exception("trNode == null");
+                    }
+                        
                     RSSFeed rssfeed = ParseFeedNode(trNode);
 
                     if (rssfeed != null)
@@ -321,7 +306,7 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
                 {
                     HTMLParserFeedItem item = null;
 
-                    List<HTMLParserFeedItemDefinition> defintionlist = buildDefinitions.ToList();
+                    List<HTMLParserFeedItemDefinition> defintionlist = htmlDefinitions.ToList();
 
                     switch (node.Name.ToLower())
                     {
@@ -429,10 +414,10 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
 
                     switch (definition.ContentType)
                     {
-                        case TagContent.AttributeValue:
+                        case ContentTag.AttributeValue:
                             feedItem.Value = this.ParseTagForAttributeValue(node, /*definition.AttributeValue,*/ definition.ReturnAttributeName);
                             return feedItem;
-                        case TagContent.InnerHtml:
+                        case ContentTag.InnerHtml:
                             feedItem.Value = this.InnerHTML(node/*, definition.AttributeValue*/);
                             return feedItem;
                     }
@@ -509,35 +494,8 @@ namespace Wp7AzureMgmt.Dashboard.DataSources
         /// <returns>html content as string</returns>
         private string FindFeedsCallingURI()
         {
-            HTTP httpRequest = new HTTP(this.dashboardURI);
-            return httpRequest.RequestGET();
+            DashboardHttp httpRequest = new DashboardHttp(this.dashboardURI);
+            return httpRequest.GetRequest();
         }
-
-        /// <summary>
-        /// HTML tags holding various pieces of RSSFeed
-        /// </summary>
-        /// <returns>List of HTMLParserFeedItemDefintion</returns>
-        private IEnumerable<HTMLParserFeedItemDefinition> BuildDefinition()
-        {
-            List<HTMLParserFeedItemDefinition> definitions = new List<HTMLParserFeedItemDefinition>();
-
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = TagContent.InnerHtml });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = TagContent.InnerHtml });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = TagContent.AttributeValue });
-            definitions.Add(new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = TagContent.AttributeValue });
-
-            return definitions;
-        }
-
-        /// <summary>
-        /// Static array built at compile time
-        /// </summary>
-        private HTMLParserFeedItemDefinition[] buildDefinitions = new HTMLParserFeedItemDefinition[] 
-        {
-            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = TagContent.InnerHtml },
-            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = TagContent.InnerHtml },
-            new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = TagContent.AttributeValue },
-            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = TagContent.AttributeValue } 
-        };
     }
 }
