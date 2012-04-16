@@ -13,9 +13,11 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System.Linq;
     using System.Net.Mail;
     using System.Text;
+    using System.Threading;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+
 
     /// <summary>
     /// TODO: Update summary.
@@ -91,6 +93,10 @@ namespace Wp7AzureMgmt.DashboardFeeds
             if ((this.feedList == null) || (this.feedList.Count() == 0) || (forceRebuild == true))
             {
                 this.feedList = this.datasource.List();
+
+                // DFB TBD: Fix this - need better way to verify forceRebuid in tests
+                // wait 1 second before setting field
+                Thread.Sleep(1000);
 
                 this.buildDate = DateTime.Now;
             }
