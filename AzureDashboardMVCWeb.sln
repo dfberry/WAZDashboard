@@ -8,9 +8,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66A4BB28-A8FA-41D8-BEE5-CC1C6D90261F}"
 	ProjectSection(SolutionItems) = preProject
 		AzureDashboardMVCWeb.vsmdi = AzureDashboardMVCWeb.vsmdi
+		jqGridNotes.txt = jqGridNotes.txt
 		Local.testsettings = Local.testsettings
 		README = README
-		README.txt = README.txt
+		test.html = test.html
+		test.json = test.json
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 		VisualStudio.gitignore = VisualStudio.gitignore
 	EndProjectSection

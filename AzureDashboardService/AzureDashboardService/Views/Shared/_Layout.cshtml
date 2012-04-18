@@ -7,17 +7,13 @@
         <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
         <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
         <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/js")"></script>
-        <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/jquery.tablesorter.js")" type="text/javascript"></script>
-        <script src="@Url.Content("~/Scripts/jquery.tablesorter.pager.js")" type="text/javascript"></script>
+        <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/i18n/js")"></script>
 
-        <script type="text/javascript">
-            $(function () {
-                $("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
-                 .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
-            });
-         </script>
         <meta name="viewport" content="width=device-width" />
+        @if (IsSectionDefined("AddToHead")) 
+        { 
+            @RenderSection("AddToHead", false) 
+        }
     </head>
     <body>
         <header>

@@ -64,6 +64,26 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
+        /// Display list of grouped feeds in grid
+        /// using jqGrid.
+        /// </summary>
+        /// <returns>feedlist as table in ViewResult</returns>
+        public ViewResult FeedListGroupGrid()
+        {
+            return View(this.model.FeedList);
+        }
+
+        /// <summary>
+        /// Display list of grouped feeds in grid
+        /// using jqGrid.
+        /// </summary>
+        /// <returns>feedlist as table in ViewResult</returns>
+        public ViewResult FeedListjqGrid()
+        {
+            return View("FeedListGroupGrid", this.model.FeedList);
+        }
+
+        /// <summary>
         /// Default Home page
         /// </summary>
         /// <returns>Home page content as ActionResult</returns>
@@ -107,7 +127,7 @@ namespace AzureDashboardService.Controllers
         {
             byte[] opmlFile = StrToByteArray(this.dashboard.OPML());
 
-            return File(opmlFile, "application/xml", "opml.xml");
+            return File(opmlFile, "application/xml", "WazServiceDashboardOpml.xml");
         }
 
         /// <summary>
@@ -119,6 +139,44 @@ namespace AzureDashboardService.Controllers
         public ActionResult OPMLCached()
         {
             return this.OPML();
+        }
+
+        /// <summary>
+        /// Stolen from http://www.timdavis.com.au/code/jquery-grid-with-asp-net-mvc/
+        /// </summary>
+        /// <param name="sidx">id of row</param>
+        /// <param name="sord">sort order</param>
+        /// <param name="page">page count</param>
+        /// <param name="rows">row count</param>
+        /// <returns>JsonResult specific to jqGrid</returns>
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
+        {
+            this.dashboard = new DashboardMgr();
+
+            var feeds = this.dashboard.Feeds();
+
+            int rowId = 0;
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = feeds.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = (
+                    from feed in feeds
+                    select new
+                    {
+                        i = rowId++,
+                        cell = new string[] { rowId.ToString(), feed.ServiceName, feed.LocationName, feed.FeedCode, feed.RSSLink }
+                    }).ToArray()
+            };
+
+            return Json(jsonData);
         }
     }
 }

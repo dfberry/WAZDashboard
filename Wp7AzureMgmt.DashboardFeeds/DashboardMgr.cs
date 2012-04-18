@@ -18,7 +18,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
 
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
