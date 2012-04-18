@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Demonstration all jqGrid elements and toolbar</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/redmond/jquery-ui.css" />
+    <!--<link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.1/src/css/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.1/src/css/jquery.searchFilter.css" />-->
+    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/css/ui.jqgrid.css" />
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>-->
+    <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>-->
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.base.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.common.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.formedit.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.inlinedit.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.custom.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/jquery.fmatter.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/jquery.searchFilter.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/src/grid.jqueryui.js"></script>
+    <!--<script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/js/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.8.2/js/jquery.jqGrid.min.js"></script>-->
+    <!--<script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/json2.js"></script>-->
+
+    <script type="text/javascript">
+    //<![CDATA[
+        jQuery(document).ready(function () {
+            $("#dsisBaseTable").jqGrid({
+                url: 'TimBrown1.json',
+                datatype: 'json',
+                colNames: ['Name', 'Location', 'WH', 'Inc', 'Eco', 'Guild', 'Owner', 'Level', 'Guild', 'OccBy',
+                          'JG(Log)', 'CC', 'PH', 'DS', 'DT', 'PS', 'PR', 'DB', 'Fleet', 'Days', 'Updated By'],
+                colModel: [
+                    { name: 'baseName', index: 'baseName', sortable: false, width: 50, jsonmap: 'row.baseName' },
+                    { name: 'location', index: 'location', width: 50, jsonmap: 'row.location' },
+                    { name: 'wh', index: 'wh', width: 50, jsonmap: 'row.wormhole' },
+                    { name: 'inc', index: 'inc', align: 'right', width: 50, jsonmap: 'row.income' },
+                    { name: 'eco', index: 'eco', align: 'right', width: 50, jsonmap: 'row.economy' },
+                    { name: 'ownerGuild', index: 'ownerGuild', width: 50, jsonmap: 'row.ownerGuild' },
+                    { name: 'ownerNick', index: 'ownerNick', width: 50, jsonmap: 'row.ownerNick' },
+                    { name: 'ownerLevel', index: 'ownerLevel', width: 50, jsonmap: 'row.ownerLevel' },
+                    { name: 'occGuild', index: 'occGuild', width: 50, jsonmap: 'row.occGuild' },
+                    { name: 'occNick', index: 'occNick', width: 50, jsonmap: 'row.occNick' },
+                    { name: 'jumpGate', index: 'jumpGate', width: 50, jsonmap: 'row.jumpGate' },
+                    { name: 'commandCenter', index: 'commandCenter', width: 50, jsonmap: 'row.commandCenter' },
+                    { name: 'photons', index: 'photons', width: 50, jsonmap: 'row.photons' },
+                    { name: 'dshield', index: 'dshields', width: 50, jsonmap: 'row.dshields' },
+                    { name: 'disruptors', index: 'disruptors', width: 50, jsonmap: 'row.disruptors' },
+                    { name: 'pshields', index: 'pshields', width: 50, jsonmap: 'row.pshields' },
+                    { name: 'prings', index: 'prings', width: 50, jsonmap: 'row.prings' },
+                    { name: 'debris', index: 'debris', width: 50, jsonmap: 'row.debris' },
+                    { name: 'fleetSize', index: 'fleetSize', width: 50, jsonmap: 'row.fleetSize' },
+                    { name: 'daysOld', index: 'daysOld', width: 50, jsonmap: 'row.daysOld' },
+                    { name: 'updatedBy', index: 'updatedBy', sortable: false, width: 50, jsonmap: 'row.updatedBy' }
+                ],
+                pager: '#dsisBasePager',
+                rowNum: 20,
+                rowList: [20, 30, 40, 50],
+                sortname: 'location',
+                sortorder: 'asc',
+                viewrecords: true,
+                caption: 'Base Report',
+                width: 1024,
+                height: 300,
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "total",
+                    records: "records",
+                    repeatitems: false,
+                    id: "id"
+                }
+            });
+        });
+    //]]>
+    </script>
+</head>
+
+<body>
+<table id="dsisBaseTable"><tr><td></td></tr></table>
+<div id="dsisBasePager"/>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+http://www.ok-soft-gmbh.com/jqGrid/TimBrown1.htm
+http://www.ok-soft-gmbh.com/jqGrid/TimBrown1.json
+http://stackoverflow.com/questions/4979468/jqgrid-not-displaying-data-no-errors
+
+{
+    "total": 0,
+    "page": "1",
+    "records": 1,
+    "rows": [
+        {
+            "id": 0,
+            "row": {
+                "baseName": "Stratos",
+                "location": "J15:32:53:41",
+                "wormhole": "",
+                "income": 78,
+                "economy": 78,
+                "ownerGuild": "CDA",
+                "ownerNick": "D-Day 9000",
+                "ownerLevel": "17.14",
+                "occGuild": "",
+                "occNick": "",
+                "jumpGate": 0,
+                "commandCenter": 1,
+                "photons": "0",
+                "dshields": "0",
+                "disruptors": "0",
+                "pshields": "0",
+                "prings": "0",
+                "debris": 0,
+                "fleetSize": "22250",
+                "daysOld": 11,
+                "updatedBy": 3057 
+            } 
+        }
+    ]
+}

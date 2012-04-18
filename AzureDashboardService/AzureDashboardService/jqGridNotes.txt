@@ -1,0 +1,17 @@
+Discoveries about jqGrid
+
+Didn't pull from github but instead used build system (http://www.trirand.com/blog/?page_id=6) which 
+gave me source code (jquery.jqGrid.src.js
+
+http://www.timdavis.com.au/code/jquery-grid-with-asp-net-mvc/
+used this sample code to build/view in VS
+
+http://stackoverflow.com/questions/9573699/this-p-is-undefined-jqgrid
+you should use jquery.jqGrid.src.js instead of jquery.jqGrid.min.js to see the place with the error more clear
+
+
+http://www.trirand.com/jqgridwiki/doku.php?id=wiki:retrieving_data
+proper json format
+
+http://www.trirand.com/blog/jqgrid/jqgrid.html
+to figure out grouping
