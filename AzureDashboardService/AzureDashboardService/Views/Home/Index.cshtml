@@ -1,11 +1,13 @@
 @model AzureDashboardService.Models.DashboardModel
-
 @{
     ViewBag.Title = "Windows Azure Service Dashboard";
 }
-
+@if (Model.IsDebug)
+{
+    <!--debug -->
+}
 @section featured {
-<section class="featured">
+    <section class="featured">
     <div class="content-wrapper">
         <hgroup class="title">
             <h1>@ViewBag.Title</h1>
@@ -25,7 +27,3 @@
     </div>
 </section>
 }
-
-
-
-
