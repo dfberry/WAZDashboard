@@ -10,7 +10,7 @@ namespace AzureDashboardService.Models
     using System.Linq;
     using System.Web;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    
+
     /// <summary>
     /// Dashboard Model
     /// </summary>
@@ -30,5 +30,11 @@ namespace AzureDashboardService.Models
         /// Gets or sets URI to pull feeds from
         /// </summary>
         public string LibraryFeedURI { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether DEBUG
+        /// is the build configuration.
+        /// </summary>
+        public bool IsDebug { get; set; }
     }
 }

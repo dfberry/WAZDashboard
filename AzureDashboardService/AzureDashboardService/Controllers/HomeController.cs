@@ -13,33 +13,18 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    
+
     /// <summary>
     /// Home controller page of the web site
     /// </summary>
-    public class HomeController : Controller
+    public class HomeController : DashboardBaseController
     {
-        /// <summary>
-        /// Dashboard data model 
-        /// </summary>
-        private DashboardModel model = null;
-
-        /// <summary>
-        /// Dashboard factory manager 
-        /// </summary>
-        private DashboardMgr dashboard = null;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController" /> class.
         /// </summary>
         public HomeController()
+            : base()
         {
-            this.dashboard = new DashboardMgr();
-            this.model = new DashboardModel();
-
-            this.model.FeedList = this.dashboard.Feeds().ToList();
-            this.model.FeedDate = this.dashboard.FeedDate();
-            this.model.LibraryFeedURI = this.dashboard.AzureDashboardLocation();
         }
 
         /// <summary>
@@ -60,7 +45,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedList()
         {
-            return View(this.model.FeedList);
+            return View(this.DashboardModel.FeedList);
         }
 
         /// <summary>
@@ -70,7 +55,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListGroupGrid()
         {
-            return View(this.model.FeedList);
+            return View(this.DashboardModel.FeedList);
         }
 
         /// <summary>
@@ -80,7 +65,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListjqGrid()
         {
-            return View("FeedListGroupGrid", this.model.FeedList);
+            return View("FeedListGroupGrid", this.DashboardModel.FeedList);
         }
 
         /// <summary>
@@ -89,7 +74,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>Home page content as ActionResult</returns>
         public ActionResult Index()
         {
-            return View(this.model);
+            return View(this.DashboardModel);
         }
 
         /// <summary>
@@ -125,7 +110,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>opml content as ActionResult</returns>
         public ActionResult OPML()
         {
-            byte[] opmlFile = StrToByteArray(this.dashboard.OPML());
+            byte[] opmlFile = StrToByteArray(this.DashboardMgr.OPML());
 
             return File(opmlFile, "application/xml", "WazServiceDashboardOpml.xml");
         }
@@ -153,8 +138,7 @@ namespace AzureDashboardService.Controllers
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
             // Get data
-            this.dashboard = new DashboardMgr();
-            var feeds = this.dashboard.Feeds();
+            var feeds = this.DashboardMgr.Feeds();
 
             // Order data by service and location
             var feedsSorted = from feed in feeds
@@ -165,7 +149,7 @@ namespace AzureDashboardService.Controllers
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = feedsSorted.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize); 
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
             // feeds paged subset
             var feedsPaged = feedsSorted.Skip(pageIndex * pageSize).Take(pageSize);
