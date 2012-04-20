@@ -152,23 +152,34 @@ namespace AzureDashboardService.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
+            // Get data
             this.dashboard = new DashboardMgr();
-
             var feeds = this.dashboard.Feeds();
 
-            int rowId = 0;
+            // Order data by service and location
+            var feedsSorted = from feed in feeds
+                              orderby feed.ServiceName, feed.LocationName
+                              select feed;
+
+            // Paging 
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
-            int totalRecords = feeds.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalRecords = feedsSorted.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize); 
 
+            // feeds paged subset
+            var feedsPaged = feedsSorted.Skip(pageIndex * pageSize).Take(pageSize);
+
+            int rowId = 0;
+
+            // build response specific to jgGrid
             var jsonData = new
             {
                 total = totalPages,
                 page,
                 records = totalRecords,
                 rows = (
-                    from feed in feeds
+                    from feed in feedsSorted
                     select new
                     {
                         i = rowId++,

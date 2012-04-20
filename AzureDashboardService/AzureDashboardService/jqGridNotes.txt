@@ -15,3 +15,6 @@ proper json format
 
 http://www.trirand.com/blog/jqgrid/jqgrid.html
 to figure out grouping
+
+http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs
+documentation

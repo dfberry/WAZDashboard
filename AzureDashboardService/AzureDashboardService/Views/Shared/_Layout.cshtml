@@ -7,7 +7,7 @@
         <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
         <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
         <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/js")"></script>
-        <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/i18n/js")"></script>
+
 
         <meta name="viewport" content="width=device-width" />
         @if (IsSectionDefined("AddToHead")) 
@@ -50,6 +50,9 @@
                     <ul id="social">
                         <li><a href="http://twitter.com/dfberry" class="twitter">dfberry on Twitter</a></li>
                     </ul>
+                    @{#if DEBUG}debug 
+                    @{#else}release
+                    @{#endif}
                 </div>
             </div>
         </footer>
