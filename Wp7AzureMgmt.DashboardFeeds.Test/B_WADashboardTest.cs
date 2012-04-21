@@ -207,7 +207,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             Assert.IsNotNull(actual);
             Assert.AreEqual("RSSCode", actual.FeedCode);
             Assert.AreEqual("LocationName", actual.LocationName);
-            Assert.AreEqual("RSSLink", actual.RSSLink);
+            Assert.AreEqual("<a href='RSSLink'>RSSLink</a>", actual.RSSLink);
             Assert.AreEqual("ServiceName", actual.ServiceName);
         }
 

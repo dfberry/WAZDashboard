@@ -30,6 +30,18 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets GetAzureFeedUriPrefix. This is the Uri prefix for the Feeds.
+        /// </summary>
+        /// <returns>AppSettings["AzureDashboardServiceFeedPrefix"] as string</returns>
+        public string GetAzureFeedUriPrefix
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AzureDashboardServiceFeedPrefix"];
+            }
+        }
+
+        /// <summary>
         /// Gets AzureUri. This is the Uri for Windows Azure Dashboard RSSFeeds
         /// </summary>
         /// <returns>AppSettings["AzureDashboardServiceURL"] as string</returns>

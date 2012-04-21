@@ -235,7 +235,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                     {
                         throw new Exception("trNode == null");
                     }
-                        
+
                     RSSFeed rssfeed = ParseFeedNode(trNode);
 
                     if (rssfeed != null)
@@ -364,12 +364,24 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 {
                     FeedCode = this.FindParseFeedItemValue(list, HTMLParserFeedItemType.RSSCode),
                     LocationName = this.FindParseFeedItemValue(list, HTMLParserFeedItemType.LocationName),
-                    RSSLink = this.FindParseFeedItemValue(list, HTMLParserFeedItemType.RSSLink),
+                    RSSLink = this.BuildRSSFeed(this.FindParseFeedItemValue(list, HTMLParserFeedItemType.RSSLink)),
                     ServiceName = this.FindParseFeedItemValue(list, HTMLParserFeedItemType.ServiceName)
                 };
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Add uri prefex (domain and subdirs) to 
+        /// rss feed uri to get complete uri.
+        /// </summary>
+        /// <param name="feedsuri">feed uri as returned by Azure</param>
+        /// <returns>complete uri as discovered on azure</returns>
+        public string BuildRSSFeed(string feedsuri)
+        {
+            string temp = this.FindFeedsPrefixUri() + feedsuri;
+            return "<a href='" + temp + "'>" + temp + "</a>";
         }
 
         /// <summary>
@@ -496,6 +508,16 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             DashboardHttp httpRequest = new DashboardHttp(this.dashboardURI);
             return httpRequest.GetRequest();
+        }
+
+        /// <summary>
+        /// Get Config setting for Feed Uri Prefix
+        /// </summary>
+        /// <returns>Azure Feed prefix as string</returns>
+        private string FindFeedsPrefixUri()
+        {
+            DashboardConfiguration config = new DashboardConfiguration();
+            return config.GetAzureFeedUriPrefix;
         }
     }
 }
