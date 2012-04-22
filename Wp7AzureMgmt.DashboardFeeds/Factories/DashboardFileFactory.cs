@@ -27,6 +27,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Factories
         /// <returns>DashboardFile with content and filename set</returns>
         public Wp7AzureMgmt.DashboardFeeds.DashboardFile CreateFile(string content, string filename)
         {
+            if (filename == null)
+            {
+                throw new ArgumentNullException("filename");
+            }
+
             Wp7AzureMgmt.DashboardFeeds.DashboardFile file = new Wp7AzureMgmt.DashboardFeeds.DashboardFile();
 
             file.FileContents = content;
@@ -41,11 +46,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Factories
         /// <param name="file">DashboardFile with filename and contents</param>
         public void Save(Wp7AzureMgmt.DashboardFeeds.DashboardFile file)
         {
-            if (file.FileContents == null)
+            if (file == null)
             {
-                throw new ArgumentNullException("content is null");
+                throw new ArgumentNullException("file");
             }
-
+            
             if (string.IsNullOrEmpty(file.FileName))
             {
                 throw new ArgumentNullException("filename is empty or null");
@@ -69,7 +74,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Factories
         {
             if (file == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("file");
             }
 
             using (StreamReader reader = File.OpenText(file.FileName))
@@ -86,6 +91,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Factories
         /// <returns>Boolean true if file exists.</returns>
         internal bool Exists(Wp7AzureMgmt.DashboardFeeds.DashboardFile file)
         {
+            if (file == null)
+            {
+                throw new ArgumentNullException("file");
+            } 
+            
             return File.Exists(file.FileName);
         }
     }

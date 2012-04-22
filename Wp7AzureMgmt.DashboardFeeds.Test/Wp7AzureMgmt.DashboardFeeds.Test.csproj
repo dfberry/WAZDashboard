@@ -61,14 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C_DashboardMgrTest.cs" />
-    <Compile Include="A_HTTPTest.cs" />
+    <Compile Include="A_DashboardHttpTest.cs" />
+    <Compile Include="DashboardFileFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSSFeedResponseResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RSSFeedResponseResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="B_WADashboardTest.cs" />
+    <Compile Include="B_DashboardTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -88,6 +89,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DataSources\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
