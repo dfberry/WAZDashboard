@@ -36,20 +36,5 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         {
             return this.Name.GetHashCode();
         }
-
-        /// <summary>
-        /// Used by test framework to compare objects
-        /// </summary>
-        /// <param name="obj">object to compare against</param>
-        /// <returns>equality of objects as bool</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj.GetType() != typeof(HTMLParserFeedItemDefinition))
-            {
-                return false;
-            }
-
-            return ((HTMLParserFeedItemDefinition)obj).Name == this.Name;
-        }
     }
 }
