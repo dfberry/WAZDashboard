@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardFileFactoryTest.cs" company="Microsoft">
+// <copyright file="HTMLParserFeedItemTest.cs" company="Microsoft">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,15 +7,15 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 {
     using System;
     using NUnit.Framework;
+    using Wp7AzureMgmt.DashboardFeeds.Enums;
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Enums;
 
     /// <summary>
-    /// 
+    /// Tests for HTMLParserFeedItem object. 
     /// </summary>
     [TestFixture]
-    class HTMLParserFeedItemTest
+    public class HTMLParserFeedItemTest
     {
         /// <summary>
         /// Test for HashCode must return same hash for two
@@ -35,9 +35,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             int diversionHash = diversion.GetHashCode();
 
             HTMLParserFeedItem target = new HTMLParserFeedItem();
-
-            // doesn't matter which one I use for this test
-            HTMLParserFeedItemType Name = sameName;
+            target.Name = sameName;
 
             // act
             int actual = target.GetHashCode();

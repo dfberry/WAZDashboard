@@ -71,6 +71,7 @@
       <DependentUpon>RSSFeedResponseResource.resx</DependentUpon>
     </Compile>
     <Compile Include="B_DashboardTest.cs" />
+    <Compile Include="RSSFeedTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

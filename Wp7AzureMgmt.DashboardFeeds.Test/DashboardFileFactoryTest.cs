@@ -6,13 +6,12 @@
 namespace Wp7AzureMgmt.DashboardFeeds.Test
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.Factories;
-
 
     /// <summary>
     /// Tests for DashboardFileFactory
@@ -105,7 +104,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// 
+        /// Test for correctly saving content to file on disk.
         /// </summary>
         [Test]
         public void SaveTest_Success()
@@ -125,7 +124,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// 
+        /// Test for saving fails by throwing exception for null
+        /// param.
         /// </summary>
         [Test]
         public void SaveTest_ParamFailure()
@@ -165,14 +165,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             string actual = target.Read(file);
 
             // assert
-            Assert.AreEqual(contents, actual);
+            Assert.AreEqual(this.contents, actual);
 
             // cleanup
             File.Delete(file.FileName);
         }
 
         /// <summary>
-        /// 
+        /// Test for read fails based on file not found.
         /// </summary>
         [Test]
         public void ReadTest_FailureFileNotFound()
@@ -206,7 +206,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             DashboardFileFactory target = new DashboardFileFactory();
-            string temp = null;
 
             // act
             try
@@ -225,7 +224,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// 
+        /// Test success for file exists on disk.
         /// </summary>
         [Test]
         public void ExistsTest_SuccessTrue()
@@ -239,7 +238,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             string actual = target.Read(file);
 
             // assert
-            Assert.AreEqual(contents, actual);
+            Assert.AreEqual(this.contents, actual);
 
             // cleanup
             File.Delete(file.FileName);
@@ -271,7 +270,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             DashboardFileFactory target = new DashboardFileFactory();
-            string temp = null;
 
             // act
             try

@@ -43,7 +43,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         }
 
         /// <summary>
-        /// Used by test framework to compare objects
+        /// Used by test framework to compare objects. Only
+        /// feedcode must be the same.
         /// </summary>
         /// <param name="obj">object to compare against</param>
         /// <returns>equality of objects as bool </returns>
