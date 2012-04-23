@@ -14,7 +14,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     /// <summary>
     /// Manages Config file AppSettings values.
     /// </summary>
-    internal class DashboardConfiguration
+    internal class DashboardConfiguration 
     {
         /// <summary>
         /// Gets DefaultUri. This is any Uri that will return 200
@@ -25,7 +25,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return ConfigurationManager.AppSettings["Default200Uri"];
+                return this.Get("Default200Uri");
             }
         }
 
@@ -37,7 +37,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return ConfigurationManager.AppSettings["AzureDashboardServiceFeedPrefix"];
+                return this.Get("AzureDashboardServiceFeedPrefix");
             }
         }
 
@@ -49,26 +49,31 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return ConfigurationManager.AppSettings["AzureDashboardServiceURL"];
+                return this.Get("AzureDashboardServiceURL");
             }
         }
 
         /// <summary>
-        /// Gets FeedCount. Regardless of where html comes from, how many RSS feeds should there be
+        /// Gets FeedCount. Regardless of where html comes from, 
+        /// how many RSS feeds should there be. Throws
+        /// FormatException if can't parse value into int.
         /// </summary>
         /// <returns>AppSettings["LastKnownRSSFeedCount"] as int</returns>
         public int GetFeedCount
         {
             get
             {
-                string tempCount = ConfigurationManager.AppSettings["LastKnownRSSFeedCount"];
-                if (string.IsNullOrEmpty(tempCount))
+                int result = 0;
+
+                string tempCount = this.Get("LastKnownRSSFeedCount");
+
+                if (int.TryParse(tempCount, out result))
                 {
-                    throw new ArgumentException("AppSettings[LastKnownRSSFeedCount] is empty");
+                    return result;
                 }
                 else
                 {
-                    return int.Parse(tempCount);
+                    throw new FormatException();
                 }
             }
         }
@@ -81,7 +86,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return ConfigurationManager.AppSettings["ContentFrom"];
+                return this.Get("ContentFrom");
             }
         }
 
@@ -94,24 +99,159 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return ConfigurationManager.AppSettings["TestFile"];
+                return this.Get("TestFile");
             }
         }
 
         /// <summary>
-        /// Plan to update feed count and file name
+        /// General method to fetch config setting
+        /// value 
         /// </summary>
-        /// <param name="key">Name of config/appsettings item</param>
-        /// <param name="value">New value of config/appsettings item</param>
-        public void ChangeAppSettingsConfiguration(string key, string value)
+        /// <param name="key">name of appSettings key</param>
+        /// <returns>value of appSettings Key</returns>
+        public string Get(string key)
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("name");
+            }
 
-            AppSettingsSection appSettings = (AppSettingsSection)config.GetSection("appSettings");
-
-            appSettings.Settings[key].Value = value;
-
-            config.Save();
+            return ConfigurationManager.AppSettings[key];
         }
+
+        /// <summary>
+        /// Save determines if update or create is necessary,
+        /// and performs that action. Throws ArgumentNullException
+        /// if params are null. Throws NullReferenceException if
+        /// Configuration object can't be created. 
+        /// </summary>
+        /// <param name="key">name of appSettings key</param>
+        /// <param name="value">value assocated with key</param>
+        public void Save(string key, string value)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            Configuration configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (configFile == null)
+            {
+                throw new NullReferenceException("Configuration");
+            }
+
+            foreach (string strKey in configFile.AppSettings.Settings.AllKeys)
+            {
+                if (strKey == key)
+                {
+                    this.Update(key, value, configFile);
+                    return;
+                }
+            }
+
+            // key not found so create it
+            this.Create(key, value, configFile);
+        }
+
+        /// <summary>
+        /// Create new appSettings key/value pair
+        /// </summary>
+        /// <param name="key">name of appSettings key</param>
+        /// <param name="value">value assocated with key</param>
+        /// <param name="configFile">config file containing settings</param>
+        public void Create(string key, string value, Configuration configFile)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (configFile == null)
+            {
+                throw new ArgumentNullException("ConfigFile");
+            }
+
+            configFile.AppSettings.Settings.Add(key, value);
+            configFile.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+        
+        /// <summary>
+        /// Update existing appSettings value given key
+        /// </summary>
+        /// <param name="key">name of appSettings key</param>
+        /// <param name="value">value assocated with key</param>
+        /// <param name="configFile">config file containing settings</param>
+        public void Update(string key, string value, Configuration configFile)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (configFile == null)
+            {
+                throw new ArgumentNullException("ConfigFile");
+            }
+
+            configFile.AppSettings.Settings[key].Value = value;
+            configFile.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        /// <summary>
+        /// Clear key from appSettings
+        /// </summary>
+        /// <param name="key">name of appSettings key</param>
+        public void Remove(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings.Remove(key);
+            config.Save(ConfigurationSaveMode.Modified, true);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        /// <summary>
+        /// Returns true if key exists
+        /// </summary>
+        /// <param name="key">name of appSettings key</param>
+        /// <returns>bool if key exists</returns>
+        public bool Exists(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException("key");
+            }
+
+            if (ConfigurationManager.AppSettings.AllKeys.ToList().Contains(key))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }    
     }
 }

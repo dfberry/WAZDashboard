@@ -893,7 +893,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
                     this.DashboardFile.FileName = filename;
                     this.DashboardFile.FileContents = this.DashboardHttp.GetRequest();
                     this.DashboardFileFactory.Save(this.DashboardFile);
-                    this.DashboardConfiguration.ChangeAppSettingsConfiguration("TestFile", this.DashboardFile.FileName);
+                    this.DashboardConfiguration.Save("TestFile", this.DashboardFile.FileName);
 
                     // set count of Feeds for test
                     this.SetFeedListCount();
@@ -904,7 +904,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
                     this.DashboardFile.FileName = filename;
                     this.DashboardFile.FileContents = this.DashboardHttp.GetRequest();
                     this.DashboardFileFactory.Save(this.DashboardFile);
-                    this.DashboardConfiguration.ChangeAppSettingsConfiguration("TestFile", this.DashboardFile.FileName);
+                    this.DashboardConfiguration.Save("TestFile", this.DashboardFile.FileName);
 
                     // set count of Feeds for test
                     this.SetFeedListCount();
@@ -927,7 +927,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             // not keeping this around - just want to get the count from file
             Dashboard dashboard = new Dashboard(this.DashboardFile.FileContents);
             List<RSSFeed> list = dashboard.FindFeeds().ToList();
-            DashboardConfiguration.ChangeAppSettingsConfiguration("LastKnownRSSFeedCount", list.Count().ToString());
+            DashboardConfiguration.Save("LastKnownRSSFeedCount", list.Count().ToString());
         }
     }
 }

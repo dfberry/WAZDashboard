@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="C_DashboardMgrTest.cs" />
     <Compile Include="A_DashboardHttpTest.cs" />
+    <Compile Include="DashboardConfigurationTest.cs" />
     <Compile Include="DashboardFileFactoryTest.cs" />
     <Compile Include="HTMLParserFeedItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
