@@ -2,6 +2,7 @@
 
 // dina's cron job
 // http://www.bluehostforum.com/archive/index.php/t-5762.html
+// make sure to reset the file to executable
 // /usr/bin/php /home1/dinafber/dfbscripts/task.php >> /home1/dinafber/dfbscripts/task.log
 
 
