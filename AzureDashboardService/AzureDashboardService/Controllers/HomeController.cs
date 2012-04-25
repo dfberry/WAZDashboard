@@ -13,6 +13,7 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using System.Net.Mail;
 
     /// <summary>
     /// Home controller page of the web site
@@ -105,6 +106,34 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
+        /// Default Download page
+        /// </summary>
+        /// <returns>download page as ViewResult</returns>
+        public ViewResult Tasks()
+        {
+            MailAddress from = new MailAddress("wazup.berryintl@gmail.com", "AppHarbor Tasks");
+            MailAddress to = new MailAddress("dina@berryintl.com", "AppHarbor Tasks");
+
+            MailMessage message = new MailMessage(from, to);
+
+            message.Subject = "Tasks: AppHarbor Tasks";
+
+            //message.Body = DateTime.Now.ToString() + "\n" + text + "\n";
+
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.gmail.com";   // We use gmail as our smtp client
+            client.Port = 587;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("wazup.berryintl@gmail.com", "redrum88");
+
+
+            client.Send(message);
+            return View();
+        }
+
+        
+        /// <summary>
         /// Return OPML file as download. 
         /// </summary>
         /// <returns>opml content as ActionResult</returns>
@@ -173,5 +202,7 @@ namespace AzureDashboardService.Controllers
 
             return Json(jsonData);
         }
+
+
     }
 }
