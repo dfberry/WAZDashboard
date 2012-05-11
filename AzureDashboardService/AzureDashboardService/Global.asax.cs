@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="Microsoft">
+// <copyright file="Global.asax.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

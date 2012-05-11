@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardFileFactory.cs" company="Microsoft">
+// <copyright file="DashboardFileFactory.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -69,7 +69,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Factories
         /// Read file and return as string
         /// </summary>
         /// <param name="file">DashboardFile to act on</param>
-        /// <returns>String contents of file</returns>
+        /// <returns>string contents of file</returns>
         internal string Read(DashboardFile file)
         {
             if (file == null)

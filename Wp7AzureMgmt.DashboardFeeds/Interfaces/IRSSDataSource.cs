@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IRSSDataSource.cs" company="Microsoft">
+// <copyright file="IRSSDataSource.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -20,19 +20,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
         /// <summary>
         /// Get copy of list
         /// </summary>
-        /// <returns>Returns IEnumerable of RSS Feeds</returns>
-        IEnumerable<RSSFeed> List();
+        /// <returns>Returns RSSFeeds ojbject</returns>
+        RssFeeds Get();
 
         /// <summary>
-        /// Returns importable file as string for Google Reader
+        /// Set copy of list
         /// </summary>
-        /// <returns>Returns OPML formatted string of RSS Feeds</returns>
-        string OPML();
-
-        /// <summary>
-        /// DateTime list was fetched from Datasource
-        /// </summary>
-        /// <returns>Returns OPML formatted string of RSS Feeds</returns>
-        DateTime BuildDate();
+        void Set();
     }
 }

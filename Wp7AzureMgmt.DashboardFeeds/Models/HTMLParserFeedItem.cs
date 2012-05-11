@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HTMLParserFeedItem.cs" company="Microsoft">
+// <copyright file="HTMLParserFeedItem.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------

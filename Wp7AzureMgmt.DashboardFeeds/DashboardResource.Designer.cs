@@ -61,6 +61,15 @@ namespace Wp7AzureMgmt.DashboardFeeds {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string HtmlTest {
+            get {
+                return ResourceManager.GetString("HtmlTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;http://www.microsoft.com/feeds/msdn_opmlpretty.xsl&quot; version=&quot;1.0&quot;?&gt;
         ///&lt;opml version=&quot;1.1&quot;&gt;
         ///  &lt;head&gt;
@@ -84,6 +93,21 @@ namespace Wp7AzureMgmt.DashboardFeeds {
         internal static string OPMLMasterOutline {
             get {
                 return ResourceManager.GetString("OPMLMasterOutline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;http://www.microsoft.com/feeds/msdn_opmlpretty.xsl&quot; version=&quot;1.0&quot;?&gt;
+        ///&lt;opml version=&quot;1.1&quot;&gt;
+        ///  &lt;head&gt;
+        ///    &lt;title&gt;Azure Service Dashboard Feeds&lt;/title&gt;
+        ///  &lt;/head&gt;
+        ///  &lt;body&gt;
+        ///&lt;outline text=&quot;Access Control [East Asia]&quot; title=&quot;Access Control [East Asia]&quot; type=&quot;rss&quot; xmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode=NSACSEA&quot; htmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/servicedashboard.aspx&quot;/&gt;&lt;outline text=&quot;Service Bus [Sou [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OPMLTest {
+            get {
+                return ResourceManager.GetString("OPMLTest", resourceCulture);
             }
         }
     }

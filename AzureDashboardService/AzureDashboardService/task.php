@@ -14,19 +14,19 @@
 
 error_reporting(E_ALL);
 
-//$to = "dina@berryintl.com";
-//$subject = "bluehost cron job";
+//$to = "toemail@email.com";
+//$subject = "cron job";
 //$message = "top";
-//$headers = 'From: dina@dinafberry.com' . "\r\n" .
-//    'Reply-To: dina@dinafberry.com' . "\r\n" .
+//$headers = 'From: fromemail@email.com' . "\r\n" .
+//    'Reply-To: fromemail@email.com' . "\r\n" .
 //    'X-Mailer: PHP/' . phpversion();
 
-//$from = "dina@dinafberry.com";
+//$from = "fromemail@email.com";
 
 //mail($to,$subject,$message,$headers,$from);
 
 // The Yahoo! Web Services request
-$request =  'http://wazdashboard.apphb.com/Home/Tasks';
+$request =  'http://wazdashboard.apphb.com/Home/BuildRSSFeedsOnSchedule';
 
 // Initialize the session
 $session = curl_init($request);

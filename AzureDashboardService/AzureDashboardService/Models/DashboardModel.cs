@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardModel.cs" company="Microsoft">
+// <copyright file="DashboardModel.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -19,12 +19,7 @@ namespace AzureDashboardService.Models
         /// <summary>
         /// Gets or sets feedlist
         /// </summary>
-        public List<RSSFeed> FeedList { get; set; }
-
-        /// <summary>
-        /// Gets or sets feeddate (date feeds were generated from html)
-        /// </summary>
-        public DateTime FeedDate { get; set; }
+        public RssFeeds Feeds { get; set; }
 
         /// <summary>
         /// Gets or sets URI to pull feeds from

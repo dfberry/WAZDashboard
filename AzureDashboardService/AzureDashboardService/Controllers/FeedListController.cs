@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="FeedListController.cs" company="Microsoft">
+// <copyright file="FeedListController.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -9,6 +9,7 @@ namespace AzureDashboardService.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Web;
     using System.Web.Http;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
@@ -27,11 +28,14 @@ namespace AzureDashboardService.Controllers
         /// GET /api/feedlist
         /// </summary>
         /// <returns>IEnumerable of RSSFeed</returns>
-        public IEnumerable<RSSFeed> Get()
+        public RssFeeds Get()
         {
-            this.dashboard = new DashboardMgr();
+            HttpContextBase context = null;
+            this.dashboard = new DashboardMgr(context);
+            bool fetchFromUri = false;
+            string pathToFiles = string.Empty;
 
-            return this.dashboard.Feeds();
+            return this.dashboard.GetStoredRssFeeds(pathToFiles, fetchFromUri);
         }
     }
 }

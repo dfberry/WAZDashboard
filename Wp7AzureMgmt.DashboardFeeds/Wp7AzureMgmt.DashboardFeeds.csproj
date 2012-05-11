@@ -13,6 +13,12 @@
     <AssemblyName>Wp7AzureMgmt.DashboardFeeds</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,34 +54,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DashboardConfiguration.cs" />
+    <Compile Include="DataSources\FakeDataSource.cs" />
+    <Compile Include="Interfaces\IDashboardHttp.cs" />
+    <Compile Include="Interfaces\INotification.cs" />
+    <Compile Include="Interfaces\ISmtpClient.cs" />
+    <Compile Include="Notifications\DashboardSmtpClient.cs" />
+    <Compile Include="Utilities\DashboardConfiguration.cs" />
     <Compile Include="DashboardResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardResource.resx</DependentUpon>
     </Compile>
     <Compile Include="DashboardMgr.cs" />
-    <Compile Include="DataSources\Dashboard.cs" />
+    <Compile Include="DataSources\UriDatasource.cs" />
+    <Compile Include="DataSources\FileDatasource.cs" />
+    <Compile Include="Utilities\DashboardHttpFake.cs" />
+    <Compile Include="Notifications\Email.cs" />
     <Compile Include="Enums\ContentTag.cs" />
     <Compile Include="Enums\FindBy.cs" />
     <Compile Include="Enums\HTMLParserFeedItemType.cs" />
     <Compile Include="Factories\DashboardFileFactory.cs" />
+    <Compile Include="Notifications\EmailMock.cs" />
+    <Compile Include="Utilities\HtmlParser.cs" />
     <Compile Include="Models\DashboardFile.cs" />
-    <Compile Include="DashboardHttp.cs" />
+    <Compile Include="Utilities\DashboardHttp.cs" />
     <Compile Include="Interfaces\IRSSDataSource.cs" />
     <Compile Include="Models\HTMLParserFeedItem.cs" />
     <Compile Include="Models\HtmlParserFeedItemDefinition.cs" />
-    <Compile Include="Models\RSSFeed.cs" />
+    <Compile Include="Models\RssFeed.cs" />
+    <Compile Include="Models\RssFeeds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Serializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DashboardResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DashboardResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="servicedashboardcontent.htm" />
+    <Content Include="WazServiceDashboardOpml.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

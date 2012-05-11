@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HtmlParserFeedItemDefinition.cs" company="Microsoft">
+// <copyright file="HtmlParserFeedItemDefinition.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -59,7 +59,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         }
 
         /// <summary>
-        /// Used by test framework to compare objects
+        /// Used by test framework to compare objects. Ignores
+        /// case.
         /// </summary>
         /// <param name="obj">object to compare against</param>
         /// <returns>equality of objects as bool</returns>
@@ -70,7 +71,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
                 return false;
             }
 
-            return (((HTMLParserFeedItemDefinition)obj).Tag == this.Tag) && (((HTMLParserFeedItemDefinition)obj).AttributeName == this.AttributeName);
+            return (((HTMLParserFeedItemDefinition)obj).Tag.ToLower() == this.Tag.ToLower()) && (((HTMLParserFeedItemDefinition)obj).AttributeName.ToLower() == this.AttributeName.ToLower());
         }
     }
 }

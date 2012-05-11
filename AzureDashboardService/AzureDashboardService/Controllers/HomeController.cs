@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="HomeController.cs" company="Microsoft">
+// <copyright file="HomeController.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -8,13 +8,13 @@ namespace AzureDashboardService.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Mail;
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using System.Net.Mail;
-
+    
     /// <summary>
     /// Home controller page of the web site
     /// </summary>
@@ -41,22 +41,13 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
-        /// Display list of feeds
-        /// </summary>
-        /// <returns>feedlist as table in ViewResult</returns>
-        public ViewResult FeedList()
-        {
-            return View(this.DashboardModel.FeedList);
-        }
-
-        /// <summary>
         /// Display list of grouped feeds in grid
         /// using jqGrid.
         /// </summary>
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListGroupGrid()
         {
-            return View(this.DashboardModel.FeedList);
+            return View(this.DashboardModel.Feeds);
         }
 
         /// <summary>
@@ -66,7 +57,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListjqGrid()
         {
-            return View("FeedListGroupGrid", this.DashboardModel.FeedList);
+            return View("FeedListGroupGrid", this.DashboardModel.Feeds);
         }
 
         /// <summary>
@@ -106,40 +97,12 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
-        /// Default Download page
-        /// </summary>
-        /// <returns>download page as ViewResult</returns>
-        public ViewResult Tasks()
-        {
-            MailAddress from = new MailAddress("wazup.berryintl@gmail.com", "AppHarbor Tasks");
-            MailAddress to = new MailAddress("dina@berryintl.com", "AppHarbor Tasks");
-
-            MailMessage message = new MailMessage(from, to);
-
-            message.Subject = "Tasks: AppHarbor Tasks";
-
-            //message.Body = DateTime.Now.ToString() + "\n" + text + "\n";
-
-            SmtpClient client = new SmtpClient();
-            client.Host = "smtp.gmail.com";   // We use gmail as our smtp client
-            client.Port = 587;
-            client.UseDefaultCredentials = true;
-            client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("wazup.berryintl@gmail.com", "redrum88");
-
-
-            client.Send(message);
-            return View();
-        }
-
-        
-        /// <summary>
         /// Return OPML file as download. 
         /// </summary>
         /// <returns>opml content as ActionResult</returns>
         public ActionResult OPML()
         {
-            byte[] opmlFile = StrToByteArray(this.DashboardMgr.OPML());
+            byte[] opmlFile = StrToByteArray(this.DashboardModel.Feeds.OPML());
 
             return File(opmlFile, "application/xml", "WazServiceDashboardOpml.xml");
         }
@@ -158,16 +121,18 @@ namespace AzureDashboardService.Controllers
         /// <summary>
         /// Stolen from http://www.timdavis.com.au/code/jquery-grid-with-asp-net-mvc/
         /// </summary>
-        /// <param name="sidx">id of row</param>
+        /// <param name="sidx">id of row to begin at</param>
         /// <param name="sord">sort order</param>
         /// <param name="page">page count</param>
-        /// <param name="rows">row count</param>
+        /// <param name="rows">row count for pagesize</param>
         /// <returns>JsonResult specific to jqGrid</returns>
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
+            bool fetchFromUri = true;
+
             // Get data
-            var feeds = this.DashboardMgr.Feeds();
+            var feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles, fetchFromUri).Feeds;
 
             // Order data by service and location
             var feedsSorted = from feed in feeds
@@ -202,7 +167,5 @@ namespace AzureDashboardService.Controllers
 
             return Json(jsonData);
         }
-
-
     }
 }
