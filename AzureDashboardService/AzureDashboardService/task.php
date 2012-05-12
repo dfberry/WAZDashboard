@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 //mail($to,$subject,$message,$headers,$from);
 
 // The Yahoo! Web Services request
-$request =  'http://wazdashboard.apphb.com/Home/BuildRSSFeedsOnSchedule';
+$request =  'http://wazdashboard.apphb.com/Api/BuildRSSFeedsOnSchedule';
 
 // Initialize the session
 $session = curl_init($request);
