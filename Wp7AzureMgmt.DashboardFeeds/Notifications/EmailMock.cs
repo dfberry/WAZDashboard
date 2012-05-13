@@ -5,7 +5,7 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds.Utilities
+namespace Wp7AzureMgmt.DashboardFeeds
 {
     using System;
     using System.Collections.Generic;

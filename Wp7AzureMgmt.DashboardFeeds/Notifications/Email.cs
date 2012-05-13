@@ -17,7 +17,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     /// Sending Emails
     /// http://stackoverflow.com/questions/1058041/how-do-i-make-a-mockup-of-system-net-mail-mailmessage
     /// </summary>
-    internal class EmailNotification : INotification
+    public class EmailNotification : INotification
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailNotification" /> class.

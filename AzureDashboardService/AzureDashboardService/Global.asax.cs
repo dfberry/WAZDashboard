@@ -13,6 +13,7 @@ namespace AzureDashboardService
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using AzureDashboardService.Controllers;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
@@ -61,6 +62,35 @@ namespace AzureDashboardService
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
+        }
+
+        /// <summary>
+        /// Send App Errors by email for now because
+        /// everything is on AppHarbor
+        /// </summary>
+        protected void Application_Error()
+        {
+            Exception exception = Server.GetLastError();
+            Response.Clear();
+
+            HttpException httpException = exception as HttpException;
+
+            if (httpException != null)
+            {
+                string action;
+
+                switch (httpException.GetHttpCode())
+                {
+                    default:
+                        action = "Error";
+                        break;
+                }
+
+                // clear error on server 
+                Server.ClearError();
+
+                Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using Moq;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
-    using Wp7AzureMgmt.DashboardFeeds.Notifications;
     using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>

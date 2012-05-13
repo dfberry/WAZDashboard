@@ -13,6 +13,7 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
+    using AzureDashboardService.Notifications;
 
     /// <summary>
     /// BaseController for all controllers
