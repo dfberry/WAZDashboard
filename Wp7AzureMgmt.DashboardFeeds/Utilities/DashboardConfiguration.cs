@@ -63,6 +63,19 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets DataFileDir. This is the location where files are saved to disk.
+        /// An example is the serialized file of the FileDataSource.
+        /// </summary>
+        /// <returns>AppSettings["DirForDataFiles"] as string</returns>
+        public string DataFileDir
+        {
+            get
+            {
+                return this.Get("DirForDataFiles");
+            }
+        }
+
+        /// <summary>
         /// Gets GetAzureFeedUriPrefix. This is the Uri prefix for the Feeds.
         /// </summary>
         /// <returns>AppSettings["AzureDashboardServiceFeedPrefix"] as string</returns>

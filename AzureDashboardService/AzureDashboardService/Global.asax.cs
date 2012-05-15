@@ -73,11 +73,18 @@ namespace AzureDashboardService
             Exception exception = Server.GetLastError();
             Response.Clear();
 
-            HttpException httpException = exception as HttpException;
+            var httpException = exception as HttpException;
+            Response.Clear();
+            Server.ClearError();
+            var routeData = new RouteData();
+            routeData.Values["controller"] = "Error";
+            routeData.Values["action"] = "GeneralError";
+            routeData.Values["exception"] = exception;
 
             if (httpException != null)
             {
                 string action;
+                Response.StatusCode = httpException.GetHttpCode();
 
                 switch (httpException.GetHttpCode())
                 {
@@ -86,11 +93,14 @@ namespace AzureDashboardService
                         break;
                 }
 
-                // clear error on server 
-                Server.ClearError();
-
-                Response.Redirect(String.Format("~/Error/{0}/?message={1}", action, exception.Message));
             }
+
+            // Avoid IIS7 getting in the middle
+            Response.TrySkipIisCustomErrors = true;
+            IController errorsController = new ErrorController();
+            HttpContextWrapper wrapper = new HttpContextWrapper(Context);
+            var rc = new RequestContext(wrapper, routeData);
+            errorsController.Execute(rc);
         }
     }
 }

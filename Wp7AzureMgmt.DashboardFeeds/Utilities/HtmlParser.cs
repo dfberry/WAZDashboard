@@ -281,7 +281,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         public string BuildRSSFeed(string feedsuri)
         {
             string temp = this.uriPrefix + feedsuri;
-            return "<a href='" + temp + "'>" + temp + "</a>";
+            return "<a href='" + temp + "'>rss</a>";
         }
 
         /// <summary>

@@ -140,7 +140,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 throw new ArgumentNullException("string filename");
             }
 
-            Serializer.Serialize(filename, feeds);
+            try
+            {
+                Serializer.Serialize(filename, feeds);
+            }
+            catch
+            {
+                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed.");
+            }
         }
 
         /// <summary>
@@ -164,14 +171,21 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 throw new ArgumentNullException("string serializedFile");
             }
 
-            if (File.Exists(serializedFile))
+            try
             {
-                this.feeds = Serializer.Deserialize<RssFeeds>(serializedFile);
-                return this.feeds;
+                if (File.Exists(serializedFile))
+                {
+                    this.feeds = Serializer.Deserialize<RssFeeds>(serializedFile);
+                    return this.feeds;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch
             {
-                return null;
+                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed.");
             }
         }
     }

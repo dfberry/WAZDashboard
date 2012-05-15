@@ -11,9 +11,9 @@ namespace AzureDashboardService.Controllers
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Models;
+    using AzureDashboardService.Notifications;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
-    using AzureDashboardService.Notifications;
 
     /// <summary>
     /// BaseController for all controllers
@@ -43,13 +43,13 @@ namespace AzureDashboardService.Controllers
         /// </summary>
         public DashboardBaseController()
         {
-            bool fetchFromUri = true;
+            DashboardConfiguration dbconfig = new DashboardConfiguration(this.HttpContext);
+            string dirForDataFiles = dbconfig.DataFileDir;
 
             this.dashboard = new DashboardMgr(this.HttpContext);
             this.model = new DashboardModel();
             this.pathToFiles = this.HttpContext.Server.MapPath("~/");
-
-            this.model.Feeds = this.dashboard.GetStoredRssFeeds(this.pathToFiles, fetchFromUri);
+            this.pathToFiles += dirForDataFiles + "\\";
 
 #if DEBUG
             this.model.IsDebug = true;
