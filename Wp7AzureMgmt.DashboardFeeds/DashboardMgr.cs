@@ -51,15 +51,19 @@ namespace Wp7AzureMgmt.DashboardFeeds
         public RssFeeds GetStoredRssFeeds(string pathToFiles, bool fetchFromUri)
         {
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
-            RssFeeds feeds = fileDatasource.Get();
+            RssFeeds feeds = null;
 
-            if ((fetchFromUri == true) && 
-                ((feeds == null) || (feeds.Feeds.Count() == 0)))
+            if (fetchFromUri == true)
             {
-                // grab from UriDatasource instead
+                // grab from UriDatasource 
                 this.SetRssFeedsFromUri(pathToFiles);
 
-                // try again
+                // serialize to file
+                feeds = fileDatasource.Get();
+            }
+            else
+            {
+                // get from file
                 feeds = fileDatasource.Get();
             }
 

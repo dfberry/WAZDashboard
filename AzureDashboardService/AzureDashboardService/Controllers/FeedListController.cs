@@ -22,17 +22,6 @@ namespace AzureDashboardService.Controllers
     public class FeedListController : DashboardBaseController
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeedListController" /> class.
-        /// Purpose is to generate feeds list prior to a method needing it. The feeds
-        /// list should be available to all FeeListController methods.
-        /// </summary>
-        public FeedListController()
-        {
-            bool fetchFromUri = true;
-            this.DashboardModel.Feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles, fetchFromUri);
-        }
-
-        /// <summary>
         /// Converts string to byte array. Used to return
         /// opml file as download from website.
         /// </summary>
@@ -51,7 +40,16 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListjqGrid()
         {
-            return View("FeedListGroupGrid", this.DashboardModel.Feeds);
+            this.GetFeeds();
+
+            if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
+            {
+                return View("FeedListGroupGrid", this.DashboardModel.Feeds);
+            }
+            else
+            {
+                return View("NoFeeds");
+            }
         }
 
         /// <summary>
@@ -60,9 +58,18 @@ namespace AzureDashboardService.Controllers
         /// <returns>opml content as ActionResult</returns>
         public ActionResult OPML()
         {
-            byte[] opmlFile = StrToByteArray(this.DashboardModel.Feeds.OPML());
+            this.GetFeeds();
 
-            return File(opmlFile, "application/xml", "WazServiceDashboardOpml.xml");
+            if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
+            {
+                byte[] opmlFile = StrToByteArray(this.DashboardModel.Feeds.OPML());
+
+                return File(opmlFile, "application/xml", "WazServiceDashboardOpml.xml");
+            }
+            else
+            {
+                return View("NoFeeds");
+            }
         }
 
         /// <summary>
@@ -86,6 +93,13 @@ namespace AzureDashboardService.Controllers
         /// <returns>JsonResult specific to jqGrid</returns>
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
+            this.GetFeeds();
+
+            if ((this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
+            {
+                return null;
+            }
+            
             // Order data by service and location
             var feedsSorted = from feed in this.DashboardModel.Feeds.Feeds
                               orderby feed.ServiceName, feed.LocationName
@@ -118,6 +132,23 @@ namespace AzureDashboardService.Controllers
             };
 
             return Json(jsonData);
+        }
+
+        /// <summary>
+        /// Grab feeds from serialized file
+        /// </summary>
+        private void GetFeeds()
+        {
+            bool fetchFromUri = false;
+            
+            try
+            {
+                this.DashboardModel.Feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles, fetchFromUri);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("FeedListController::GetFeeds - couldn't get feeds");
+            }
         }
     }
 }

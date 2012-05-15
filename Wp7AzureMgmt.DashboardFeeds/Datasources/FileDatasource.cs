@@ -54,7 +54,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
 
             // set this once in constructor
             DashboardConfiguration config = new DashboardConfiguration(this.configurationContext);
-            this.fileName = pathToFilename + config.SerializedFeedListFile;
+
+            this.FileName = pathToFilename + config.SerializedFeedListFile;
+
+            if (string.IsNullOrEmpty(this.FileName))
+            {
+                throw new NullReferenceException("FileName");
+            }
         }
 
         /// <summary>
