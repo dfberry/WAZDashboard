@@ -48,6 +48,12 @@ namespace AzureDashboardService.Controllers
             ViewData["FilePath"] = filePath;
             ViewData["DataFileExists"] = fileExists.ToString();
 
+#if HideExceptions
+            VewData["HideExceptions"] = true;
+#else
+            ViewData["HideExceptions"] = false;
+#endif
+
             return View();
         }
     }

@@ -70,6 +70,7 @@ namespace AzureDashboardService
         /// </summary>
         protected void Application_Error()
         {
+#if HideExceptions
             Exception exception = Server.GetLastError();
             Response.Clear();
 
@@ -101,6 +102,7 @@ namespace AzureDashboardService
             HttpContextWrapper wrapper = new HttpContextWrapper(Context);
             var rc = new RequestContext(wrapper, routeData);
             errorsController.Execute(rc);
+#endif
         }
     }
 }
