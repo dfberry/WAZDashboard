@@ -94,9 +94,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="servicedashboardcontent.htm" />
     <Content Include="WazServiceDashboardOpml.xml" />
   </ItemGroup>

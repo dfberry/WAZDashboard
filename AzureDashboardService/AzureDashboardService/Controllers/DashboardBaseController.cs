@@ -37,14 +37,19 @@ namespace AzureDashboardService.Controllers
         private DashboardMgr dashboard;
 
         /// <summary>
+        /// DashboardConfiguration - entry into web.config appSettings
+        /// </summary>
+        private DashboardConfiguration dbconfig;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBaseController" /> class.
         /// Builds model for web app that most/all
         /// controllers use.
         /// </summary>
         public DashboardBaseController()
         {
-            DashboardConfiguration dbconfig = new DashboardConfiguration(this.HttpContext);
-            string dirForDataFiles = dbconfig.DataFileDir;
+            this.dbconfig = new DashboardConfiguration(this.HttpContext);
+            string dirForDataFiles = this.dbconfig.DataFileDir;
 
             this.dashboard = new DashboardMgr(this.HttpContext);
             this.model = new DashboardModel();
@@ -117,6 +122,22 @@ namespace AzureDashboardService.Controllers
             set
             {
                 this.dashboard = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets DashboardConfiguration.
+        /// </summary>
+        protected DashboardConfiguration DashboardConfiguration
+        {
+            get
+            {
+                return this.dbconfig;
+            }
+
+            set
+            {
+                this.dbconfig = value;
             }
         }
     }
