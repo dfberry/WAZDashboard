@@ -8,12 +8,14 @@ namespace AzureDashboardService.Controllers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Models;
     using AzureDashboardService.Notifications;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
+    using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// BaseController for all controllers
@@ -53,14 +55,20 @@ namespace AzureDashboardService.Controllers
 
             this.dashboard = new DashboardMgr(this.HttpContext);
             this.model = new DashboardModel();
-            this.pathToFiles = this.HttpContext.Server.MapPath("~/");
-            this.pathToFiles += dirForDataFiles + "\\";
+
+            // DFB-todo: set this only once on app start up or check at each request?
+            // answer: for now - check at each request
+            this.dbconfig.PathToWebRoot = this.pathToFiles = this.HttpContext.Server.MapPath("~/");
+
+            // add data dir to current path
+            this.pathToFiles += dirForDataFiles + @"\";
 
 #if DEBUG
             this.model.IsDebug = true;
 #else
             this.model.IsDebug = false;
 #endif
+            TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, this.HttpContext.Request.RawUrl);
         }
 
         /// <summary>

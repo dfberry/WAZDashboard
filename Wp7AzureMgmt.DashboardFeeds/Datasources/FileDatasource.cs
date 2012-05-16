@@ -19,12 +19,18 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// This datasource fetches the feed list from a file on disk
     /// </summary>
     internal class FileDatasource : IRSSDataSource
     {
+        /// <summary>
+        /// DashboardConfiguration is required as class object for tracing
+        /// </summary>
+        private DashboardConfiguration config;
+
         /// <summary>
         /// HttpContext determines where to get config settings. Web app looks in 
         /// web config.
@@ -50,12 +56,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <param name="httpContext">HttpContextBase - used to determine config file location</param>
         public FileDatasource(string pathToFilename, HttpContextBase httpContext)
         {
-            this.configurationContext = httpContext;
-
             // set this once in constructor
-            DashboardConfiguration config = new DashboardConfiguration(this.configurationContext);
+            this.configurationContext = httpContext;
+            this.config = new DashboardConfiguration(this.configurationContext);
+            string tracelog = this.config.FullTraceLogFilePathAndName;
+            TraceLogToFile.Trace(tracelog, "FileDatasource::FileName - pathToFilename=" + pathToFilename);
 
-            this.FileName = pathToFilename + config.SerializedFeedListFile;
+            this.FileName = pathToFilename + this.config.SerializedFeedListFile;
 
             if (string.IsNullOrEmpty(this.FileName))
             {
@@ -86,6 +93,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             get
             {
+                TraceLogToFile.Trace(this.config.FullTraceLogFilePathAndName, "FileDatasource::FileName - this.fileName=" + this.fileName);
                 return this.fileName;
             }
 

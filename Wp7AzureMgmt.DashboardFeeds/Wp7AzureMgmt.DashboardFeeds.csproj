@@ -38,6 +38,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TraceDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\TraceDebug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Trace</DefineConstants>
+    <DocumentationFile>bin\Debug\Wp7AzureMgmt.DashboardFeeds.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack">
       <HintPath>.\HtmlAgilityPack.dll</HintPath>
@@ -85,6 +96,7 @@
     <Compile Include="Models\RssFeeds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Serializer.cs" />
+    <Compile Include="Utilities\TraceLogToFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DashboardResource.resx">
@@ -92,10 +104,6 @@
       <LastGenOutput>DashboardResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="servicedashboardcontent.htm" />
-    <Content Include="WazServiceDashboardOpml.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -76,6 +76,23 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets or sets PathToWebRoot. Must be determined from calling exe
+        /// (such as test environment) or web app.
+        /// </summary>
+        public string PathToWebRoot
+        {
+            get
+            {
+                return this.Get("PathToWebRoot");
+            }
+
+            set
+            {
+                this.Save("PathToWebRoot", value);
+            }
+        }
+
+        /// <summary>
         /// Gets GetAzureFeedUriPrefix. This is the Uri prefix for the Feeds.
         /// </summary>
         /// <returns>AppSettings["AzureDashboardServiceFeedPrefix"] as string</returns>
@@ -96,6 +113,46 @@ namespace Wp7AzureMgmt.DashboardFeeds
             get
             {
                 return this.Get("SerializedFeedListFile");
+            }
+        }
+        
+        /// <summary>
+        /// Gets tracelog filename without or without path. 
+        /// </summary>
+        /// <returns>AppSettings["TraceLogFileName"] as string</returns>
+        public string TraceLogFileName
+        {
+            get
+            {
+                return this.Get("TraceLogFileName");
+            }
+        }
+
+        /// <summary>
+        /// Gets FullSerializedFileDatasourceFilePathAndName
+        /// which is PathToWebRoot + DataFileDir + SerializedFeedListFile 
+        /// </summary>
+        public string FullSerializedFileDatasourceFilePathAndName
+        {
+            get
+            {
+                string temp = this.PathToWebRoot + this.DataFileDir + this.SerializedFeedListFile;
+
+                return temp;
+            }
+        }
+
+        /// <summary>
+        /// Gets FullTraceLogFilePathAndName
+        /// which is PathToWebRoot + DataFileDir + TraceLogFileName
+        /// </summary>
+        public string FullTraceLogFilePathAndName
+        {
+            get
+            {
+                string temp = this.PathToWebRoot + this.DataFileDir + this.TraceLogFileName;
+
+                return temp;
             }
         }
 

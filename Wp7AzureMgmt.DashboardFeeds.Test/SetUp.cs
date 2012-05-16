@@ -29,12 +29,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// save file name.
         /// </summary>
         /// <returns>filename as string</returns>
-        public static string RunBeforeAnyTests()
+        public static string RunBeforeTests()
         {
             Trace.TraceInformation("RunBeforeAnyTests a");
 
             // if there is a file with today's date, don't do anything
-            string fileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds\" + DateTime.Today.ToString("yyMMdd") + ".html";
+            string fileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
             HttpContextBase httpContext = null;
 
             // file built today not found so go build it

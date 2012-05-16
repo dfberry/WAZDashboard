@@ -88,7 +88,7 @@ namespace Wp7AzureMgmt.DashboardFeeds {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;outline text=&quot;$$name [$$location]&quot; title=&quot;$$name [$$location]&quot; type=&quot;rss&quot; xmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode=$$code&quot; htmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/servicedashboard.aspx&quot;/&gt;.
+        ///   Looks up a localized string similar to &lt;outline text=&quot;$$name [$$location]&quot; title=&quot;$$name [$$location]&quot; type=&quot;rss&quot; xmlUrl=&quot;http://www.windowsazurestatus.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode=$$code&quot; htmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/servicedashboard.aspx&quot;/&gt;.
         /// </summary>
         internal static string OPMLMasterOutline {
             get {
@@ -103,7 +103,7 @@ namespace Wp7AzureMgmt.DashboardFeeds {
         ///    &lt;title&gt;Azure Service Dashboard Feeds&lt;/title&gt;
         ///  &lt;/head&gt;
         ///  &lt;body&gt;
-        ///&lt;outline text=&quot;Access Control [East Asia]&quot; title=&quot;Access Control [East Asia]&quot; type=&quot;rss&quot; xmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode=NSACSEA&quot; htmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/servicedashboard.aspx&quot;/&gt;&lt;outline text=&quot;Service Bus [Sou [rest of string was truncated]&quot;;.
+        ///&lt;outline text=&quot;Access Control [East Asia]&quot; title=&quot;Access Control [East Asia]&quot; type=&quot;rss&quot; xmlUrl=&quot;http://www.windowsazurestatus.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode=NSACSEA&quot; htmlUrl=&quot;http://www.microsoft.com/windowsazure/support/status/servicedashboard.aspx&quot;/&gt;&lt;outline text=&quot;Service [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string OPMLTest {
             get {

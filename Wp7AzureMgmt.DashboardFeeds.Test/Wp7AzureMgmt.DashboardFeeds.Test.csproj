@@ -33,6 +33,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'TraceDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\TraceDebug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Trace</DefineConstants>
+    <DocumentationFile>bin\Debug\Wp7AzureMgmt.DashboardFeeds.Test.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack">
       <HintPath>.\HtmlAgilityPack.dll</HintPath>
@@ -110,9 +122,14 @@
     <EmbeddedResource Include="RSSFeedResponseResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RSSFeedResponseResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Trace.txt" />
+    <Content Include="servicedashboardcontent.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

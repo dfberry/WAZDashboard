@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "Trace";
+}
+
+<h2>Trace</h2>
+@Html.Raw(Html.Encode(ViewData["TraceData"]).Replace("\n", "<br />")) 
+

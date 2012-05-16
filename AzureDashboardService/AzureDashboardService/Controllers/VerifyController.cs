@@ -12,6 +12,7 @@ namespace AzureDashboardService.Controllers
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// Used to verify build
@@ -54,7 +55,54 @@ namespace AzureDashboardService.Controllers
             ViewData["HideExceptions"] = false;
 #endif
 
+#if Trace
+            ViewData["Trace"] = true;
+#else
+            ViewData["Trace"] = false;
+#endif
+
             return View();
+        }
+
+        /// <summary>
+        /// Adds test to tracefile. Underlying Trace call depends on Trace config settings.
+        /// </summary>
+        /// <returns>ActionResult of Trace View</returns>
+        public ActionResult TraceTest()
+        {
+            if (Request.QueryString["test"] != null)
+            {
+                string test = Request.QueryString["test"];
+
+                TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, test);
+            }
+
+            return this.Trace();
+        }
+
+        /// <summary>
+        /// Print trace file contents to web page. View handles html coding between
+        /// newline for text file and new line for html file.
+        /// </summary>
+        /// <returns>ActionResult of Trace View</returns>
+        public ActionResult Trace()
+        {
+            string traceData = TraceLogToFile.Get(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
+
+            ViewData["TraceData"] = traceData;
+
+            return View();
+        }
+
+        /// <summary>
+        /// Deletes existing tracefile.
+        /// </summary>
+        /// <returns>ActionResult of Trace View</returns>
+        public ActionResult DeleteTraceFile()
+        {
+            TraceLogToFile.Delete(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
+
+            return this.Trace();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// This datasource fetches the feed list from Windows Azure Dashboard Service web page
@@ -80,6 +81,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             get
             {
+                TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::DashboardUri - this.dashboardURI=" + this.dashboardURI);
                 return this.dashboardURI;
             }
 
@@ -112,6 +114,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             get
             {
+                TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::SerializedFilename - this.serializedFilename=" + this.serializedFilename);
                 return this.serializedFilename;
             }
 
@@ -145,10 +148,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             // get raw html
             this.uricontent = this.GetHtml();
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::Get - this.uricontent=" + this.uricontent);
 
             string uriPrefix = this.configuration.AzureFeedUriPrefix;
 
             // parse content into object
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::Get - call into parser");
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::Get - uriPrefix=" + uriPrefix);
             HtmlParser htmlParser = new HtmlParser(uriPrefix);
             this.rssFeeds = htmlParser.ParseHtmlForFeeds(this.uricontent);
 
@@ -173,6 +179,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
             this.httpRequest.BuildHttpGet();
             this.uricontent = this.httpRequest.GetRequest();
 
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::GetHtml(Uri uri) - this.uricontent=" + this.uricontent);
+
             return this.uricontent;
         }
 
@@ -188,6 +196,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
             }
 
             this.uricontent = this.httpRequest.GetRequest();
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::GetHtml() - this.uricontent=" + this.uricontent);
 
             return this.uricontent;
         }
@@ -219,6 +228,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
             }
 
             string html = this.GetHtml(this.DashboardUri);
+            TraceLogToFile.Trace(this.configuration.FullTraceLogFilePathAndName, "UriDatasource::GetAndSaveHtml() - html=" + html);
 
             File.WriteAllText(filename, html);
         }

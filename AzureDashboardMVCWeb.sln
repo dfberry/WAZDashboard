@@ -31,6 +31,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
+		TraceDebug|Any CPU = TraceDebug|Any CPU
+		TraceDebug|Mixed Platforms = TraceDebug|Mixed Platforms
+		TraceDebug|x86 = TraceDebug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -43,6 +46,11 @@ Global
 		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.TraceDebug|Any CPU.ActiveCfg = TraceDebug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.TraceDebug|Any CPU.Build.0 = TraceDebug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.TraceDebug|Mixed Platforms.ActiveCfg = TraceDebug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.TraceDebug|Mixed Platforms.Build.0 = TraceDebug|Any CPU
+		{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}.TraceDebug|x86.ActiveCfg = TraceDebug|Any CPU
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -53,6 +61,11 @@ Global
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DA36C554-E472-4FEF-8F57-478759562D77}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.TraceDebug|Any CPU.ActiveCfg = TraceDebug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.TraceDebug|Any CPU.Build.0 = TraceDebug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.TraceDebug|Mixed Platforms.ActiveCfg = TraceDebug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.TraceDebug|Mixed Platforms.Build.0 = TraceDebug|Any CPU
+		{DA36C554-E472-4FEF-8F57-478759562D77}.TraceDebug|x86.ActiveCfg = TraceDebug|Any CPU
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -63,6 +76,11 @@ Global
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.Release|x86.ActiveCfg = Release|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.TraceDebug|Any CPU.ActiveCfg = TraceDebug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.TraceDebug|Any CPU.Build.0 = TraceDebug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.TraceDebug|Mixed Platforms.ActiveCfg = TraceDebug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.TraceDebug|Mixed Platforms.Build.0 = TraceDebug|Any CPU
+		{1937A0E8-FBEB-4200-9DFE-9DFCA3415C46}.TraceDebug|x86.ActiveCfg = TraceDebug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

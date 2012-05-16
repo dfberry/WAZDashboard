@@ -42,23 +42,12 @@ namespace Wp7AzureMgmt.DashboardFeeds
                 throw new ArgumentNullException("filename cannot be empty or null");
             }
 
-            Stream stream = null;
-
-            try
+            using (Stream stream = File.Open(filename, FileMode.Create))
             {
-                stream = File.Open(filename, FileMode.Create);
-
                 if (stream != null)
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     formatter.Serialize(stream, objectToSerialize);
-                }
-            }
-            finally
-            {
-                if (stream != null)
-                {
-                    stream.Close();
                 }
             }
         }
@@ -76,25 +65,16 @@ namespace Wp7AzureMgmt.DashboardFeeds
         public static T Deserialize<T>(string filename)
         {
             T objectToSerialize;
-            Stream stream = null;
 
             if (string.IsNullOrEmpty(filename))
             {
                 throw new ArgumentNullException("filename cannot be empty or null");
             }
 
-            try
+            using (Stream stream = File.Open(filename, FileMode.Open))
             {
-                stream = File.Open(filename, FileMode.Open);
                 BinaryFormatter formatter = new BinaryFormatter();
                 objectToSerialize = (T)formatter.Deserialize(stream);
-            }
-            finally
-            {
-                if (stream != null)
-                {
-                    stream.Close();
-                }
             }
 
             return objectToSerialize;

@@ -218,9 +218,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
+
+            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(httpContext);
+
             string pathToFilename = string.Empty;
-            FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
-            string filename = "FileDataSourceTest_Get";
+            FileDatasource fileDatasource = new FileDatasource(dashboardConfiguration.FullSerializedFileDatasourceFilePathAndName, httpContext);
+            string filename = dashboardConfiguration.FullSerializedFileDatasourceFilePathAndName;
             fileDatasource.FileName = filename;
             fileDatasource.RssFeeds = this.rssFeeds;
             fileDatasource.Set();

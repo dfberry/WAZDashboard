@@ -29,7 +29,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Utilities
         /// <returns>string as mock html response</returns>
         public string GetRequest()
         {
-            string filename = @"..\..\..\Wp7AzureMgmt.DashboardFeeds\servicedashboardcontent.htm";
+            string filename = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
             string response = string.Empty;
 
             if (File.Exists(filename))
@@ -38,6 +38,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Utilities
                 {
                     response = rdr.ReadToEnd();
                 }
+            }
+            else
+            {
+                throw new NullReferenceException("file doesn't exist");
             }
 
             return response;

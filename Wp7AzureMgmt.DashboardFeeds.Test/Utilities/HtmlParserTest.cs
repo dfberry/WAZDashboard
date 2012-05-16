@@ -39,7 +39,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // get test string to parse
             FakeDatasource fakeDatasource = new FakeDatasource();
-            fakeDatasource.HtmlFileName = Setup.RunBeforeAnyTests();
+            fakeDatasource.HtmlFileName = Setup.RunBeforeTests();
             this.htmlFileContents = fakeDatasource.GetHtml();
         }
 

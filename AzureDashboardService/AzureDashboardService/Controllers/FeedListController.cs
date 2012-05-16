@@ -15,6 +15,7 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// Feed List (rss feeds) api controller
@@ -143,7 +144,29 @@ namespace AzureDashboardService.Controllers
             
             try
             {
+                TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - PathToFiles=" + this.PathToFiles);
+                TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - fetchFromUri=" + fetchFromUri.ToString());
+
                 this.DashboardModel.Feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles, fetchFromUri);
+
+                if (this.DashboardModel.Feeds != null)
+                {
+                    TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - feeds=not null");
+
+                    if (this.DashboardModel.Feeds.Feeds != null)
+                    {
+                        TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - feeds.feeds=not null");
+                        TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - feeds.feeds.count=" + this.DashboardModel.Feeds.Feeds.Count().ToString());
+                    }
+                    else
+                    {
+                        TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - feeds.feeds=null");
+                    }
+                }
+                else
+                {
+                    TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, "FeedListController::GetFeeds - feeds=null");
+                }
             }
             catch (Exception ex)
             {
