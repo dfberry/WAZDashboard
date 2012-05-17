@@ -33,7 +33,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>Home page content as ActionResult</returns>
         public ActionResult Index()
         {
-            return View(this.DashboardModel);
+            return View();
         }
 
         /// <summary>

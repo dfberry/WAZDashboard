@@ -25,26 +25,26 @@ namespace Wp7AzureMgmt.DashboardFeeds.Utilities
         /// <param name="msg">test to append to file</param>
         public static void Trace(string pathAndFilename, string msg)
         {
-#if Trace
-            msg = " ******************************\n" + DateTime.UtcNow + "\n" + msg + "\n";
+//#if Trace
+//            msg = " ******************************\n" + DateTime.UtcNow + "\n" + msg + "\n";
 
-            if (!File.Exists(pathAndFilename))
-            {
-                using (StreamWriter sw = File.CreateText(pathAndFilename))
-                {
-                    sw.Write(msg);
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(pathAndFilename))
-                {
-                    sw.Write(msg);
-                } 
-            }
-#else
-            System.Diagnostics.Trace.TraceInformation(msg);
-#endif
+//            if (!File.Exists(pathAndFilename))
+//            {
+//                using (StreamWriter sw = File.CreateText(pathAndFilename))
+//                {
+//                    sw.Write(msg);
+//                }
+//            }
+//            else
+//            {
+//                using (StreamWriter sw = File.AppendText(pathAndFilename))
+//                {
+//                    sw.Write(msg);
+//                } 
+//            }
+//#else
+//            System.Diagnostics.Trace.TraceInformation(msg);
+//#endif
         }
 
         /// <summary>

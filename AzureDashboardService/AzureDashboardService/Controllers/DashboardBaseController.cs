@@ -68,7 +68,7 @@ namespace AzureDashboardService.Controllers
 #else
             this.model.IsDebug = false;
 #endif
-            TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, this.HttpContext.Request.RawUrl);
+            //TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, this.HttpContext.Request.RawUrl);
         }
 
         /// <summary>
