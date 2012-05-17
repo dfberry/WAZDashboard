@@ -71,7 +71,8 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                return this.Get("DirForDataFiles");
+                //return this.Get("DirForDataFiles");
+                return string.Empty;
             }
         }
 
@@ -136,7 +137,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                string temp = this.PathToWebRoot + this.DataFileDir + this.SerializedFeedListFile;
+                string temp = this.PathToWebRoot + this.SerializedFeedListFile;
 
                 return temp;
             }
@@ -150,7 +151,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                string temp = this.PathToWebRoot + this.DataFileDir + this.TraceLogFileName;
+                string temp = this.PathToWebRoot + this.TraceLogFileName;
 
                 return temp;
             }

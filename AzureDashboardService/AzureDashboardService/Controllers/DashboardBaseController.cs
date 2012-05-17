@@ -58,10 +58,10 @@ namespace AzureDashboardService.Controllers
 
             // DFB-todo: set this only once on app start up or check at each request?
             // answer: for now - check at each request
-            this.dbconfig.PathToWebRoot = this.pathToFiles = this.HttpContext.Server.MapPath("~/");
+            this.dbconfig.PathToWebRoot = this.pathToFiles = (this.HttpContext.Server.MapPath("~/App_Data") + @"\");
 
             // add data dir to current path
-            this.pathToFiles += dirForDataFiles + @"\";
+            //this.pathToFiles += dirForDataFiles + @"\";
 
 #if DEBUG
             this.model.IsDebug = true;
