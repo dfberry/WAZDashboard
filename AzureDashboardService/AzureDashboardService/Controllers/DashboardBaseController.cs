@@ -51,19 +51,13 @@ namespace AzureDashboardService.Controllers
         public DashboardBaseController()
         {
             this.dbconfig = new DashboardConfiguration(this.HttpContext);
-            //string dirForDataFiles = this.dbconfig.DataFileDir;
 
             this.dashboard = new DashboardMgr(this.HttpContext);
             this.model = new DashboardModel();
 
             // DFB-todo: set this only once on app start up or check at each request?
             // answer: for now - check at each request
-            //this.dbconfig.PathToWebRoot = this.pathToFiles = (this.HttpContext.Server.MapPath("~/App_Data") + @"\");
-
-            // add data dir to current path
-            //this.pathToFiles += dirForDataFiles + @"\";
-
-            //TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, this.HttpContext.Request.RawUrl);
+            this.pathToFiles = this.HttpContext.Server.MapPath("~/App_Data") + @"\";
         }
 
         /// <summary>

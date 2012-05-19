@@ -10,7 +10,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Web;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
@@ -64,6 +66,28 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             Trace.TraceInformation("RunBeforeAnyTests d");
 
             return fileName;
+        }
+
+        /// <summary>
+        /// Gets data path so tests look for data files in correct place
+        /// </summary>
+        /// <returns>string including post pend slash</returns>
+        public static string GetDataPath()
+        {
+            string binPath = new System.Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+
+            // everything before the bin directory
+            Regex matchPattern = new Regex("bin");
+
+            // grab matches
+            string[] splitString = matchPattern.Split(binPath);
+
+            if (splitString != null)
+            {
+                return splitString[0] + "App_Data/";
+            }
+
+            return string.Empty;
         }
     }
 }

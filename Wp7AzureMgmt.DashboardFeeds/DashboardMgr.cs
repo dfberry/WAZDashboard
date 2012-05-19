@@ -46,26 +46,14 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// Deserialize RssFeeds from disk
         /// </summary>
         /// <param name="pathToFiles">location on disk for serialized files</param>
-        /// <param name="fetchFromUri">if RssFeeds not serialized on disk, grab from uri</param>
         /// <returns>RssFeeds from file</returns>
-        public RssFeeds GetStoredRssFeeds(string pathToFiles, bool fetchFromUri)
+        public RssFeeds GetStoredRssFeeds(string pathToFiles)
         {
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
             RssFeeds feeds = null;
 
-            if (fetchFromUri == true)
-            {
-                // grab from UriDatasource 
-                this.SetRssFeedsFromUri(pathToFiles);
-
-                // serialize to file
-                feeds = fileDatasource.Get();
-            }
-            else
-            {
-                // get from file
-                feeds = fileDatasource.Get();
-            }
+            // get from file
+            feeds = fileDatasource.Get();
 
             return feeds;
         }

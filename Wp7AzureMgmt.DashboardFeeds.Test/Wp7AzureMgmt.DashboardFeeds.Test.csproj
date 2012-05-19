@@ -115,7 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\Trace.txt" />
     <Content Include="Data\FileDatasource" />
+    <Content Include="App_Data\FileDatasource" />
     <None Include="packages.config" />
     <Shadow Include="Test References\Wp7AzureMgmt.DashboardFeeds.accessor" />
   </ItemGroup>

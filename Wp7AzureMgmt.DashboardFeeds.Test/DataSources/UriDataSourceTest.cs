@@ -81,7 +81,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public void GetHtml()
         {
             // arrange
-            int lastKnownLength = 320000;
+            int lastKnownLength = 300000;
             HttpContextBase httpContext = null;
 
             UriDatasource uriDatasource = new UriDatasource(null, httpContext);

@@ -73,8 +73,6 @@ namespace AzureDashboardService.Controllers
             if (Request.QueryString["test"] != null)
             {
                 string test = Request.QueryString["test"];
-
-                TraceLogToFile.Trace(this.DashboardConfiguration.FullTraceLogFilePathAndName, test);
             }
 
             return this.Trace();
@@ -87,9 +85,9 @@ namespace AzureDashboardService.Controllers
         /// <returns>ActionResult of Trace View</returns>
         public ActionResult Trace()
         {
-            string traceData = TraceLogToFile.Get(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
+            //string traceData = TraceLogToFile.Get(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
 
-            ViewData["TraceData"] = traceData;
+            //ViewData["TraceData"] = traceData;
 
             return View();
         }
@@ -100,8 +98,6 @@ namespace AzureDashboardService.Controllers
         /// <returns>ActionResult of Trace View</returns>
         public ActionResult DeleteTraceFile()
         {
-            TraceLogToFile.Delete(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
-
             return this.Trace();
         }
     }

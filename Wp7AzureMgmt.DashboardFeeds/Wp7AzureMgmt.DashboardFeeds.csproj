@@ -96,7 +96,6 @@
     <Compile Include="Models\RssFeeds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Serializer.cs" />
-    <Compile Include="Utilities\TraceLogToFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DashboardResource.resx">

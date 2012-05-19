@@ -71,7 +71,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
         {
             get
             {
-                //return this.Get("DirForDataFiles");
                 return string.Empty;
             }
         }

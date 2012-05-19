@@ -59,14 +59,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
             // set this once in constructor
             this.configurationContext = httpContext;
             this.config = new DashboardConfiguration(this.configurationContext);
-            string tracelog = this.config.FullTraceLogFilePathAndName;
-            TraceLogToFile.Trace(tracelog, "FileDatasource::FileName - pathToFilename=" + pathToFilename);
 
             this.FileName = pathToFilename + this.config.SerializedFeedListFile;
 
             if (string.IsNullOrEmpty(this.FileName))
             {
-                throw new NullReferenceException("FileName");
+                throw new NullReferenceException("FileDatasource::FileDatasource - FileName is null or empty");
             }
         }
 
@@ -93,7 +91,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             get
             {
-                TraceLogToFile.Trace(this.config.FullTraceLogFilePathAndName, "FileDatasource::FileName - this.fileName=" + this.fileName);
                 return this.fileName;
             }
 
@@ -113,7 +110,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             if (rssFeeds == null)
             {
-                throw new ArgumentNullException("RssFeeds rssFeeds");
+                throw new ArgumentNullException("FileDatasource::OPML - " + "RssFeeds rssFeeds");
             }
 
             return rssFeeds.OPML();
@@ -146,12 +143,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             if (feeds == null)
             {
-                throw new ArgumentNullException("RssFeeds feeds");
+                throw new ArgumentNullException("FileDatasource::Set - " + "RssFeeds feeds");
             }
 
             if (string.IsNullOrEmpty(filename))
             {
-                throw new ArgumentNullException("string filename");
+                throw new ArgumentNullException("FileDatasource::Set - " + "string filename");
             }
 
             try
@@ -182,7 +179,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             if (string.IsNullOrEmpty(serializedFile))
             {
-                throw new ArgumentNullException("string serializedFile");
+                throw new ArgumentNullException("FileDatasource::GetFeeds - " + "string serializedFile");
             }
 
             try
@@ -194,7 +191,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 }
                 else
                 {
-                    return null;
+                    throw new ArgumentNullException("FileDatasource::GetFeeds - " + "serializedFile doesn't exist");
                 }
             }
             catch

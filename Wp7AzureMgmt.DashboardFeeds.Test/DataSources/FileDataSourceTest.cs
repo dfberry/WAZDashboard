@@ -30,7 +30,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             new RssFeed() { ServiceName = "s1", LocationName = "l1", FeedCode = "c1",  RSSLink = "u1" },
             new RssFeed() { ServiceName = "s2", LocationName = "l2", FeedCode = "c2",  RSSLink = "u2" },
             new RssFeed() { ServiceName = "s3", LocationName = "l3", FeedCode = "c3",  RSSLink = "u3" },
-        };
+        }; 
+        
+        /// <summary>
+        /// Serialized FileDatasource name
+        /// </summary>
+        private string filename = "FileDatasource";
 
         /// <summary>
         /// RssFeeds for test purposes only
@@ -39,8 +44,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             Feeds = rssFeedArray.Cast<Wp7AzureMgmt.DashboardFeeds.Models.RssFeed>(),
             FeedDate = DateTime.UtcNow
-        };
-        
+        };        
+
         /// <summary>
         /// Tests that string is correctly formatted OPML.
         /// Using static RssFeeds for testing.
@@ -50,9 +55,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
             fileDatasource.RssFeeds = this.rssFeeds;
+            fileDatasource.Set();
 
             // act
             string actual = fileDatasource.OPML();
@@ -74,8 +80,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
+            fileDatasource.RssFeeds = this.rssFeeds;
+            fileDatasource.Set();
 
             // act
             string actual = fileDatasource.OPML(this.rssFeeds);
@@ -96,7 +104,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
 
             // act
@@ -123,24 +131,22 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
-            string filename = "FileDataSourceTest_Set";
-            fileDatasource.FileName = filename;
             fileDatasource.RssFeeds = this.rssFeeds;
 
             // act
             fileDatasource.Set();
 
             // assert
-            Assert.IsTrue(File.Exists(filename));
+            Assert.IsTrue(File.Exists(fileDatasource.FileName));
 
-            RssFeeds foundRssFeeds = Serializer.Deserialize<RssFeeds>(filename);
+            RssFeeds foundRssFeeds = Serializer.Deserialize<RssFeeds>(fileDatasource.FileName);
 
             Assert.IsTrue(this.rssFeeds.Equals(foundRssFeeds));
 
             // cleanup
-            File.Delete(filename);
+            File.Delete(fileDatasource.FileName);
         }
 
         /// <summary>
@@ -151,9 +157,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
+
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
-            string filename = "FileDataSourceTest_Set_RssFeeds_Filename";
+            string filename = pathToFilename + this.filename;
 
             // act
             fileDatasource.Set(this.rssFeeds, filename);
@@ -177,9 +184,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
+
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
-            string filename = "FileDataSourceTest_Set_ArgumentNullException";
+            string filename = this.filename;
 
             // act
             try
@@ -211,7 +219,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         }
 
         /// <summary>
-        /// Tests fetch from serialized file. 
+        /// Writes to serialized file then tests fetch from serialized file. 
         /// </summary>
         [Test]
         public void Get()
@@ -220,11 +228,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             HttpContextBase httpContext = null;
 
             DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(httpContext);
+            string pathToFilename = Setup.GetDataPath();
 
-            string pathToFilename = string.Empty;
-            FileDatasource fileDatasource = new FileDatasource(dashboardConfiguration.FullSerializedFileDatasourceFilePathAndName, httpContext);
-            string filename = dashboardConfiguration.FullSerializedFileDatasourceFilePathAndName;
-            fileDatasource.FileName = filename;
+            FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
+
             fileDatasource.RssFeeds = this.rssFeeds;
             fileDatasource.Set();
 
@@ -235,7 +242,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             Assert.IsTrue(actual.Equals(this.rssFeeds));
 
             // cleanup
-            File.Delete(filename);
+            File.Delete(fileDatasource.FileName);
         }
 
         /// <summary>
@@ -247,15 +254,15 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
-            string filename = "FileDataSourceTest_Get";
-            fileDatasource.FileName = filename;
+            string filename = this.filename;
+
             fileDatasource.RssFeeds = this.rssFeeds;
             fileDatasource.Set();
 
             // act
-            RssFeeds actual = fileDatasource.GetFeeds(filename);
+            RssFeeds actual = fileDatasource.GetFeeds(fileDatasource.FileName);
 
             // assert
             Assert.IsNotNull(actual);
@@ -273,7 +280,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             // arrange
             HttpContextBase httpContext = null;
-            string pathToFilename = string.Empty;
+            string pathToFilename = Setup.GetDataPath();
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);
 
             // act
