@@ -42,7 +42,7 @@
                 },
                 gridview: true,
                 loadonce: true,
-                caption: "Azure Service Dashboard RSS Feeds"
+                caption: "Windows Azure Service Dashboard RSS Feeds"
             });
             jQuery("#chngroup").change(function () {
                 var vl = $(this).val();
@@ -61,15 +61,18 @@
     ViewBag.Title = "FeedListGroupGrid";
 }
 <h2>
-    FeedListGroupGrid</h2>
+    Windows Azure Service Dashboard Rss Feeds </h2>
+<div>
+Built on: @Model.FeedDate.ToShortDateString()
+</div>
+<p>
 Group By:
 <select id="chngroup">
     <option value="ServiceName">Service Name</option>
     <option value="LocationName">Location Name</option>
     <option value="clear">Remove Grouping</option>
 </select>
-<br />
-<br />
+</p>
 <table id="feedlistgroupgrid">
 </table>
 <div id="feedlistgroupgridpager" class="scroll" style="text-align: center;">

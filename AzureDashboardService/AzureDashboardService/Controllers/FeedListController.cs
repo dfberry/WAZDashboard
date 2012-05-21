@@ -136,6 +136,21 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
+        /// Build new Rss feed list and then show View
+        /// that contains the datetime stamp
+        /// verifying the new datetime
+        /// </summary>
+        /// <returns>ActionResult of FeedListGroupGrid</returns>
+        public ActionResult BuildRssList()
+        {
+            // build new file - should also have a new feeddata as well
+            // to verify new file
+            this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
+
+            return this.FeedListjqGrid();
+        }
+
+        /// <summary>
         /// Grab feeds from serialized file
         /// </summary>
         private void GetFeeds()

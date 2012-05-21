@@ -9,11 +9,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Net.Mail;
     using System.Text;
-    using System.Threading;
     using System.Web;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
