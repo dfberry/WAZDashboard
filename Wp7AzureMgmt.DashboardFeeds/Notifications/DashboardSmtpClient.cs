@@ -10,26 +10,20 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System.Linq;
     using System.Net;
     using System.Net.Mail;
+    using System.Net.Security;
+    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     
     /// <summary>
     /// SmtpClient to use in real code
     /// </summary>
-    internal class DashboardSmtpClient : ISmtpClient
+    public class DashboardSmtpClient : ISmtpClient
     {
         /// <summary>
         /// Real smtpClient
         /// </summary>
-        private SmtpClient smtpClient;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardSmtpClient" /> class.
-        /// </summary>
-        public DashboardSmtpClient()
-        {
-            this.smtpClient = new SmtpClient();
-        }
+        private SmtpClient smtpClient = new SmtpClient();
 
         /// <summary>
         /// Sets NetworkCredential
@@ -107,11 +101,30 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets or sets an SmtpClient
+        /// </summary>
+        public SmtpClient SmtpClient
+        {
+            get
+            {
+                return this.smtpClient;
+            }
+
+            set
+            {
+                this.smtpClient = value;
+            }
+        }
+
+        /// <summary>
         /// Send mail notification
         /// </summary>
         /// <param name="message">MailMessage of information</param>
         public void Send(MailMessage message)
         {
+            // Be careful - this affects all useage
+            ServicePointManager.ServerCertificateValidationCallback += delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
+            
             this.smtpClient.Send(message);
         }
     }

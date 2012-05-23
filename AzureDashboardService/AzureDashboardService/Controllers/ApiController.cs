@@ -26,16 +26,5 @@ namespace AzureDashboardService.Controllers
         {
             return View();
         }
-
-        /// <summary>
-        /// Grab Azure html, parse to RssFeeds, serialize.
-        /// </summary>
-        /// <returns>download page as ViewResult</returns>
-        public ViewResult BuildRSSFeedsOnSchedule()
-        {
-            this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
-
-            return null;
-        }
     }
 }

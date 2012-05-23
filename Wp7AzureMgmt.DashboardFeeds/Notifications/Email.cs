@@ -26,14 +26,13 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// <param name="smtpClient">SmtpClient to send email with</param>
         public EmailNotification(bool stamp, ISmtpClient smtpClient)
         {
-            this.StampEmailWithTime = stamp;
-            this.NotificationSent = false;
-
             if (smtpClient == null)
             {
                 throw new ArgumentNullException("iSmtpClient");
             }
 
+            this.NotificationSent = false;
+            this.StampEmailWithTime = stamp;
             this.SmtpClient = smtpClient;
         }
 
@@ -177,18 +176,11 @@ namespace Wp7AzureMgmt.DashboardFeeds
             if (this.Message == null)
             {
                 throw new NullReferenceException("Message");
-            }            
-            
-            this.Message.Subject = title;
+            }
 
-            if (this.StampEmailWithTime)
-            {
-                this.Message.Body = DateTime.Now.ToString() + "\n" + text + "\n";
-            }
-            else
-            {
-                this.Message.Body = text;
-            }
+            this.Message.Subject = "WP7Azure: " + title;
+
+            this.Message.Body = DateTime.Now.ToString() + "\n" + text + "\n";
 
             this.SmtpClient.Send(this.Message);
 

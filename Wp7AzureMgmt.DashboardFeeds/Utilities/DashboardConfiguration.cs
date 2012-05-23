@@ -7,6 +7,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
     using System.Text;
@@ -63,15 +64,100 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
-        /// Gets DataFileDir. This is the location where files are saved to disk.
-        /// An example is the serialized file of the FileDataSource.
+        /// Gets or sets EmailLogon
         /// </summary>
-        /// <returns>AppSettings["DirForDataFiles"] as string</returns>
-        public string DataFileDir
+        public string EmailLogon
         {
             get
             {
-                return string.Empty;
+                return this.Get("EmailLogon");
+            }
+
+            set
+            {
+                this.Save("EmailLogon", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets EmailPassword
+        /// </summary>
+        public string EmailPassword
+        {
+            get
+            {
+                return this.Get("EmailPassword");
+            }
+
+            set
+            {
+                this.Save("EmailPassword", value);
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailHost
+        /// </summary>
+        public string EmailHost
+        {
+            get
+            {
+                return this.Get("EmailHost");
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailPort
+        /// </summary>
+        public string EmailPort
+        {
+            get
+            {
+                return this.Get("EmailPort");
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailFromAddress
+        /// </summary>
+        public string EmailFromAddress
+        {
+            get
+            {
+                return this.Get("EmailFromAddress");
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailFromName
+        /// </summary>
+        public string EmailFromName
+        {
+            get
+            {
+                return this.Get("EmailFromName");
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailToAddress
+        /// </summary>
+        public string EmailToAddress
+        {
+            get
+            {
+                return this.Get("EmailToAddress");
+            }
+        }
+
+        /// <summary>
+        /// Gets EmailToName
+        /// </summary>
+        public string EmailToName
+        {
+            get
+            {
+                return this.Get("EmailToName");
             }
         }
 
@@ -129,6 +215,36 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets AzureUri. This is the Uri for Windows Azure Dashboard RSSFeeds
+        /// </summary>
+        /// <returns>AppSettings["AzureDashboardServiceURL"] as string</returns>
+        public string AzureUri
+        {
+            get
+            {
+                return this.Get("AzureDashboardServiceURL");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets test file name. Test file name to open and treat and contents of Dashboard
+        /// to parse for feeds. 
+        /// </summary>
+        /// <returns>AppSettings["TestFile"] as string</returns>
+        public string TestFileName
+        {
+            get
+            {
+                return this.Get("TestFile");
+            }
+
+            set
+            {
+                this.Save("TestFile", value);
+            }
+        }
+
+        /// <summary>
         /// Gets FullSerializedFileDatasourceFilePathAndName
         /// which is PathToWebRoot + DataFileDir + SerializedFeedListFile 
         /// </summary>
@@ -157,69 +273,31 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
-        /// Gets AzureUri. This is the Uri for Windows Azure Dashboard RSSFeeds
+        /// Gets all config settings in NameValueCollection
         /// </summary>
-        /// <returns>AppSettings["AzureDashboardServiceURL"] as string</returns>
-        public string AzureUri
+        public NameValueCollection GetAll
         {
             get
             {
-                return this.Get("AzureDashboardServiceURL");
-            }
-        }
+                NameValueCollection list = new NameValueCollection();
 
-        /// <summary>
-        /// Gets FeedCount. Regardless of where html comes from, 
-        /// how many RSS feeds should there be. Throws
-        /// FormatException if can't parse value into int.
-        /// </summary>
-        /// <returns>AppSettings["LastKnownRSSFeedCount"] as int</returns>
-        public int FeedCount
-        {
-            get
-            {
-                int result = 0;
+                list.Add("AzureFeedUriPrefix", this.AzureFeedUriPrefix);
+                list.Add("AzureUri", this.AzureUri);
+                list.Add("DefaultUri", this.DefaultUri);
 
-                string tempCount = this.Get("LastKnownRSSFeedCount");
+                list.Add("EmailLogon", this.EmailLogon);
+                list.Add("EmailPassword", this.EmailPassword); 
+                list.Add("EmailPort", this.EmailPort);
+                list.Add("EmailFromAddress", this.EmailFromAddress);
+                list.Add("EmailFromName", this.EmailFromName);
+                list.Add("EmailToAddress", this.EmailToAddress);
+                list.Add("EmailToName", this.EmailToName);
 
-                if (int.TryParse(tempCount, out result))
-                {
-                    return result;
-                }
-                else
-                {
-                    throw new FormatException();
-                }
-            }
-        }
+                list.Add("PathToWebRoot", this.PathToWebRoot);
+                list.Add("SerializedFeedListFile", this.SerializedFeedListFile);
+                list.Add("TraceLogFileName", this.TraceLogFileName);
 
-        /// <summary>
-        /// Gets ContentFrom setting. Grab html from web or file.
-        /// </summary>
-        /// <returns>AppSettings["ContentFrom"] as string</returns>
-        public string ContentFrom
-        {
-            get
-            {
-                return this.Get("ContentFrom");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets test file name. Test file name to open and treat and contents of Dashboard
-        /// to parse for feeds. 
-        /// </summary>
-        /// <returns>AppSettings["TestFile"] as string</returns>
-        public string TestFileName
-        {
-            get
-            {
-                return this.Get("TestFile");
-            }
-
-            set
-            {
-                this.Save("TestFile", value);
+                return list;
             }
         }
 

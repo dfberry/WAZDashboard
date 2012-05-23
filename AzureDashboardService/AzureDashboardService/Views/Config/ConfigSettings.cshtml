@@ -1,0 +1,11 @@
+﻿@model System.Collections.Specialized.NameValueCollection
+@{
+    ViewBag.Title = "ConfigSettings";
+}
+
+<h2>ConfigSettings</h2>
+<ul>
+@foreach (string s in Model.AllKeys) { 
+  <li>@s: @Model[s] </li> 
+}
+</ul>

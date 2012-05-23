@@ -41,7 +41,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListjqGrid()
         {
-            this.GetFeeds();
+            this.Build();
 
             if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
@@ -59,7 +59,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>opml content as ActionResult</returns>
         public ActionResult OPML()
         {
-            this.GetFeeds();
+            this.Build();
 
             if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
@@ -94,7 +94,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>JsonResult specific to jqGrid</returns>
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
-            this.GetFeeds();
+            this.Build();
 
             if ((this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
             {
@@ -147,13 +147,15 @@ namespace AzureDashboardService.Controllers
             // to verify new file
             this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
 
+            this.Notify("/FeedList/BuildRssList called", "test");
+
             return this.FeedListjqGrid();
         }
 
         /// <summary>
         /// Grab feeds from serialized file
         /// </summary>
-        private void GetFeeds()
+        public void Build()
         {
             try
             {

@@ -15,6 +15,7 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Notifications;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
+    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
@@ -136,6 +137,36 @@ namespace AzureDashboardService.Controllers
             {
                 this.dbconfig = value;
             }
+        }
+
+        /// <summary>
+        /// Only used to send internal IT-ish notices
+        /// </summary>
+        /// <param name="subject">Email subject</param>
+        /// <param name="text">Email text</param>
+        protected void Notify(string subject, string text)
+        {
+            bool stamp = true;
+
+            var smtpClient = new DashboardSmtpClient();
+            EmailNotification email = new EmailNotification(stamp, smtpClient);
+
+            email.SetSmtpClient(
+                this.DashboardConfiguration.EmailFromAddress,
+                this.DashboardConfiguration.EmailFromName,
+                this.DashboardConfiguration.EmailHost,
+                this.DashboardConfiguration.EmailPort);
+
+            // username and password
+            email.SetNetworkCredentials(
+                this.DashboardConfiguration.EmailLogon,
+                this.DashboardConfiguration.EmailPassword);
+
+            email.SetReceiver(
+                this.DashboardConfiguration.EmailToAddress,
+                this.DashboardConfiguration.EmailToName);
+
+            email.Notify(subject, text);
         }
     }
 }

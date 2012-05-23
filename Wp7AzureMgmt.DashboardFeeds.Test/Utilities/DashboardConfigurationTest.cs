@@ -21,27 +21,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     public class DashboardConfigurationTest
     {
         /// <summary>
-        /// Make sure conversion from string to int works.
-        /// </summary>
-        [Test]
-        public void GetFeedCountTest()
-        {
-            // arrange
-            string key = "LastKnownRSSFeedCount";
-            int expected = 5;
-
-            HttpContextBase httpContext = null;
-            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(httpContext);
-            dashboardConfiguration.Save(key, expected.ToString());
-
-            // act
-            int actual = dashboardConfiguration.FeedCount;
-
-            // assert
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         /// General method to test fetching config setting
         /// value 
         /// </summary>

@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Email";
+}
+
+<h2>Email Security</h2>
+<p>This is the email account that sends email. It will be written to the web.config file and then used from there. </p>
+@{ Html.BeginForm("SaveEmail","Config");}
+<p>Email Logon :<br />@Html.TextBox("emailLogon")</p>
+<p>Email Password:<br />@Html.TextBox("emailPassword")</p>
+<input type="submit" value="Save" />
+@{Html.EndForm();}
