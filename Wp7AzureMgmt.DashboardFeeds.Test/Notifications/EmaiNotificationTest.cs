@@ -179,7 +179,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Test for SetSmtpClient
         /// </summary>
         [Test]
-        public void SetSmtpClient()
+        public void SetFromMailAddress()
         {
             // arrange
             bool stamp = true;
@@ -188,22 +188,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             string fromEmail = this.emailAddress;
             string fromEmailName = "fromEmailName";
-            string host = this.emailHost;
-            string port = this.emailPort;
 
             // act
-            email.SetSmtpClient(fromEmail, fromEmailName, host, port);
+            email.SetFromMailAddress(fromEmail, fromEmailName);
 
             // assert
             Assert.IsTrue(email.From != null);
             Assert.IsTrue(email.From.Address == fromEmail);
             Assert.IsTrue(email.From.DisplayName == fromEmailName);
-
-            Assert.IsTrue(email.SmtpClient != null);
-            Assert.IsTrue(email.SmtpClient.Host == host);
-            Assert.IsTrue(email.SmtpClient.Port.ToString() == port);
-            Assert.IsTrue(email.SmtpClient.EnableSsl == true);
-            Assert.IsTrue(email.SmtpClient.UseDefaultCredentials == true);
         }
 
         /// <summary>
@@ -219,7 +211,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             try
             {
-                email.SetSmtpClient(this.emailAddress, "fromEmailName", this.emailHost, null);
+                email.SetFromMailAddress(this.emailAddress, null);
                 Assert.Fail("exception not thrown");
             }
             catch (ArgumentNullException)
@@ -232,33 +224,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             try
             {
-                email.SetSmtpClient(this.emailAddress, "fromEmailName", null, this.emailPort);
-                Assert.Fail("exception not thrown");
-            }
-            catch (ArgumentNullException)
-            {
-            }
-            catch
-            {
-                Assert.Fail("Invalid exception");
-            }
-
-            try
-            {
-                email.SetSmtpClient(this.emailAddress, null, this.emailHost, this.emailPort);
-                Assert.Fail("exception not thrown");
-            }
-            catch (ArgumentNullException)
-            {
-            }
-            catch
-            {
-                Assert.Fail("Invalid exception");
-            }
-
-            try
-            {
-                email.SetSmtpClient(null, "fromEmailName", this.emailHost, this.emailPort);
+                email.SetFromMailAddress(null, "fromEmailName");
                 Assert.Fail("exception not thrown");
             }
             catch (ArgumentNullException)
@@ -287,7 +253,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             email.SmtpClient = mockSmtpClient.Object;
 
-            email.SetSmtpClient(fromEmail, fromEmailName, host, port);
+            email.SetFromMailAddress(fromEmail, fromEmailName/*, host, port*/);
 
             // username and password
             string username = "username";
@@ -364,7 +330,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             try
             {
-                email.SetSmtpClient(this.emailAddress, "fromEmailName", this.emailHost, this.emailPort);
+                email.SetFromMailAddress(this.emailAddress, "fromEmailName"/*, this.emailHost, this.emailPort*/);
                 email.Notify("title", "Text");
 
                 Assert.Fail("exception not thrown");

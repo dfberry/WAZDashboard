@@ -41,7 +41,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult FeedListjqGrid()
         {
-            this.Build();
+            this.InternalBuild();
 
             if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
@@ -59,7 +59,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>opml content as ActionResult</returns>
         public ActionResult OPML()
         {
-            this.Build();
+            this.InternalBuild();
 
             if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
@@ -94,7 +94,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>JsonResult specific to jqGrid</returns>
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
-            this.Build();
+            this.InternalBuild();
 
             if ((this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
             {
@@ -141,30 +141,21 @@ namespace AzureDashboardService.Controllers
         /// verifying the new datetime
         /// </summary>
         /// <returns>ActionResult of FeedListGroupGrid</returns>
-        public ActionResult BuildRssList()
+        public ActionResult Build()
         {
-            // build new file - should also have a new feeddata as well
-            // to verify new file
-            this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
-
             this.Notify("/FeedList/BuildRssList called", "test");
 
             return this.FeedListjqGrid();
         }
 
         /// <summary>
-        /// Grab feeds from serialized file
+        /// Grab html from Azure, parse, save to serialized file
         /// </summary>
-        public void Build()
+        public void InternalBuild()
         {
-            try
-            {
-                this.DashboardModel.Feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("FeedListController::GetFeeds - couldn't get feeds");
-            }
+            // build new file - should also have a new feeddata as well
+            // to verify new file
+            this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
         }
     }
 }

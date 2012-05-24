@@ -123,6 +123,9 @@ namespace Wp7AzureMgmt.DashboardFeeds
         public void Send(MailMessage message)
         {
             // Be careful - this affects all useage
+            // trying to get around Bluehost issues with how they lock down their Smtp gateway
+            // I don't have a certificate so ignore cert error
+            // http://stackoverflow.com/questions/777607/the-remote-certificate-is-invalid-according-to-the-validation-procedure-ple
             ServicePointManager.ServerCertificateValidationCallback += delegate(object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
             
             this.smtpClient.Send(message);

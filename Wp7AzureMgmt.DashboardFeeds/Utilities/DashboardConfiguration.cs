@@ -10,6 +10,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
+    using System.Net.Configuration;
     using System.Text;
     using System.Web;
     using System.Web.Configuration;
@@ -51,6 +52,29 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DashboardConfiguration" /> class.
+        /// If httpContext is null, calls ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
+        /// configFileName is any "other" config file besides the default.
+        /// For example: MainSettings.config
+        /// </summary>
+        /// <param name="httpContext">httpContext of calling assembly</param>
+        /// <param name="configFileName">name of non-default config file</param>
+        public DashboardConfiguration(HttpContextBase httpContext, string configFileName)
+        {
+            this.httpContext = httpContext;
+
+            if (this.httpContext == null)
+            {
+                this.config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            else
+            {
+                this.config = WebConfigurationManager.OpenWebConfiguration("~", "Default Web Site", configFileName);
+            }
+        }
+
+        /// <summary>
         /// Gets DefaultUri. This is any Uri that will return 200
         /// suggest "http://localhost"
         /// </summary>
@@ -60,6 +84,33 @@ namespace Wp7AzureMgmt.DashboardFeeds
             get
             {
                 return this.Get("Default200Uri");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets SmtpSection in config file
+        /// http://forums.asp.net/t/1704500.aspx/1
+        /// http://msdn.microsoft.com/en-us/library/system.net.configuration.smtpsection.aspx
+        /// http://social.msdn.microsoft.com/Forums/en/netfxbcl/thread/62b00a0a-67fc-4fd6-b240-cc55121db9a7
+        /// </summary>
+        public SmtpSection SmtpSection
+        {
+            get
+            {
+                return (SmtpSection)this.config.GetSection("system.net/mailSettings/smtp");
+            }
+
+            set
+            {
+                SmtpSection settings = (SmtpSection)this.config.GetSection("system.net/mailSettings/smtp");
+
+                settings.Network.UserName = value.Network.UserName;
+                settings.Network.Password = value.Network.Password;
+                settings.Network.Host = value.Network.Host;
+                settings.Network.Port = value.Network.Port;
+                settings.Network.EnableSsl = true;
+
+                this.config.Save();
             }
         }
 
@@ -92,28 +143,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
             set
             {
                 this.Save("EmailPassword", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailHost
-        /// </summary>
-        public string EmailHost
-        {
-            get
-            {
-                return this.Get("EmailHost");
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailPort
-        /// </summary>
-        public string EmailPort
-        {
-            get
-            {
-                return this.Get("EmailPort");
             }
         }
 
@@ -285,9 +314,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
                 list.Add("AzureUri", this.AzureUri);
                 list.Add("DefaultUri", this.DefaultUri);
 
-                list.Add("EmailLogon", this.EmailLogon);
-                list.Add("EmailPassword", this.EmailPassword); 
-                list.Add("EmailPort", this.EmailPort);
                 list.Add("EmailFromAddress", this.EmailFromAddress);
                 list.Add("EmailFromName", this.EmailFromName);
                 list.Add("EmailToAddress", this.EmailToAddress);

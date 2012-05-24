@@ -100,5 +100,34 @@ namespace AzureDashboardService.Controllers
         {
             return this.Trace();
         }
+
+        /// <summary>
+        /// Send email with Server Variables and Request header information
+        /// </summary>
+        /// <returns>ActionResult containing both sets of information</returns>
+        public ActionResult Email()
+        {
+            string toReturn = Request.HttpMethod + " " + Request.RawUrl + " " + Request.ServerVariables["SERVER_PROTOCOL"] + "\n\n"; 
+                
+            toReturn += "***\nServer Variables\n";
+
+            foreach (string var in Request.ServerVariables)
+            {  
+                toReturn += var + " " + Request[var] + "\n";
+            }
+
+            toReturn += "***\n\nRequest Headers\n";
+
+            foreach (string var in Request.Headers.AllKeys)
+            {
+                toReturn += var + " " + Request.Headers[var] + "\n";
+            }
+
+            ViewData["State"] = toReturn;
+
+            this.Notify("/Verify/Email", toReturn);
+
+            return View();
+        }
     }
-}
+} 

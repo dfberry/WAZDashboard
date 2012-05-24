@@ -1,0 +1,6 @@
+﻿@{
+    ViewBag.Title = "Email";
+}
+
+<h2>Email</h2>
+@Html.Raw(Html.Encode(ViewData["State"]).Replace("\n", "<br />")) 

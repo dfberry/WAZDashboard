@@ -91,9 +91,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// </summary>
         /// <param name="fromEmail">From email address</param>
         /// <param name="fromEmailName">From email name</param>
-        /// <param name="host">mail host as string</param>
-        /// <param name="port">mail host port as string</param>
-        public void SetSmtpClient(string fromEmail, string fromEmailName, string host, string port)
+        public void SetFromMailAddress(string fromEmail, string fromEmailName)
         {
             if (string.IsNullOrEmpty(fromEmail))
             {
@@ -104,21 +102,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
             {
                 throw new ArgumentNullException("fromEmailName");
             }
-
-            if (string.IsNullOrEmpty(host))
-            {
-                throw new ArgumentNullException("host");
-            }
-
-            if (string.IsNullOrEmpty(port))
-            {
-                throw new ArgumentNullException("port");
-            }
-
-            this.SmtpClient.Host = host;
-            this.SmtpClient.Port = int.Parse(port);
-            this.SmtpClient.UseDefaultCredentials = true;
-            this.SmtpClient.EnableSsl = true;
 
             this.From = new MailAddress(fromEmail, fromEmailName);
         }

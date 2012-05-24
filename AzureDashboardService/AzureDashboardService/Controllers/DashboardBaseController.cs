@@ -151,16 +151,9 @@ namespace AzureDashboardService.Controllers
             var smtpClient = new DashboardSmtpClient();
             EmailNotification email = new EmailNotification(stamp, smtpClient);
 
-            email.SetSmtpClient(
+            email.SetFromMailAddress(
                 this.DashboardConfiguration.EmailFromAddress,
-                this.DashboardConfiguration.EmailFromName,
-                this.DashboardConfiguration.EmailHost,
-                this.DashboardConfiguration.EmailPort);
-
-            // username and password
-            email.SetNetworkCredentials(
-                this.DashboardConfiguration.EmailLogon,
-                this.DashboardConfiguration.EmailPassword);
+                this.DashboardConfiguration.EmailFromName);
 
             email.SetReceiver(
                 this.DashboardConfiguration.EmailToAddress,

@@ -9,8 +9,10 @@ namespace AzureDashboardService.Controllers
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Linq;
+    using System.Net.Configuration;
     using System.Web;
     using System.Web.Mvc;
+    using Wp7AzureMgmt.DashboardFeeds;
 
     /// <summary>
     /// Displays the web.config settings read from DashboardConfiguration
@@ -34,16 +36,6 @@ namespace AzureDashboardService.Controllers
         /// <returns>Email View</returns>
         public ActionResult Email()
         {
-            string emailLogon = this.DashboardConfiguration.EmailLogon;
-            string emailPassword = this.DashboardConfiguration.EmailPassword;
-
-            // if the config is already set, don't show form again
-            if ((!string.IsNullOrEmpty(emailLogon))
-                && (!string.IsNullOrEmpty(emailPassword)))
-            {
-                return this.SaveEmail(null);
-            }
-
             return View();
         }
 
@@ -58,14 +50,24 @@ namespace AzureDashboardService.Controllers
             {
                 string emailLogon = collection["emailLogon"];
                 string emailPassword = collection["emailPassword"];
+                string host = collection["host"];
+                string portString = collection["port"];
+                int port;
 
-                // if values passed in, save them
-                if ((!string.IsNullOrEmpty(emailLogon))
-                    && (!string.IsNullOrEmpty(emailPassword)))
+                DashboardConfiguration mailSettingsConfig = new DashboardConfiguration(this.HttpContext);
+
+                SmtpSection smtpSection = new SmtpSection();
+
+                smtpSection.Network.UserName = emailLogon;
+                smtpSection.Network.Password = emailPassword;
+                smtpSection.Network.Host = host;
+
+                if (int.TryParse(portString, out port) == true)
                 {
-                    this.DashboardConfiguration.EmailLogon = emailLogon;
-                    this.DashboardConfiguration.EmailPassword = emailPassword;
+                    smtpSection.Network.Port = port;
                 }
+
+                this.DashboardConfiguration.SmtpSection = smtpSection;
             }
 
             return this.Index();

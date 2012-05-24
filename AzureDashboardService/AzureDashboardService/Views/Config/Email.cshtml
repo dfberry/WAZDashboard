@@ -7,5 +7,7 @@
 @{ Html.BeginForm("SaveEmail","Config");}
 <p>Email Logon :<br />@Html.TextBox("emailLogon")</p>
 <p>Email Password:<br />@Html.TextBox("emailPassword")</p>
+<p>Host:<br />@Html.TextBox("host")</p>
+<p>Port:<br />@Html.TextBox("port")</p>
 <input type="submit" value="Save" />
 @{Html.EndForm();}
