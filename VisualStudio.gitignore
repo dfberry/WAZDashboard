@@ -69,6 +69,8 @@ ClientBin
 stylecop.*
 ~$*
 *.dbmdl
+.lnk
+.StyleCop
 Generated_Code *.gitignore #added for RIA/Silverlight projects
 
 # Backup & report files from converting an old project file to a newer
@@ -80,3 +82,6 @@ UpgradeLog*.XML
 #NuGet
 #DFB 5/12/2012 AppHarbor needs the packages so don't ignore them
 #packages/
+
+#AppSpecific - check in config only once then ignore it
+.config
