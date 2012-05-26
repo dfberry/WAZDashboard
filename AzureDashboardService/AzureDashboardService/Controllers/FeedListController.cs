@@ -43,7 +43,10 @@ namespace AzureDashboardService.Controllers
         {
             this.InternalBuild();
 
-            if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
+            if ((this.DashboardModel != null) 
+                && (this.DashboardModel.Feeds != null)
+                &&(this.DashboardModel.Feeds.Feeds != null) 
+                && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
                 return View("FeedListGroupGrid", this.DashboardModel.Feeds);
             }
@@ -61,7 +64,10 @@ namespace AzureDashboardService.Controllers
         {
             this.InternalBuild();
 
-            if ((this.DashboardModel.Feeds.Feeds != null) && (this.DashboardModel.Feeds.Feeds.Count() > 0))
+            if ((this.DashboardModel != null)
+                && (this.DashboardModel.Feeds != null)
+                && (this.DashboardModel.Feeds.Feeds != null) 
+                && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
                 byte[] opmlFile = StrToByteArray(this.DashboardModel.Feeds.OPML());
 
@@ -96,7 +102,9 @@ namespace AzureDashboardService.Controllers
         {
             this.InternalBuild();
 
-            if ((this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
+            if ((this.DashboardModel != null)
+                && (this.DashboardModel.Feeds != null)
+                && (this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
             {
                 return null;
             }
@@ -143,6 +151,8 @@ namespace AzureDashboardService.Controllers
         /// <returns>ActionResult of FeedListGroupGrid</returns>
         public ActionResult Build()
         {
+            this.InternalBuild();
+ 
             this.Notify("/FeedList/BuildRssList called", "test");
 
             return this.FeedListjqGrid();
@@ -156,6 +166,8 @@ namespace AzureDashboardService.Controllers
             // build new file - should also have a new feeddata as well
             // to verify new file
             this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
+
+            this.DashboardModel.Feeds = this.DashboardMgr.GetStoredRssFeeds(this.PathToFiles);
         }
     }
 }

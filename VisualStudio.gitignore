@@ -69,8 +69,8 @@ ClientBin
 stylecop.*
 ~$*
 *.dbmdl
-.lnk
-.StyleCop
+*.lnk
+*.StyleCop
 Generated_Code *.gitignore #added for RIA/Silverlight projects
 
 # Backup & report files from converting an old project file to a newer
@@ -84,4 +84,4 @@ UpgradeLog*.XML
 #packages/
 
 #AppSpecific - check in config only once then ignore it
-.config
+*.config
