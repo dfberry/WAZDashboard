@@ -18,7 +18,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.Core.Interfaces;
     
     /// <summary>
     /// This datasource fetches the feed list from Windows Azure Dashboard Service web page
@@ -34,7 +36,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <summary>
         /// Configuration settings
         /// </summary>
-        private DashboardConfiguration configuration = null;
+        private FeedConfiguration configuration = null;
 
         /// <summary>
         /// RssFeeds that is the data
@@ -68,7 +70,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <param name="httpContext">Http web context or null if not a web request</param>
         public UriDatasource(DashboardHttp http, HttpContextBase httpContext)
         {
-            this.configuration = new DashboardConfiguration(httpContext);
+            this.configuration = new FeedConfiguration(httpContext);
             this.configurationContext = httpContext;
             this.httpRequest = http;
             this.GetConfigSettings();
@@ -233,7 +235,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// </summary>
         private void GetConfigSettings()
         {
-            this.configuration = new DashboardConfiguration(this.configurationContext);
+            this.configuration = new FeedConfiguration(this.configurationContext);
 
             // need an http requester - this can always be overwritten
             this.dashboardURI = new Uri(this.configuration.AzureUri);

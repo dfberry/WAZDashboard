@@ -14,6 +14,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// This is a test class for DashboardMgrTest and is intended
@@ -28,7 +29,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         public DashboardMgrTest()
         {
             HttpContextBase httpContext = null;
-            this.Wp7AzureMgmtConfiguration = new DashboardConfiguration(httpContext);
+            this.Wp7AzureMgmtConfiguration = new FeedConfiguration(httpContext);
             this.DashboardHttp = new DashboardHttp(new Uri(this.Wp7AzureMgmtConfiguration.AzureUri));
         }
 
@@ -42,7 +43,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Gets or sets DashboardConfiguration for App.Config
         /// settings. 
         /// </summary>
-        private DashboardConfiguration Wp7AzureMgmtConfiguration { get; set; }
+        private FeedConfiguration Wp7AzureMgmtConfiguration { get; set; }
 
         /// <summary>
         /// A test for DashboardMgr Constructor

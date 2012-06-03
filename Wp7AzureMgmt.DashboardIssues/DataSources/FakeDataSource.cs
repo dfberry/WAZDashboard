@@ -3,49 +3,184 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds.DataSources
+namespace Wp7AzureMgmt.DashboardIssues.DataSources
 {
     using System;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
     using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// This fake datasource is used for testing both library
     /// and mvc app.
     /// </summary>
-    internal class FakeDatasource : IRSSDataSource
+    internal class FakeDatasource : IRssIssueDataSource
     {
         /// <summary>
-        /// RssFeed array for testing
+        /// Default Parallel Options to no limit
         /// </summary>
-        private static RssFeed[] rssFeedArray = new RssFeed[] 
+#if DEBUG
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 1 };
+#else  
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = -1 }; // no limit to parallelism
+#endif
+
+        public rssChannelImage GetrssChannelImage(int i)
         {
-            new RssFeed() { ServiceName = "s1", LocationName = "l1", FeedCode = "c1",  RSSLink = "u1" },
-            new RssFeed() { ServiceName = "s2", LocationName = "l2", FeedCode = "c2",  RSSLink = "u2" },
-            new RssFeed() { ServiceName = "s3", LocationName = "l3", FeedCode = "c3",  RSSLink = "u3" },
-        };
+            rssChannelImage temp = new rssChannelImage();
+
+            temp.url = "url_" + i.ToString();
+            temp.link = "link_" + i.ToString();
+            temp.title = "title_" + i.ToString();
+
+            return temp;
+        }
+        public rssChannelImage[] GetrssChannelImageArray(int iMaxItems)
+        {
+            List<rssChannelImage> tempCollection = new List<rssChannelImage>();
+            int i = iMaxItems;
+
+            while (i > 0)
+            {
+                rssChannelImage tempItem = GetrssChannelImage(i);
+
+                tempCollection.Add(tempItem);
+                i--;
+            }
+
+            return tempCollection.ToArray();
+        }
+
+        public rssChannelItem GetrssChannelItem(int i)
+        {
+            rssChannelItem temp = new rssChannelItem();
+
+            temp.pubDate = "pubDate_" + i.ToString();
+            temp.description = "description_" + i.ToString();
+            temp.title = "title_" + i.ToString();
+            temp.status = "status_" + i.ToString();
+
+            return temp;
+        }
+
+        public rssChannelItem[] GetrssChannelItemArray(int iMaxItems)
+        {
+            List<rssChannelItem> tempCollection = new List<rssChannelItem>();
+            int i = iMaxItems;
+
+            while (i > 0)
+            {
+                rssChannelItem tempItem = GetrssChannelItem(i);
+
+                tempCollection.Add(tempItem);
+                i--;
+            }
+
+            return tempCollection.ToArray();
+        }
         
-        /// <summary>
-        /// Location (path and file) of Windows Azure Rss feeds as html page
-        /// </summary>
-        private string htmlFileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
-
-        /// <summary>
-        /// Location (path and file) of opml file
-        /// </summary>
-        private string opmlFileName = @"..\..\WazServiceDashboardOpml.xml";
-
-        /// <summary>
-        /// New RssFeeds with UtcNow datetime and RssFeed array.
-        /// </summary>
-        private RssFeeds rssFeeds = new RssFeeds
+        
+        public rssChannel GetrssChannel(int i)
         {
-            Feeds = rssFeedArray.Cast<Wp7AzureMgmt.DashboardFeeds.Models.RssFeed>(),
-            FeedDate = DateTime.UtcNow
-        };
+            rssChannel temp = new rssChannel();
+
+            temp.pubDate = "pubDate_" + i.ToString();
+            temp.description = "description_" + i.ToString();
+            temp.title = "title_" + i.ToString();
+            temp.link = "link_" + i.ToString();
+            temp.language = "language_" + i.ToString();
+            temp.lastBuildDate = "lastBuildDate" + i.ToString();
+            temp.copyright = "copyright" + i.ToString();
+
+            temp.image = this.GetrssChannelImageArray(i);
+            temp.item = this.GetrssChannelItemArray(i);
+
+            return temp;
+        }
+
+        public rssChannel[] GetrssChannelArray(int iMaxItems)
+        {
+            List<rssChannel> tempCollection = new List<rssChannel>();
+            int i = iMaxItems;
+
+            while (i > 0)
+            {
+                rssChannel tempItem = GetrssChannel(i);
+
+                tempCollection.Add(tempItem);
+                i--;
+            }
+
+            return tempCollection.ToArray();
+        }
+
+        public RssIssueXml GetRssIssueXml(int iMaxItems)
+        {
+            RssIssueXml temp = new RssIssueXml();
+
+            temp.channel = this.GetrssChannelArray(iMaxItems);
+            temp.version = "version_" + iMaxItems;
+
+            return temp;
+
+        }
+
+        public RssIssue GetRssIssue(int iMaxItems)
+        {
+            RssIssue temp = new RssIssue();
+
+            temp.DateTime = DateTime.UtcNow;
+            temp.RssIssueXml = this.GetRssIssueXml(iMaxItems);
+            temp.RssFeed = new RssFeed() { FeedCode = "testFeedCode", RSSLink = "testRssLink", LocationName = "testLocationName", ServiceName = "testServiceName" };
+
+            return temp;
+        }
+
+        public RssIssues GetRssIssues(int iMaxItems)
+        {
+            RssIssues temp = new RssIssues();
+            List<RssIssue> tempCollection = new List<RssIssue>();
+            int i = iMaxItems;
+
+            temp.RetrievalDate = DateTime.UtcNow;
+
+            while (i > 0)
+            {
+                RssIssue tempItem = GetRssIssue(i);
+
+                tempCollection.Add(tempItem);
+                i--;
+            }
+
+            temp.Issues = tempCollection.ToArray();
+
+            return temp;
+        }
+
+        /// <summary>
+        /// Create 5 of item
+        /// </summary>
+        int maxCount = 5;
+
+        /// <summary>
+        /// Location (path and file) of Windows Azure Rss issues as html page
+        /// </summary>
+        private string htmlFileName = @"..\..\..\Wp7AzureMgmt.DashboardIssues.Test\rssissuecontent.html";
+
+        public FakeDatasource()
+        {
+            this.rssIssues = this.GetRssIssues(maxCount);
+        }
+
+        /// <summary>
+        /// New RssIssues with UtcNow datetime and RssIssue array.
+        /// </summary>
+        private RssIssues rssIssues { get; set; }
 
         /// <summary>
         /// Gets or sets HtmlFileName. 
@@ -64,42 +199,23 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Gets RssFeeds. 
+        /// Gets RssIssues. 
         /// </summary>
-        public RssFeeds RssFeeds
+        public RssIssues RssIssues
         {
             get
             {
-                return this.rssFeeds;
+                return this.rssIssues;
             }
-        }
-
-        /// <summary>
-        /// Returns importable file as string for Google Reader
-        /// </summary>
-        /// <returns>Returns OPML formatted string of RSS Feeds</returns>
-        public string OPML()
-        {
-            string testOpmlContent = string.Empty;
-
-            if (File.Exists(this.opmlFileName))
-            {
-                using (StreamReader rdr = File.OpenText(this.opmlFileName))
-                {
-                    testOpmlContent = rdr.ReadToEnd();
-                }
-            }
-
-            return testOpmlContent;
         }
 
         /// <summary>
         /// Internal mechanics of parsing HTML to build list
         /// </summary>
         /// <returns>IEnumerable of RSSFeed</returns>
-        public RssFeeds Get()
+        public RssIssues Get()
         {
-            return this.rssFeeds;
+            return this.rssIssues;
         }
 
         /// <summary>
@@ -111,7 +227,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Call Uri and get Response html content
+        /// Open file and return text as string
         /// </summary>
         /// <returns>html content as string</returns>
         public string GetHtml()

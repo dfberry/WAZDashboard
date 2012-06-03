@@ -14,6 +14,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// Main entry point in dashboard Mgr

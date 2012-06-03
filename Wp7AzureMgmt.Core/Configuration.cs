@@ -1,35 +1,34 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardConfiguration.cs" company="DFBerry">
+// <copyright file="Configuration.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds
+namespace Wp7AzureMgmt.Core
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
+    using System.Net;
     using System.Net.Configuration;
-    using System.Text;
     using System.Web;
+    using System.Collections.Specialized;
     using System.Web.Configuration;
-    
+
     /// <summary>
     /// Manages Config file AppSettings values.
     /// </summary>
-    public class DashboardConfiguration 
+    public class Configuration
     {
         /// <summary>
         /// HttpContext determines where to get config settings. Web app looks in 
         /// web config.
         /// </summary>
-        private HttpContextBase httpContext;
+        protected HttpContextBase httpContext;
 
         /// <summary>
         /// Configuration file of current loading assembly
         /// </summary>
-        private Configuration config;
+        protected System.Configuration.Configuration config;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardConfiguration" /> class.
@@ -37,7 +36,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
         /// </summary>
         /// <param name="httpContext">httpContext of calling assembly</param>
-        public DashboardConfiguration(HttpContextBase httpContext)
+        public Configuration(HttpContextBase httpContext)
         {
             this.httpContext = httpContext;
 
@@ -60,7 +59,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// </summary>
         /// <param name="httpContext">httpContext of calling assembly</param>
         /// <param name="configFileName">name of non-default config file</param>
-        public DashboardConfiguration(HttpContextBase httpContext, string configFileName)
+        public Configuration(HttpContextBase httpContext, string configFileName)
         {
             this.httpContext = httpContext;
 
@@ -74,18 +73,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
             }
         }
 
-        /// <summary>
-        /// Gets DefaultUri. This is any Uri that will return 200
-        /// suggest "http://localhost"
-        /// </summary>
-        /// <returns>AppSettings["Default200Uri"] as string</returns>
-        public string DefaultUri
-        {
-            get
-            {
-                return this.Get("Default200Uri");
-            }
-        }
 
         /// <summary>
         /// Gets or sets SmtpSection in config file
@@ -111,219 +98,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
                 settings.Network.EnableSsl = true;
 
                 this.config.Save();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets EmailLogon
-        /// </summary>
-        public string EmailLogon
-        {
-            get
-            {
-                return this.Get("EmailLogon");
-            }
-
-            set
-            {
-                this.Save("EmailLogon", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets EmailPassword
-        /// </summary>
-        public string EmailPassword
-        {
-            get
-            {
-                return this.Get("EmailPassword");
-            }
-
-            set
-            {
-                this.Save("EmailPassword", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailFromAddress
-        /// </summary>
-        public string EmailFromAddress
-        {
-            get
-            {
-                return this.Get("EmailFromAddress");
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailFromName
-        /// </summary>
-        public string EmailFromName
-        {
-            get
-            {
-                return this.Get("EmailFromName");
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailToAddress
-        /// </summary>
-        public string EmailToAddress
-        {
-            get
-            {
-                return this.Get("EmailToAddress");
-            }
-        }
-
-        /// <summary>
-        /// Gets EmailToName
-        /// </summary>
-        public string EmailToName
-        {
-            get
-            {
-                return this.Get("EmailToName");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets PathToWebRoot. Must be determined from calling exe
-        /// (such as test environment) or web app.
-        /// </summary>
-        public string PathToWebRoot
-        {
-            get
-            {
-                return this.Get("PathToWebRoot");
-            }
-
-            set
-            {
-                this.Save("PathToWebRoot", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets GetAzureFeedUriPrefix. This is the Uri prefix for the Feeds.
-        /// </summary>
-        /// <returns>AppSettings["AzureDashboardServiceFeedPrefix"] as string</returns>
-        public string AzureFeedUriPrefix
-        {
-            get
-            {
-                return this.Get("AzureDashboardServiceFeedPrefix");
-            }
-        }
-
-        /// <summary>
-        /// Gets name of feeds file. 
-        /// </summary>
-        /// <returns>AppSettings["SerializedFeedListFile"] as string</returns>
-        public string SerializedFeedListFile
-        {
-            get
-            {
-                return this.Get("SerializedFeedListFile");
-            }
-        }
-        
-        /// <summary>
-        /// Gets tracelog filename without or without path. 
-        /// </summary>
-        /// <returns>AppSettings["TraceLogFileName"] as string</returns>
-        public string TraceLogFileName
-        {
-            get
-            {
-                return this.Get("TraceLogFileName");
-            }
-        }
-
-        /// <summary>
-        /// Gets AzureUri. This is the Uri for Windows Azure Dashboard RSSFeeds
-        /// </summary>
-        /// <returns>AppSettings["AzureDashboardServiceURL"] as string</returns>
-        public string AzureUri
-        {
-            get
-            {
-                return this.Get("AzureDashboardServiceURL");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets test file name. Test file name to open and treat and contents of Dashboard
-        /// to parse for feeds. 
-        /// </summary>
-        /// <returns>AppSettings["TestFile"] as string</returns>
-        public string TestFileName
-        {
-            get
-            {
-                return this.Get("TestFile");
-            }
-
-            set
-            {
-                this.Save("TestFile", value);
-            }
-        }
-
-        /// <summary>
-        /// Gets FullSerializedFileDatasourceFilePathAndName
-        /// which is PathToWebRoot + DataFileDir + SerializedFeedListFile 
-        /// </summary>
-        public string FullSerializedFileDatasourceFilePathAndName
-        {
-            get
-            {
-                string temp = this.PathToWebRoot + this.SerializedFeedListFile;
-
-                return temp;
-            }
-        }
-
-        /// <summary>
-        /// Gets FullTraceLogFilePathAndName
-        /// which is PathToWebRoot + DataFileDir + TraceLogFileName
-        /// </summary>
-        public string FullTraceLogFilePathAndName
-        {
-            get
-            {
-                string temp = this.PathToWebRoot + this.TraceLogFileName;
-
-                return temp;
-            }
-        }
-
-        /// <summary>
-        /// Gets all config settings in NameValueCollection
-        /// </summary>
-        public NameValueCollection GetAll
-        {
-            get
-            {
-                NameValueCollection list = new NameValueCollection();
-
-                list.Add("AzureFeedUriPrefix", this.AzureFeedUriPrefix);
-                list.Add("AzureUri", this.AzureUri);
-                list.Add("DefaultUri", this.DefaultUri);
-
-                list.Add("EmailFromAddress", this.EmailFromAddress);
-                list.Add("EmailFromName", this.EmailFromName);
-                list.Add("EmailToAddress", this.EmailToAddress);
-                list.Add("EmailToName", this.EmailToName);
-
-                list.Add("PathToWebRoot", this.PathToWebRoot);
-                list.Add("SerializedFeedListFile", this.SerializedFeedListFile);
-                list.Add("TraceLogFileName", this.TraceLogFileName);
-
-                return list;
             }
         }
 
@@ -413,7 +187,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
             this.config.AppSettings.Settings.Add(key, value);
             this.config.Save();
         }
-        
+
         /// <summary>
         /// Update existing appSettings value given key
         /// </summary>
@@ -475,6 +249,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
             {
                 return false;
             }
-        }    
+        }
     }
 }
+

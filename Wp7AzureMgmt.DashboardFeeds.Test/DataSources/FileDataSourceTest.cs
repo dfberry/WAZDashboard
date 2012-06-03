@@ -15,6 +15,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// Tests for FileDataSource class
@@ -227,7 +228,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             // arrange
             HttpContextBase httpContext = null;
 
-            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(httpContext);
+            FeedConfiguration dashboardConfiguration = new FeedConfiguration(httpContext);
             string pathToFilename = Setup.GetDataPath();
 
             FileDatasource fileDatasource = new FileDatasource(pathToFilename, httpContext);

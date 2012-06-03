@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
+namespace Wp7AzureMgmt.Core.Interfaces
 {
     using System;
 

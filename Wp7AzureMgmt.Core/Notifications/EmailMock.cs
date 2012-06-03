@@ -5,13 +5,13 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds
+namespace Wp7AzureMgmt.Core.Notifications
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
+    using Wp7AzureMgmt.Core.Interfaces;
     
     /// <summary>
     /// Mock email to use during testing

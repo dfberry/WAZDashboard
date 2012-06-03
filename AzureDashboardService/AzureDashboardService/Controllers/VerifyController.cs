@@ -12,7 +12,7 @@ namespace AzureDashboardService.Controllers
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// Used to verify build
@@ -31,7 +31,7 @@ namespace AzureDashboardService.Controllers
                 this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
             }
 
-            string filePath = this.PathToFiles + this.DashboardConfiguration.SerializedFeedListFile;
+            string filePath = this.PathToFiles + this.FeedConfiguration.SerializedFeedListFile;
 
             // Fully qualify File so it doesn't use MVC version
             bool fileExists = System.IO.File.Exists(filePath);

@@ -3,7 +3,7 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
+namespace Wp7AzureMgmt.Core.Interfaces
 {
     using System;
     using System.Collections.Generic;
@@ -29,6 +29,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
         /// </summary>
         /// <returns>html response as string</returns>
         string GetRequest();
+
+        T GetXmlRequest<T>();
 
         /// <summary>
         /// Save string to file. Filename must include full

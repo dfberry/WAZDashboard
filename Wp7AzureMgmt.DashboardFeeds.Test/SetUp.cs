@@ -16,7 +16,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Web;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.Core;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// Grab RSS feeds page from Windows Azure
@@ -57,7 +58,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
                 uriDatasource.GetAndSaveHtml(fileName);
 
                 // Save filename to config file so test run can use it for parsing
-                DashboardConfiguration dbconf = new DashboardConfiguration(httpContext);
+                FeedConfiguration dbconf = new FeedConfiguration(httpContext);
                 dbconf.TestFileName = fileName;
 
                 Trace.TraceInformation("RunBeforeAnyTests c");

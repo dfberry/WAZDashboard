@@ -3,7 +3,7 @@
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-namespace Wp7AzureMgmt.DashboardFeeds
+namespace Wp7AzureMgmt.Core.Notifications
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System.Net.Security;
     using System.Security.Cryptography.X509Certificates;
     using System.Text;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
+    using Wp7AzureMgmt.Core.Interfaces;
     
     /// <summary>
     /// SmtpClient to use in real code

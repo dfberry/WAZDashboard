@@ -11,6 +11,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Web;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds;
+    using Wp7AzureMgmt.Core;
     
     /// <summary>
     /// This is a test class for HTTPTest and is intended
@@ -26,7 +27,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             HttpContextBase context = null;
 
-            DashboardConfiguration = new DashboardConfiguration(context);
+            DashboardConfiguration = new FeedConfiguration(context);
             DashboardHttp = new DashboardHttp(new Uri(DashboardConfiguration.DefaultUri));
         }
 
@@ -40,7 +41,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Gets or sets dashboardConfiguration for App.Config
         /// settings. 
         /// </summary>
-        private DashboardConfiguration DashboardConfiguration { get; set; }
+        private FeedConfiguration DashboardConfiguration { get; set; }
 
         /// <summary>
         /// A test for HTTP Constructor
@@ -48,7 +49,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [Test]public void DashboardHttpConstructorTest_Success()
         {
             // arrange
-            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(null);
+            FeedConfiguration dashboardConfiguration = new FeedConfiguration(null);
             Uri getUri = new Uri(dashboardConfiguration.DefaultUri);
 
             // act
@@ -66,7 +67,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             // arrange
             HttpContextBase context = null;
 
-            DashboardConfiguration dashboardConfiguration = new DashboardConfiguration(context);
+            FeedConfiguration dashboardConfiguration = new FeedConfiguration(context);
             Uri getUri = new Uri(dashboardConfiguration.DefaultUri);
             DashboardHttp target = new DashboardHttp(getUri);
             string actual = string.Empty; 

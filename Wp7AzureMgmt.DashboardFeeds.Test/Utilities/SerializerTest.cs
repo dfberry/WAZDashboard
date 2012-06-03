@@ -12,6 +12,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Linq;
     using System.Text;
     using NUnit.Framework;
+    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// Tests the Serializer class

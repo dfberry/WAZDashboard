@@ -18,7 +18,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.Core.Interfaces;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// Tests for UriDataSource
@@ -85,7 +87,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             HttpContextBase httpContext = null;
 
             UriDatasource uriDatasource = new UriDatasource(null, httpContext);
-            DashboardConfiguration config = new DashboardConfiguration(null);
+            FeedConfiguration config = new FeedConfiguration(null);
             DashboardHttp http = new DashboardHttp(new Uri(config.AzureUri));
             uriDatasource.DashboardHttp = http;
 

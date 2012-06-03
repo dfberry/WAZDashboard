@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.DashboardFeeds.DataSources
+namespace Wp7AzureMgmt.DashboardIssues.DataSources
 {
     using System;
     using System.Collections.Generic;
@@ -14,22 +14,19 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
-    using HtmlAgilityPack;
-    using Wp7AzureMgmt.DashboardFeeds.Enums;
-    using Wp7AzureMgmt.DashboardFeeds.Factories;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
-    using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.DashboardIssues.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
+    using Wp7AzureMgmt.DashboardIssues.Models;
 
     /// <summary>
-    /// This datasource fetches the feed list from a file on disk
+    /// This datasource fetches the issue list from a file on disk
     /// </summary>
-    internal class FileDatasource : IRSSDataSource
+    internal class FileDatasource : IRssIssueDataSource
     {
         /// <summary>
         /// DashboardConfiguration is required as class object for tracing
         /// </summary>
-        private DashboardConfiguration config;
+        private IssueConfiguration config;
 
         /// <summary>
         /// HttpContext determines where to get config settings. Web app looks in 
@@ -38,14 +35,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         private HttpContextBase configurationContext;
       
         /// <summary>
-        /// Path and filename of RssFeeds datasource. 
+        /// Path and filename of RssIssues datasource. 
         /// </summary>
         private string fileName;
 
         /// <summary>
-        /// RssFeeds built from filename
+        /// RssIssues built from filename
         /// </summary>
-        private RssFeeds feeds = null;
+        private RssIssues issues = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileDatasource" /> class.
@@ -58,9 +55,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             // set this once in constructor
             this.configurationContext = httpContext;
-            this.config = new DashboardConfiguration(this.configurationContext);
+            this.config = new IssueConfiguration(this.configurationContext);
 
-            this.FileName = pathToFilename + this.config.SerializedFeedListFile;
+            this.FileName = pathToFilename + this.config.SerializedIssueListFile;
 
             if (string.IsNullOrEmpty(this.FileName))
             {
@@ -69,18 +66,18 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Gets or sets RssFeeds built from filename
+        /// Gets or sets RssIssues built from filename
         /// </summary>
-        public RssFeeds RssFeeds
+        public RssIssues RssIssues
         {
             get
             {
-                return this.feeds;
+                return this.issues;
             }
 
             set
             {
-                this.feeds = value;
+                this.issues = value;
             }
         }
 
@@ -101,49 +98,24 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Returns importable file as string for Google Reader
-        /// based on feeds passed in.
-        /// </summary>
-        /// <param name="rssFeeds">RssFeeds to convert to opml</param>
-        /// <returns>Returns OPML formatted string of RSS Feeds</returns>
-        public string OPML(RssFeeds rssFeeds)
-        {
-            if (rssFeeds == null)
-            {
-                throw new ArgumentNullException("FileDatasource::OPML - " + "RssFeeds rssFeeds");
-            }
-
-            return rssFeeds.OPML();
-        }
-
-        /// <summary>
-        /// Returns importable file as string for Google Reader
-        /// </summary>
-        /// <returns>Returns OPML formatted string of RSS Feeds</returns>
-        public string OPML()
-        {
-            return this.OPML(this.feeds);
-        }
-
-        /// <summary>
-        /// Serialize RssFeeds to FileName.
+        /// Serialize RssIssues to FileName.
         /// </summary>
         public void Set()
         {
-            this.Set(this.feeds, this.fileName);
+            this.Set(this.issues, this.fileName);
         }
 
         /// <summary>
-        /// Serialize the feeds to a filename. Neither can be 
+        /// Serialize the issues to a filename. Neither can be 
         /// null.
         /// </summary>
-        /// <param name="feeds">list of feeds</param>
+        /// <param name="issues">list of issues</param>
         /// <param name="filename">filename and path</param>
-        public void Set(RssFeeds feeds, string filename)
+        public void Set(RssIssues issues, string filename)
         {
-            if (feeds == null)
+            if (issues == null)
             {
-                throw new ArgumentNullException("FileDatasource::Set - " + "RssFeeds feeds");
+                throw new ArgumentNullException("FileDatasource::Set - " + "RssIssues issues");
             }
 
             if (string.IsNullOrEmpty(filename))
@@ -153,50 +125,50 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
 
             try
             {
-                Serializer.Serialize(filename, feeds);
+                Wp7AzureMgmt.Core.Serializer.Serialize(filename, issues);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed.");
+                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed. " + ex.InnerException);
             }
         }
 
         /// <summary>
-        /// Deserialize the feeds from FileName. 
+        /// Deserialize the issues from FileName. 
         /// </summary>
-        /// <returns>RssFeeds from Serialized file</returns>
-        public RssFeeds Get()
+        /// <returns>RssIssues from Serialized file</returns>
+        public RssIssues Get()
         {
-            return this.GetFeeds(this.fileName);
+            return this.Get(this.fileName);
         }
 
         /// <summary>
-        /// Deserialize RssFeeds from serializedFile
+        /// Deserialize RssIssues from serializedFile
         /// </summary>
         /// <param name="serializedFile">path and filename</param>
-        /// <returns>RssFeeds from file</returns>
-        public RssFeeds GetFeeds(string serializedFile)
+        /// <returns>RssIssues from file</returns>
+        public RssIssues Get(string serializedFile)
         {
             if (string.IsNullOrEmpty(serializedFile))
             {
-                throw new ArgumentNullException("FileDatasource::GetFeeds - " + "string serializedFile");
+                throw new ArgumentNullException("FileDatasource::GetIssues - " + "string serializedFile");
             }
 
             try
             {
                 if (File.Exists(serializedFile))
                 {
-                    this.feeds = Serializer.Deserialize<RssFeeds>(serializedFile);
-                    return this.feeds;
+                    this.issues = Wp7AzureMgmt.Core.Serializer.Deserialize<RssIssues>(serializedFile);
+                    return this.issues;
                 }
                 else
                 {
-                    throw new ArgumentNullException("FileDatasource::GetFeeds - " + "serializedFile doesn't exist");
+                    throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist");
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed.");
+                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed. " + ex.InnerException);
             }
         }
     }

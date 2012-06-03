@@ -1,27 +1,27 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IRSSDataSource.cs" company="DFBerry">
+// <copyright file="IRssIssueDataSource.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.DashboardFeeds.Interfaces
+namespace Wp7AzureMgmt.DashboardIssues.Interfaces
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardIssues.Models;
 
     /// <summary>
-    /// Generic Actions Against Source of RSS Feeds
+    /// Generic Actions Against Source of RSS Issues
     /// </summary>
-    public interface IRSSDataSource
+    public interface IRssIssueDataSource
     {
         /// <summary>
         /// Get copy of list
         /// </summary>
-        /// <returns>Returns RSSFeeds ojbject</returns>
-        RssFeeds Get();
+        /// <returns>Returns RSSIssues ojbject</returns>
+        RssIssues Get();
 
         /// <summary>
         /// Set copy of list

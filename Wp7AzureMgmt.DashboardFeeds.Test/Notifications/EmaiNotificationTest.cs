@@ -12,7 +12,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using Moq;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.Core.Notifications;
+    using Wp7AzureMgmt.Core.Interfaces;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// Tests for EmailNotification

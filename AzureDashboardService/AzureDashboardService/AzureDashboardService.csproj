@@ -137,12 +137,14 @@
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\DashboardBaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FeedIssueController.cs" />
     <Compile Include="Controllers\FeedListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VerifyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardIssueModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Notifications\NotificationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -334,9 +336,17 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Wp7AzureMgmt.Core\Wp7AzureMgmt.Core.csproj">
+      <Project>{F68D3467-8B53-434B-8D44-2E90C0A03856}</Project>
+      <Name>Wp7AzureMgmt.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
       <Project>{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}</Project>
       <Name>Wp7AzureMgmt.DashboardFeeds</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Wp7AzureMgmt.DashboardIssues\Wp7AzureMgmt.DashboardIssues.csproj">
+      <Project>{97D29E65-A608-446C-A0BB-C5A541330A8E}</Project>
+      <Name>Wp7AzureMgmt.DashboardIssues</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -380,6 +390,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Verify\Email.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\FeedIssue\IssueListGrid.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

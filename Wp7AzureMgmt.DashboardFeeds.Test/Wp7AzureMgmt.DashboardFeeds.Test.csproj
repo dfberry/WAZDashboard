@@ -70,7 +70,7 @@
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\nunit.framework.dll</HintPath>
+      <HintPath>..\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -126,6 +126,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Wp7AzureMgmt.Core\Wp7AzureMgmt.Core.csproj">
+      <Project>{F68D3467-8B53-434B-8D44-2E90C0A03856}</Project>
+      <Name>Wp7AzureMgmt.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
       <Project>{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}</Project>
       <Name>Wp7AzureMgmt.DashboardFeeds</Name>

@@ -19,7 +19,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.Core;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// This datasource fetches the feed list from a file on disk
@@ -29,7 +30,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <summary>
         /// DashboardConfiguration is required as class object for tracing
         /// </summary>
-        private DashboardConfiguration config;
+        private FeedConfiguration config;
 
         /// <summary>
         /// HttpContext determines where to get config settings. Web app looks in 
@@ -58,7 +59,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         {
             // set this once in constructor
             this.configurationContext = httpContext;
-            this.config = new DashboardConfiguration(this.configurationContext);
+            this.config = new FeedConfiguration(this.configurationContext);
 
             this.FileName = pathToFilename + this.config.SerializedFeedListFile;
 

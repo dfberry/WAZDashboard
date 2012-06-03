@@ -25,7 +25,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>ConfigSettings view</returns>
         public ActionResult Index()
         {
-            NameValueCollection configSettings = this.DashboardConfiguration.GetAll;
+            NameValueCollection configSettings = this.FeedConfiguration.GetAll;
 
             return View("ConfigSettings", configSettings);
         }
@@ -54,7 +54,7 @@ namespace AzureDashboardService.Controllers
                 string portString = collection["port"];
                 int port;
 
-                DashboardConfiguration mailSettingsConfig = new DashboardConfiguration(this.HttpContext);
+                FeedConfiguration mailSettingsConfig = new FeedConfiguration(this.HttpContext);
 
                 SmtpSection smtpSection = new SmtpSection();
 
@@ -67,7 +67,7 @@ namespace AzureDashboardService.Controllers
                     smtpSection.Network.Port = port;
                 }
 
-                this.DashboardConfiguration.SmtpSection = smtpSection;
+                this.FeedConfiguration.SmtpSection = smtpSection;
             }
 
             return this.Index();

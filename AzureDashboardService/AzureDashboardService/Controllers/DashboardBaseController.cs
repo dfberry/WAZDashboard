@@ -13,10 +13,13 @@ namespace AzureDashboardService.Controllers
     using System.Web.Mvc;
     using AzureDashboardService.Models;
     using AzureDashboardService.Notifications;
+    using Wp7AzureMgmt.Core.Notifications;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.DashboardIssues;
+
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// BaseController for all controllers
@@ -29,20 +32,25 @@ namespace AzureDashboardService.Controllers
         /// </summary>
         private string pathToFiles;
 
+        private IssueMgr issueMgr;
+
+
         /// <summary>
         /// Dashboard data model 
         /// </summary>
-        private DashboardModel model;
+        private DashboardModel feedModel;
+
+        private DashboardIssueModel issueModel;
 
         /// <summary>
         /// Dashboard factory manager 
         /// </summary>
-        private DashboardMgr dashboard;
+        private DashboardMgr feedMgr;
 
         /// <summary>
         /// DashboardConfiguration - entry into web.config appSettings
         /// </summary>
-        private DashboardConfiguration dbconfig;
+        private FeedConfiguration dbFeedConfig;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBaseController" /> class.
@@ -51,10 +59,14 @@ namespace AzureDashboardService.Controllers
         /// </summary>
         public DashboardBaseController()
         {
-            this.dbconfig = new DashboardConfiguration(this.HttpContext);
+            this.dbFeedConfig = new FeedConfiguration(this.HttpContext);
 
-            this.dashboard = new DashboardMgr(this.HttpContext);
-            this.model = new DashboardModel();
+            this.feedMgr = new DashboardMgr(this.HttpContext);
+            this.issueMgr = new IssueMgr(this.HttpContext);
+            
+            this.feedModel = new DashboardModel();
+            this.issueModel = new DashboardIssueModel();
+
 
             // DFB-todo: set this only once on app start up or check at each request?
             // answer: for now - check at each request
@@ -98,12 +110,44 @@ namespace AzureDashboardService.Controllers
         {
             get
             {
-                return this.model;
+                return this.feedModel;
             }
 
             set
             {
-                this.model = value;
+                this.feedModel = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the only DashboardIssueModel.
+        /// </summary>
+        protected DashboardIssueModel DashboardIssueModel
+        {
+            get
+            {
+                return this.issueModel;
+            }
+
+            set
+            {
+                this.issueModel = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the only IssueMgr.
+        /// </summary>
+        protected IssueMgr IssueMgr
+        {
+            get
+            {
+                return this.issueMgr;
+            }
+
+            set
+            {
+                this.issueMgr = value;
             }
         }
 
@@ -114,28 +158,28 @@ namespace AzureDashboardService.Controllers
         {
             get
             {
-                return this.dashboard;
+                return this.feedMgr;
             }
 
             set
             {
-                this.dashboard = value;
+                this.feedMgr = value;
             }
         }
 
         /// <summary>
         /// Gets or sets DashboardConfiguration.
         /// </summary>
-        protected DashboardConfiguration DashboardConfiguration
+        protected FeedConfiguration FeedConfiguration
         {
             get
             {
-                return this.dbconfig;
+                return this.dbFeedConfig;
             }
 
             set
             {
-                this.dbconfig = value;
+                this.dbFeedConfig = value;
             }
         }
 
@@ -152,12 +196,12 @@ namespace AzureDashboardService.Controllers
             EmailNotification email = new EmailNotification(stamp, smtpClient);
 
             email.SetFromMailAddress(
-                this.DashboardConfiguration.EmailFromAddress,
-                this.DashboardConfiguration.EmailFromName);
+                this.FeedConfiguration.EmailFromAddress,
+                this.FeedConfiguration.EmailFromName);
 
             email.SetReceiver(
-                this.DashboardConfiguration.EmailToAddress,
-                this.DashboardConfiguration.EmailToName);
+                this.FeedConfiguration.EmailToAddress,
+                this.FeedConfiguration.EmailToName);
 
             email.Notify(subject, text);
         }

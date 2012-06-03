@@ -4,7 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Wp7AzureMgmt.DashboardFeeds.DataSources
+namespace Wp7AzureMgmt.DashboardIssues.DataSources
 {
     using System;
     using System.Collections.Generic;
@@ -13,18 +13,29 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using System.Linq;
     using System.Text;
     using System.Web;
-    using HtmlAgilityPack;
-    using Wp7AzureMgmt.DashboardFeeds.Enums;
-    using Wp7AzureMgmt.DashboardFeeds.Factories;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.Core.Interfaces;
+    using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using System.Threading.Tasks;
     
     /// <summary>
-    /// This datasource fetches the feed list from Windows Azure Dashboard Service web page
+    /// This datasource fetches the issue list from Windows Azure Dashboard Service web page
     /// </summary>
-    internal class UriDatasource : IRSSDataSource
+    internal class UriDatasource : IRssIssueDataSource
     {
+        /// <summary>
+        /// Default Parallel Options to no limit
+        /// </summary>
+#if DEBUG
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 1 }; // no parallelism
+#else  
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = -1 }; // no limit to parallelism
+#endif
+        
         /// <summary>
         /// HttpContext determines where to get config settings. Web app looks in 
         /// web config.
@@ -34,12 +45,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <summary>
         /// Configuration settings
         /// </summary>
-        private DashboardConfiguration configuration = null;
+        private IssueConfiguration configuration = null;
 
         /// <summary>
-        /// RssFeeds that is the data
+        /// RssIssues that is the data
         /// </summary>
-        private RssFeeds rssFeeds;
+        private RssIssues rssIssues;
 
         /// <summary>
         /// IDashboardHttp object
@@ -61,17 +72,24 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// </summary>
         private string uricontent = null;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string pathToSerializedFeeds = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UriDatasource" /> class.
         /// </summary>
         /// <param name="http">DashboardHttp object containing request</param>
         /// <param name="httpContext">Http web context or null if not a web request</param>
-        public UriDatasource(DashboardHttp http, HttpContextBase httpContext)
+        public UriDatasource(DashboardHttp http, HttpContextBase httpContext, string pathToFeedsFileSource)
         {
-            this.configuration = new DashboardConfiguration(httpContext);
+            //this.configuration = new FeedConfiguration(httpContext);
             this.configurationContext = httpContext;
             this.httpRequest = http;
-            this.GetConfigSettings();
+            this.pathToSerializedFeeds = pathToFeedsFileSource;
+            //this.GetConfigSettings();
         }
 
         /// <summary>
@@ -91,18 +109,18 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Gets or sets RssFeeds
+        /// Gets or sets RssIssues
         /// </summary>
-        public RssFeeds RssFeeds
+        public RssIssues RssIssues
         {
             get
             {
-                return this.rssFeeds;
+                return this.rssIssues;
             }
 
             set
             {
-                this.rssFeeds = value;
+                this.rssIssues = value;
             }
         }
 
@@ -137,60 +155,52 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 this.httpRequest = value;
             }
         }
-        
-        /// <summary>
-        /// Get RssFeeds from uri specified in config file
-        /// </summary>
-        /// <returns>RssFeeds from parsed html from uri</returns>
-        public RssFeeds Get()
+
+        private RssFeeds GetRssFeeds()
         {
-            // get raw html
-            this.uricontent = this.GetHtml();
-
-            string uriPrefix = this.configuration.AzureFeedUriPrefix;
-
-            // parse content into object
-            HtmlParser htmlParser = new HtmlParser(uriPrefix);
-            this.rssFeeds = htmlParser.ParseHtmlForFeeds(this.uricontent);
-
-            return this.rssFeeds;
+            // get RssFeeds
+            FeedConfiguration feedConfiguration = new FeedConfiguration(configurationContext);
+            DashboardMgr feedMgr = new DashboardMgr(configurationContext);
+            return feedMgr.GetStoredRssFeeds(this.pathToSerializedFeeds);
         }
 
         /// <summary>
-        /// Get Html from uri. Sets object's Uri and requests
-        /// from that Uri.
+        /// Get RssIssues from uris specified in RssFeeds 
         /// </summary>
-        /// <param name="uri">uri to grab html from </param>
-        /// <returns>Html of request</returns>
-        public string GetHtml(Uri uri)
+        /// <returns>RssIssues from parsed html from uri</returns>
+        public RssIssues Get()
         {
-            if (this.httpRequest == null)
+            RssFeeds rssFeeds = this.GetRssFeeds();
+            List<RssIssue> issues = new List<RssIssue>();
+
+            Parallel.ForEach(rssFeeds.Feeds, this.options, feed =>
             {
-                throw new NullReferenceException("httpRequest");
+
+                if (!string.IsNullOrEmpty(feed.FeedCode))
+                {
+                    Uri uri = new Uri(String.Format("http://www.microsoft.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode={0}", feed.FeedCode));
+
+                    DashboardHttp http = new Core.DashboardHttp(uri);
+
+                    RssIssue rssIssue = new RssIssue()
+                    {
+                        RssIssueXml = http.GetXmlRequest<RssIssueXml>(),
+                        RssFeed = feed,
+                        DateTime = DateTime.UtcNow
+                    };
+
+                    issues.Add(rssIssue);
+                }
+            });
+
+            if ((issues != null) && (issues.Count > 0))
+            {
+                rssIssues = new RssIssues();
+                rssIssues.Issues = issues;
+                rssIssues.RetrievalDate = DateTime.UtcNow;
             }
 
-            this.dashboardURI = uri; 
-            this.httpRequest.SetUri(this.dashboardURI);
-            this.httpRequest.BuildHttpGet();
-            this.uricontent = this.httpRequest.GetRequest();
-
-            return this.uricontent;
-        }
-
-        /// <summary>
-        /// Get Html from uri specified in config file
-        /// </summary>
-        /// <returns>Html of Rss feeds as string</returns>
-        public string GetHtml()
-        {
-            if (this.httpRequest == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            this.uricontent = this.httpRequest.GetRequest();
-
-            return this.uricontent;
+            return rssIssues;
         }
 
         /// <summary>
@@ -203,28 +213,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         }
 
         /// <summary>
-        /// Gets html from uri and saves (without any changes)
-        /// to filename. Works for text files only.
-        /// </summary>
-        /// <param name="filename">save html to this path and filename</param>
-        public void GetAndSaveHtml(string filename)
-        {
-            if (string.IsNullOrEmpty(this.dashboardURI.ToString()))
-            {
-                throw new NullReferenceException("dashboardUri");
-            }
-
-            if (string.IsNullOrEmpty(filename.ToString()))
-            {
-                throw new NullReferenceException("filename");
-            }
-
-            string html = this.GetHtml(this.DashboardUri);
-
-            File.WriteAllText(filename, html);
-        }
-
-        /// <summary>
         /// Get all config settings. Sets 
         /// dashboardURI. Creates new DashboardHttp
         /// for httpRequest. Calls BuildHttpGet. All
@@ -233,11 +221,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// </summary>
         private void GetConfigSettings()
         {
-            this.configuration = new DashboardConfiguration(this.configurationContext);
+            //this.configuration = new IssueConfiguration(this.configurationContext);
 
             // need an http requester - this can always be overwritten
-            this.dashboardURI = new Uri(this.configuration.AzureUri);
-            this.httpRequest = new DashboardHttp(this.dashboardURI);
+            //this.dashboardURI = new Uri(this.configuration.AzureUri);
+            //this.httpRequest = new DashboardHttp(this.httpRequest);
         }
     }
 }

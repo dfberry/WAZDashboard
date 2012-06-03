@@ -15,7 +15,7 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// Feed List (rss feeds) api controller
@@ -45,7 +45,7 @@ namespace AzureDashboardService.Controllers
 
             if ((this.DashboardModel != null) 
                 && (this.DashboardModel.Feeds != null)
-                &&(this.DashboardModel.Feeds.Feeds != null) 
+                && (this.DashboardModel.Feeds.Feeds != null) 
                 && (this.DashboardModel.Feeds.Feeds.Count() > 0))
             {
                 return View("FeedListGroupGrid", this.DashboardModel.Feeds);
@@ -104,7 +104,7 @@ namespace AzureDashboardService.Controllers
 
             if ((this.DashboardModel != null)
                 && (this.DashboardModel.Feeds != null)
-                && (this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0))
+                && ((this.DashboardModel.Feeds.Feeds == null) || (this.DashboardModel.Feeds.Feeds.Count() == 0)))
             {
                 return null;
             }
@@ -153,7 +153,7 @@ namespace AzureDashboardService.Controllers
         {
             this.InternalBuild();
  
-            this.Notify("/FeedList/BuildRssList called", "test");
+            this.Notify("/FeedList/Build called", "test");
 
             return this.FeedListjqGrid();
         }

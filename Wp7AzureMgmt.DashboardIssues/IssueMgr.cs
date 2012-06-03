@@ -11,10 +11,24 @@ namespace Wp7AzureMgmt.DashboardIssues
     using System.Linq;
     using System.Text;
     using System.Web;
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.DashboardIssues.DataSources;
+    using Wp7AzureMgmt.Core;
+using Wp7AzureMgmt.DashboardFeeds.Models;
+    using System.Threading.Tasks;
     
     
-    class IssueMgr
+    public class IssueMgr
     {
+        /// <summary>
+        /// Default Parallel Options to no limit
+        /// </summary>
+#if DEBUG
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 1 };
+#else  
+        private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = -1 }; // no limit to parallelism
+#endif
+
         /// <summary>
         /// Http context which shouldn't be null if called
         /// from MVC app
@@ -41,28 +55,29 @@ namespace Wp7AzureMgmt.DashboardIssues
         public RssIssues GetStoredRssIssues(string pathToFiles)
         {
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
-            RssFeeds feeds = null;
 
             // get from file
-            feeds = fileDatasource.Get();
+            return fileDatasource.Get();
 
-            return feeds;
         }
 
         /// <summary>
-        /// Serialize RssFeeds to disk. Make request across
-        /// wire to Uri, grab response into RssFeeds,
-        /// serialize RssFeeds.
+        /// Serialize RssIssues to disk. Make request across
+        /// wire to Uri, grab response into RssIssues,
+        /// serialize RssIssues.
         /// </summary>
         /// <param name="pathToFiles">Path to serialized files</param>
-        public void SetRssFeedsFromUri(string pathToFiles)
+        public void SetRssIssuesFromUri(string pathToFiles)
         {
             DashboardHttp httpRequest = new DashboardHttp();
 
-            UriDatasource uriDataSource = new UriDatasource(httpRequest, this.httpContext);
-            RssFeeds feeds = uriDataSource.Get();
+            // DFB - this is a dummy uri not intended to work 
+            httpRequest.Uri = new Uri("http://localhost");
+
+            UriDatasource uriDataSource = new UriDatasource(httpRequest, this.httpContext, pathToFiles);
+            RssIssues issues = uriDataSource.Get();
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
-            fileDatasource.RssFeeds = feeds;
+            fileDatasource.RssIssues = issues;
             fileDatasource.Set();
         }
     }

@@ -85,3 +85,10 @@ UpgradeLog*.XML
 
 #AppSpecific - check in config only once then ignore it
 *.config
+
+#xsd transformation
+xsd/
+
+#test files
+*.testsettings
+*.vsmdi

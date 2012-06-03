@@ -44,12 +44,23 @@
     <Compile Include="DataSources\FakeDataSource.cs" />
     <Compile Include="DataSources\FileDatasource.cs" />
     <Compile Include="DataSources\UriDatasource.cs" />
-    <Compile Include="Interfaces\IRSSDataSource.cs" />
+    <Compile Include="Interfaces\IRssIssueDataSource.cs" />
     <Compile Include="IssueMgr.cs" />
+    <Compile Include="Models\RssIssue.cs" />
+    <Compile Include="Models\RssIssues.cs" />
+    <Compile Include="Models\RssIssueXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utiliites\IssueConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\Wp7AzureMgmt.Core\Wp7AzureMgmt.Core.csproj">
+      <Project>{F68D3467-8B53-434B-8D44-2E90C0A03856}</Project>
+      <Name>Wp7AzureMgmt.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
+      <Project>{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}</Project>
+      <Name>Wp7AzureMgmt.DashboardFeeds</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
