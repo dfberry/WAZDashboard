@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8F8D7A71-DC3E-419A-82B2-44604E4C6B21}</ProjectGuid>
+    <ProjectGuid>{054DD1D9-7759-422B-AB70-BD4163AE55FE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestProject1</RootNamespace>
-    <AssemblyName>TestProject1</AssemblyName>
+    <RootNamespace>Wp7AzureMgmt.Core.Test</RootNamespace>
+    <AssemblyName>Wp7AzureMgmt.Core.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -40,7 +40,7 @@
       <HintPath>..\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -56,37 +56,13 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSources\UriDatasourceTest.cs" />
-    <Compile Include="DataSources\FileDatasourceTest.cs" />
-    <Compile Include="Models\rssChannelItemTest.cs" />
-    <Compile Include="Utilities\IssueConfigurationTest.cs" />
-    <Compile Include="IssueMgrTest.cs" />
+    <Compile Include="ObjectPropertiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetUp.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <Content Include="MailSettings.config">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Shadow Include="Test References\Wp7AzureMgmt.DashboardIssues.accessor" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wp7AzureMgmt.Core\Wp7AzureMgmt.Core.csproj">
       <Project>{F68D3467-8B53-434B-8D44-2E90C0A03856}</Project>
       <Name>Wp7AzureMgmt.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wp7AzureMgmt.DashboardFeeds\Wp7AzureMgmt.DashboardFeeds.csproj">
-      <Project>{ED148540-DBB6-49B2-8FF6-5C1F4D974BF1}</Project>
-      <Name>Wp7AzureMgmt.DashboardFeeds</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Wp7AzureMgmt.DashboardIssues\Wp7AzureMgmt.DashboardIssues.csproj">
-      <Project>{97D29E65-A608-446C-A0BB-C5A541330A8E}</Project>
-      <Name>Wp7AzureMgmt.DashboardIssues</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -81,6 +81,41 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
 
         }
 
+        public override int GetHashCode()
+        {
+            return this.version.GetHashCode() + this.channel.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(RssIssueXml))
+            {
+                return false;
+            }
+
+            if ((((RssIssueXml)obj).version == this.version)
+                && (((RssIssueXml)obj).channel.Length == this.channel.Length))
+            {
+                rssChannel[] thisList = this.channel;
+                rssChannel[] testList = ((RssIssueXml)obj).channel;
+
+                for (int i = 0; i < this.channel.Length; i++)
+                {
+                    if (!thisList[i].Equals(testList[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                // date or count is not right
+                return false;
+            }
+
+            return true;
+        }
+
     }
 
     /// <remarks/>
@@ -270,6 +305,67 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             info.AddValue("pubDate", this.pubDate);
             info.AddValue("title", this.title);
         }
+
+        public override int GetHashCode()
+        {
+            return this.copyright.GetHashCode() +
+                this.description.GetHashCode() +
+                this.image.GetHashCode() + 
+                this.item.GetHashCode() + 
+                this.language.GetHashCode() + 
+                this.lastBuildDate.GetHashCode() + 
+                this.link.GetHashCode() + 
+                this.pubDate.GetHashCode() + 
+                this.title.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(rssChannel))
+            {
+                return false;
+            }
+
+            if ((((rssChannel)obj).copyright == this.copyright)
+                && (((rssChannel)obj).description == this.description)
+                && (((rssChannel)obj).language == this.language)
+                && (((rssChannel)obj).link == this.link)
+                && (((rssChannel)obj).pubDate == this.pubDate)
+                && (((rssChannel)obj).title == this.title)
+                && (((rssChannel)obj).item.Length == this.item.Length)
+                && (((rssChannel)obj).image.Length == this.image.Length))
+            {
+                // items 
+                rssChannelItem[] thisList = this.item;
+                rssChannelItem[] testList = ((rssChannel)obj).item;
+
+                for (int i = 0; i < this.item.Length; i++)
+                {
+                    if (!thisList[i].Equals(testList[i]))
+                    {
+                        return false;
+                    }
+                }
+
+                // images 
+                rssChannelImage[] thisList2 = this.image;
+                rssChannelImage[] testList2 = ((rssChannel)obj).image;
+                for (int i = 0; i < this.image.Length; i++)
+                {
+                    if (!thisList2[i].Equals(testList2[i]))
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     /// <remarks/>
@@ -349,6 +445,30 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             info.AddValue("link", this.link);
             info.AddValue("title", this.title);
             info.AddValue("url", this.url);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.link.GetHashCode() +
+                this.title.GetHashCode() +
+                this.url.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(rssChannelImage))
+            {
+                return false;
+            }
+
+            if ((((rssChannelImage)obj).link == this.link)
+                && (((rssChannelImage)obj).title == this.title)
+                && (((rssChannelImage)obj).url == this.url))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 
@@ -448,50 +568,110 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             info.AddValue("status", this.status);
             info.AddValue("title", this.title);
         }
+
+        public override int GetHashCode()
+        {
+            return this.description.GetHashCode() + 
+                this.pubDate.GetHashCode() + 
+                this.status.GetHashCode() +
+                this.title.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(rssChannelItem))
+            {
+                return false;
+            }
+
+            if ((((rssChannelItem)obj).description == this.description)
+                && (((rssChannelItem)obj).pubDate == this.pubDate)
+                && (((rssChannelItem)obj).status == this.status)
+                && (((rssChannelItem)obj).title == this.title))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class NewDataSet : ISerializable
-    {
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+    //[System.SerializableAttribute()]
+    //[System.Diagnostics.DebuggerStepThroughAttribute()]
+    //[System.ComponentModel.DesignerCategoryAttribute("code")]
+    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    //[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    //public partial class NewDataSet : ISerializable
+    //{
 
-        private RssIssueXml[] itemsField;
+    //    private RssIssueXml[] itemsField;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("rss")]
-        public RssIssueXml[] Items
-        {
-            get
-            {
-                return this.itemsField;
-            }
-            set
-            {
-                this.itemsField = value;
-            }
-        }
+    //    /// <remarks/>
+    //    [System.Xml.Serialization.XmlElementAttribute("rss")]
+    //    public RssIssueXml[] Items
+    //    {
+    //        get
+    //        {
+    //            return this.itemsField;
+    //        }
+    //        set
+    //        {
+    //            this.itemsField = value;
+    //        }
+    //    }
 
-        /// <summary>
-        /// Used by deserialization
-        /// </summary>
-        public NewDataSet()
-        {
-        }
+    //    /// <summary>
+    //    /// Used by deserialization
+    //    /// </summary>
+    //    public NewDataSet()
+    //    {
+    //    }
 
-        public NewDataSet(SerializationInfo info, StreamingContext ctxt)
-        {
-            this.Items = (RssIssueXml[])info.GetValue("Items", typeof(RssIssueXml[]));
-        }
+    //    public NewDataSet(SerializationInfo info, StreamingContext ctxt)
+    //    {
+    //        this.Items = (RssIssueXml[])info.GetValue("Items", typeof(RssIssueXml[]));
+    //    }
 
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
-        {
-            info.AddValue("Items", this.Items);
-        }
-    }
+    //    public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+    //    {
+    //        info.AddValue("Items", this.Items);
+    //    }
+
+    //    public override int GetHashCode()
+    //    {
+    //        return itemsField.GetHashCode();
+    //    }
+
+    //    public override bool Equals(object obj)
+    //    {
+    //        if (obj.GetType() != typeof(NewDataSet))
+    //        {
+    //            return false;
+    //        }
+
+    //        if ((((NewDataSet)obj).itemsField.Length == this.itemsField.Length))
+    //        {
+    //            RssIssueXml[] thisList = this.Items;
+    //            RssIssueXml[] testList = ((NewDataSet)obj).Items;
+
+    //            for (int i = 0; i < this.itemsField.Length; i++)
+    //            {
+    //                if (!thisList[i].Equals(testList[i]))
+    //                {
+    //                    return false;
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // date or count is not right
+    //            return false;
+    //        }
+
+    //        return true;
+    //    }
+    //}
 }

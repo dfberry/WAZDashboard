@@ -129,7 +129,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             string filename = "FileDatasource_SetTest";
             string fullpathandfilename = pathToFilename + filename;
 
-            // act
+            // actls
             target.Set(issues, fullpathandfilename);
 
             // assert
@@ -137,7 +137,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
 
             // make sure I can deserialize
             RssIssues deserialized = target.Get(fullpathandfilename);
-            Assert.AreEqual(issues, deserialized);
+            Assert.AreSame(issues, deserialized);
             
             // cleanup
             File.Delete(fullpathandfilename);
