@@ -32,7 +32,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         ///// save file name.
         ///// </summary>
         ///// <returns>filename as string</returns>
-        public static string RunBeforeTests()
+        public static string RunBeforeTests_FeedListFile()
         {
 
             HttpContextBase httpContext = null;
@@ -43,26 +43,53 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             return string.Empty;
         }
 
+        ///// <summary>
+        ///// Pull Html file from Windows Azure only once, store it,
+        ///// save file name.
+        ///// </summary>
+        ///// <returns>filename as string</returns>
+        public static string RunBeforeTests_IssueListFile()
+        {
+            HttpContextBase httpContext = null;
+            IssueMgr issueMgr = new IssueMgr(httpContext);
+
+            issueMgr.SetRssIssuesFromUri(GetDataPath());
+
+            return string.Empty;
+        }
+
         /// <summary>
         /// Gets data path so tests look for data files in correct place
         /// </summary>
         /// <returns>string including post pend slash</returns>
         public static string GetDataPath()
         {
-            string binPath = new System.Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            string finalPath = string.Empty;
+            string binPath = AppDomain.CurrentDomain.BaseDirectory;
+            string[] splitString = null;
+            string basePath = string.Empty;
 
             // everything before the bin directory
-            Regex matchPattern = new Regex("bin");
-
-            // grab matches
-            string[] splitString = matchPattern.Split(binPath);
-
-            if (splitString != null)
+            if (binPath.Contains("bin"))
             {
-                return splitString[0] + "App_Data/";
+                Regex matchPattern = new Regex("bin");
+                splitString = matchPattern.Split(binPath);
+                basePath = splitString[0];
+                finalPath = Path.Combine(basePath, @"App_Data\");
+            }
+            else if (binPath.Contains("TestResults"))
+            {
+                Regex matchPattern = new Regex("TestResults");
+                splitString = matchPattern.Split(binPath);
+                basePath = splitString[0];
+                finalPath = Path.Combine(basePath, "XmlTestProject", @"App_Data\");
+            }
+            else
+            {
+                // don't know where the path is at this point
             }
 
-            return string.Empty;
+            return finalPath;
         }
     }
 }

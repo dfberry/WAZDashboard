@@ -213,14 +213,12 @@ namespace Wp7AzureMgmt.Core
         {
             try
             {
-
                 using (HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
                 {
                     using (StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
+                        // leave this in, to look at string in debugger
                         string xml = streamReader.ReadToEnd();
-
-
                         
                         if (string.IsNullOrEmpty(xml))
                         {
@@ -234,7 +232,6 @@ namespace Wp7AzureMgmt.Core
                         {
                             Debug.WriteLine("default T");
                         }
-
 
                         return temp;
                     }

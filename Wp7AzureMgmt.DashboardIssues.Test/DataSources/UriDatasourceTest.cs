@@ -6,6 +6,7 @@ using System.Web;
 using Wp7AzureMgmt.DashboardIssues.Models;
 using Wp7AzureMgmt.DashboardFeeds.Models;
 using Wp7AzureMgmt.Core.Interfaces;
+using System.Linq;
 
 namespace Wp7AzureMgmt.DashboardIssues.Test
 {
@@ -24,11 +25,21 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         [Test]
         public void UriDatasourceConstructorTest()
         {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
+            // arrange
+            DashboardHttp http = null; 
+            HttpContextBase httpContext = null;
+            string pathToFeedsFileSource = string.Empty; Setup.GetDataPath();
+
+            // act
             UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource);
-            Assert.Inconclusive("TODO: Implement code to verify target");
+
+            // assert
+            Assert.IsNotNull(target);
+            Assert.IsNull(target.DashboardHttp);
+            Assert.IsNull(target.DashboardUri);
+            Assert.IsNull(target.RssIssues);
+            Assert.IsNotNull(target.SerializedFilename);
+            Assert.That(target.SerializedFilename.Contains("IssueFileDatasource"));
         }
 
         /// <summary>
@@ -49,7 +60,10 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             actual = target.Get();
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.IsNotNull(actual);
+            Assert.IsNotNull(actual.Issues);
+            Assert.IsTrue((actual.RetrievalDate - DateTime.UtcNow).Days < 1);
+            Assert.GreaterOrEqual(actual.Issues.ToList().Count, 70);
         }
 
         /// <summary>
@@ -58,84 +72,27 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         [Test]
         public void SetTest()
         {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
-            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource); // TODO: Initialize to an appropriate value
-            target.Set();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
+            // arrange
+            DashboardHttp http = null; 
+            HttpContextBase httpContext = null; 
+            string pathToFeedsFileSource = string.Empty; 
+            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource);
 
-        /// <summary>
-        ///A test for DashboardHttp
-        ///</summary>
-        [Test]
-        public void DashboardHttpTest()
-        {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
-            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource); // TODO: Initialize to an appropriate value
-            IDashboardHttp expected = null; // TODO: Initialize to an appropriate value
-            IDashboardHttp actual;
-            target.DashboardHttp = expected;
-            actual = target.DashboardHttp;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for DashboardUri
-        ///</summary>
-        [Test]
-        public void DashboardUriTest()
-        {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
-            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource); // TODO: Initialize to an appropriate value
-            Uri expected = null; // TODO: Initialize to an appropriate value
-            Uri actual;
-            target.DashboardUri = expected;
-            actual = target.DashboardUri;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for RssIssues
-        ///</summary>
-        [Test]
-        public void RssIssuesTest()
-        {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
-            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource); // TODO: Initialize to an appropriate value
-            RssIssues expected = null; // TODO: Initialize to an appropriate value
-            RssIssues actual;
-            target.RssIssues = expected;
-            actual = target.RssIssues;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for SerializedFilename
-        ///</summary>
-        [Test]
-        public void SerializedFilenameTest()
-        {
-            DashboardHttp http = null; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            string pathToFeedsFileSource = string.Empty; // TODO: Initialize to an appropriate value
-            UriDatasource target = new UriDatasource(http, httpContext, pathToFeedsFileSource); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            target.SerializedFilename = expected;
-            actual = target.SerializedFilename;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            // act
+            try
+            {
+                target.Set();
+                Assert.Fail("exception not thrown");
+            }
+            catch (NotImplementedException)
+            {
+                Assert.Pass();
+            }
+            catch
+            {
+                Assert.Fail("Invalid exception");
+            } 
+            
         }
     }
 }

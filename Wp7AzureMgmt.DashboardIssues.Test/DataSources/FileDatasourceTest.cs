@@ -50,7 +50,12 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             string pathToFilename = Setup.GetDataPath(); 
             HttpContextBase httpContext = null; 
             FileDatasource target = new FileDatasource(pathToFilename, httpContext);
- 
+
+            if (!File.Exists(pathToFilename + "IssueFileDatasource"))
+            {
+                Setup.RunBeforeTests_FeedListFile();
+            }
+
             RssIssues actual;
 
             // act
@@ -80,13 +85,12 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // so if it is ever propped to server, it doesn't have permission
             // problems
             string serializedFile = Setup.GetDataPath() + "GetTest_params";
-            
-            FileInfo fileInfo = new FileInfo(Setup.GetDataPath() + "IssueFileDatasource");
-            if (!fileInfo.Exists)
-            {
-                Assert.Fail("file doesn't exist");
-            }
 
+            if (!File.Exists(Setup.GetDataPath() + "IssueFileDatasource"))
+            {
+                Setup.RunBeforeTests_IssueListFile();
+            }
+            FileInfo fileInfo = new FileInfo(Setup.GetDataPath() + "IssueFileDatasource");
             fileInfo.MoveTo(serializedFile);
 
             string pathToFilename = Setup.GetDataPath();
@@ -115,7 +119,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         ///A test for Set. Use a fake here.
         ///</summary>
         [Test]
-        public void SetTest()
+        public void SetTest_wParams()
         {
             // arrange
             string pathToFilename = Setup.GetDataPath(); 
@@ -125,11 +129,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // grab a fake
             FakeDatasource fake = new FakeDatasource();
 
-            RssIssues issues = fake.RssIssues; 
-            string filename = "FileDatasource_SetTest";
+            RssIssues issues = fake.RssIssues;
+            string filename = "FileDatasource_SetTest_wParams";
             string fullpathandfilename = pathToFilename + filename;
 
-            // actls
+            // act
             target.Set(issues, fullpathandfilename);
 
             // assert
@@ -137,7 +141,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
 
             // make sure I can deserialize
             RssIssues deserialized = target.Get(fullpathandfilename);
-            Assert.AreSame(issues, deserialized);
+            Assert.AreEqual(issues, deserialized);
             
             // cleanup
             File.Delete(fullpathandfilename);
@@ -147,47 +151,31 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         ///A test for Set
         ///</summary>
         [Test]
-        public void SetTest1()
+        public void SetTest()
         {
-            string pathToFilename = string.Empty; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            FileDatasource target = new FileDatasource(pathToFilename, httpContext); // TODO: Initialize to an appropriate value
+            // arrange
+            string pathToFilename = Setup.GetDataPath() + "FileDatasource_SetTest";
+            HttpContextBase httpContext = null;
+            FileDatasource target = new FileDatasource(pathToFilename, httpContext);
+
+            // grab a fake
+            FakeDatasource fake = new FakeDatasource();
+            RssIssues issues = fake.RssIssues;
+            target.RssIssues = issues;
+            target.FileName = pathToFilename;
+
+            // act
             target.Set();
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        }
 
-        /// <summary>
-        ///A test for FileName
-        ///</summary>
-        [Test]
-        public void FileNameTest()
-        {
-            string pathToFilename = string.Empty; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            FileDatasource target = new FileDatasource(pathToFilename, httpContext); // TODO: Initialize to an appropriate value
-            string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            target.FileName = expected;
-            actual = target.FileName;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+            // assert
+            File.Exists(pathToFilename);
 
-        /// <summary>
-        ///A test for RssIssues
-        ///</summary>
-        [Test]
-        public void RssIssuesTest()
-        {
-            string pathToFilename = string.Empty; // TODO: Initialize to an appropriate value
-            HttpContextBase httpContext = null; // TODO: Initialize to an appropriate value
-            FileDatasource target = new FileDatasource(pathToFilename, httpContext); // TODO: Initialize to an appropriate value
-            RssIssues expected = null; // TODO: Initialize to an appropriate value
-            RssIssues actual;
-            target.RssIssues = expected;
-            actual = target.RssIssues;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            // make sure I can deserialize
+            RssIssues deserialized = target.Get(pathToFilename);
+            Assert.AreEqual(issues, deserialized);
+
+            // cleanup
+            File.Delete(pathToFilename);
         }
     }
 }

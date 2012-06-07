@@ -17,7 +17,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.Core;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// Grab RSS feeds page from Windows Azure
@@ -75,20 +75,35 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// <returns>string including post pend slash</returns>
         public static string GetDataPath()
         {
-            string binPath = new System.Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
+            string finalPath = string.Empty;
+
+            RssFeeds feeds = new RssFeeds();
+
+            string binPath = AppDomain.CurrentDomain.BaseDirectory;
+            string[] splitString = null;
+            string basePath = string.Empty;
 
             // everything before the bin directory
-            Regex matchPattern = new Regex("bin");
-
-            // grab matches
-            string[] splitString = matchPattern.Split(binPath);
-
-            if (splitString != null)
+            if (binPath.Contains("bin"))
             {
-                return splitString[0] + "App_Data/";
+                Regex matchPattern = new Regex("bin");
+                splitString = matchPattern.Split(binPath);
+                basePath = splitString[0];
+                finalPath = Path.Combine(basePath, @"App_Data\");
+            }
+            else if (binPath.Contains("TestResults"))
+            {
+                Regex matchPattern = new Regex("TestResults");
+                splitString = matchPattern.Split(binPath);
+                basePath = splitString[0];
+                finalPath = Path.Combine(basePath, "XmlTestProject", @"App_Data\");
+            }
+            else
+            {
+                // don't know where the path is at this point
             }
 
-            return string.Empty;
+            return finalPath;
         }
     }
 }

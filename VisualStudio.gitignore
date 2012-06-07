@@ -92,3 +92,6 @@ xsd/
 #test files
 *.testsettings
 *.vsmdi
+
+#data files
+App_Data

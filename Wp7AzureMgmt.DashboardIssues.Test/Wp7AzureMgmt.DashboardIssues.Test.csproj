@@ -59,6 +59,8 @@
     <Compile Include="DataSources\UriDatasourceTest.cs" />
     <Compile Include="DataSources\FileDatasourceTest.cs" />
     <Compile Include="Models\rssChannelItemTest.cs" />
+    <Compile Include="Models\rssChannelImageTest.cs" />
+    <Compile Include="Models\rssChannelTest.cs" />
     <Compile Include="Utilities\IssueConfigurationTest.cs" />
     <Compile Include="IssueMgrTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

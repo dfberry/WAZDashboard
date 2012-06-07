@@ -276,6 +276,13 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         /// </summary>
         public rssChannel()
         {
+            this.copyright = string.Empty;
+            this.description = string.Empty;
+            this.language = string.Empty;
+            this.lastBuildDate = string.Empty;
+            this.link = string.Empty;
+            this.pubDate = string.Empty;
+            this.title = string.Empty;
         }
 
         public rssChannel(SerializationInfo info, StreamingContext ctxt)
@@ -321,6 +328,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
 
         public override bool Equals(object obj)
         {
+
+
             if (obj.GetType() != typeof(rssChannel))
             {
                 return false;
@@ -331,30 +340,56 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
                 && (((rssChannel)obj).language == this.language)
                 && (((rssChannel)obj).link == this.link)
                 && (((rssChannel)obj).pubDate == this.pubDate)
-                && (((rssChannel)obj).title == this.title)
-                && (((rssChannel)obj).item.Length == this.item.Length)
-                && (((rssChannel)obj).image.Length == this.image.Length))
+                && (((rssChannel)obj).title == this.title))
             {
-                // items 
-                rssChannelItem[] thisList = this.item;
-                rssChannelItem[] testList = ((rssChannel)obj).item;
 
-                for (int i = 0; i < this.item.Length; i++)
+                // verify that array'd objects are either both null or both have values
+                if ((((((rssChannel)obj).item == null) && (this.item !=null)) || ((((rssChannel)obj).item != null) && (this.item ==null)))
+                    || (((((rssChannel)obj).image == null) && (this.image != null)) || ((((rssChannel)obj).image != null) && (this.image == null))))
                 {
-                    if (!thisList[i].Equals(testList[i]))
+                    return false;
+                }
+
+                if (((((rssChannel)obj).item != null) && (this.item != null)))
+                {
+
+                    // verify that array'd objects have some length
+                    if (((rssChannel)obj).item.Length != this.item.Length) 
                     {
                         return false;
+                    }                    
+                    
+                    // items 
+                    rssChannelItem[] thisList = this.item;
+                    rssChannelItem[] testList = ((rssChannel)obj).item;
+
+                    for (int i = 0; i < this.item.Length; i++)
+                    {
+                        if (!thisList[i].Equals(testList[i]))
+                        {
+                            return false;
+                        }
                     }
                 }
 
-                // images 
-                rssChannelImage[] thisList2 = this.image;
-                rssChannelImage[] testList2 = ((rssChannel)obj).image;
-                for (int i = 0; i < this.image.Length; i++)
+                if (((((rssChannel)obj).image != null) && (this.image != null)))
                 {
-                    if (!thisList2[i].Equals(testList2[i]))
+
+                    // verify that array'd objects have some length
+                    if (((rssChannel)obj).image.Length != this.image.Length)
                     {
                         return false;
+                    }   
+                    
+                    // images 
+                    rssChannelImage[] thisList2 = this.image;
+                    rssChannelImage[] testList2 = ((rssChannel)obj).image;
+                    for (int i = 0; i < this.image.Length; i++)
+                    {
+                        if (!thisList2[i].Equals(testList2[i]))
+                        {
+                            return false;
+                        }
                     }
                 }
 

@@ -63,7 +63,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         public void SetRssIssuesFromUriTest()
         {
             // arrange
-            Setup.RunBeforeTests();
+            Setup.RunBeforeTests_FeedListFile();
 
             HttpContextBase context = null;
             string pathToFiles = Setup.GetDataPath();

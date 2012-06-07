@@ -85,11 +85,11 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
         /// <param name="httpContext">Http web context or null if not a web request</param>
         public UriDatasource(DashboardHttp http, HttpContextBase httpContext, string pathToFeedsFileSource)
         {
-            //this.configuration = new FeedConfiguration(httpContext);
+            //this.configuration = new IssueConfiguration(httpContext);
             this.configurationContext = httpContext;
             this.httpRequest = http;
             this.pathToSerializedFeeds = pathToFeedsFileSource;
-            //this.GetConfigSettings();
+            this.GetConfigSettings();
         }
 
         /// <summary>
@@ -221,9 +221,10 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
         /// </summary>
         private void GetConfigSettings()
         {
-            //this.configuration = new IssueConfiguration(this.configurationContext);
+            this.configuration = new IssueConfiguration(this.configurationContext);
 
             // need an http requester - this can always be overwritten
+            this.serializedFilename = configuration.SerializedIssueListFile;
             //this.dashboardURI = new Uri(this.configuration.AzureUri);
             //this.httpRequest = new DashboardHttp(this.httpRequest);
         }
