@@ -87,16 +87,14 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             }
 
             if ((((RssIssue)obj).DateTime == this.DateTime)
-                && (((RssIssue)obj).RssFeed == this.RssFeed)
-                && (((RssIssue)obj).RssIssueXml == this.RssIssueXml))
+                && (((RssIssue)obj).RssFeed.Equals(this.RssFeed))
+                && (((RssIssue)obj).RssIssueXml.Equals(this.RssIssueXml)))
             {
                 return true;
             }
-            else
-            {
-                // date or count is not right
-                return false;
-            }
+
+            // date or count is not right
+            return false;
         }
     }
 }

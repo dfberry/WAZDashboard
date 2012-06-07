@@ -111,8 +111,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
 
             Assert.GreaterOrEqual(issuesList.Count(), 0);
 
-            // clean up
-            fileInfo.MoveTo(serializedFile);
+            // cleanup
+            File.Delete(pathToFilename);
         }
 
         /// <summary>

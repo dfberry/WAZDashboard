@@ -110,25 +110,41 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             {
                 return false;
             }
-
-            if ((((RssIssues)obj).issues == this.issues)
-                && (((RssIssues)obj).RetrievalDate == this.RetrievalDate))
+            // compare properties
+            if (((RssIssues)obj).RetrievalDate != this.RetrievalDate)
             {
-                RssIssue[] thisList = this.Issues.ToArray();
-                RssIssue[] testList = ((RssIssues)obj).Issues.ToArray();
-
-                for (int i = 0; i < this.Issues.Count(); i++)
-                {
-                    if (!thisList[i].Equals(testList[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                // date or count is not right
                 return false;
+            }
+
+            // both collections are null
+            if ((((RssIssues)obj).issues == null) && this.issues == null)
+            {
+                return true;
+            }
+
+            // one collection is null, the other isn't
+            if (((((RssIssues)obj).issues == null) && this.issues != null)
+                || ((((RssIssues)obj).issues != null) && this.issues == null))
+            {
+                return false;
+            }
+
+            // count of collections is different
+            if (((RssIssues)obj).issues.Count() != this.issues.Count())
+            {
+                return false;
+            }
+
+            // both collections have items, now compare each item -- assume they are in same order
+            RssIssue[] thisList = this.Issues.ToArray();
+            RssIssue[] testList = ((RssIssues)obj).Issues.ToArray();
+
+            for (int i = 0; i < this.Issues.Count(); i++)
+            {
+                if (!thisList[i].Equals(testList[i]))
+                {
+                    return false;
+                }
             }
 
             return true;

@@ -93,24 +93,41 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
                 return false;
             }
 
-            if ((((RssIssueXml)obj).version == this.version)
-                && (((RssIssueXml)obj).channel.Length == this.channel.Length))
+            // compare properties
+            if (((RssIssueXml)obj).version != this.version)
             {
-                rssChannel[] thisList = this.channel;
-                rssChannel[] testList = ((RssIssueXml)obj).channel;
-
-                for (int i = 0; i < this.channel.Length; i++)
-                {
-                    if (!thisList[i].Equals(testList[i]))
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                // date or count is not right
                 return false;
+            }
+            
+            // both collections are null
+            if ((((RssIssueXml)obj).channel == null) && (this.channel==null))
+            {
+                return true;
+            }
+
+            // one collection is null, the other isn't
+            if (((((RssIssueXml)obj).channel == null) && this.channel != null)
+                || ((((RssIssueXml)obj).channel != null) && this.channel == null))
+            {
+                return false;
+            }
+
+            // count of collections is different
+            if (((RssIssueXml)obj).channel.Length != this.channel.Length)
+            {
+                return false;
+            }
+
+            // both collections have items, now compare each item -- assume they are in same order
+            rssChannel[] thisList = this.channel;
+            rssChannel[] testList = ((RssIssueXml)obj).channel;
+
+            for (int i = 0; i < this.channel.Length; i++)
+            {
+                if (!thisList[i].Equals(testList[i]))
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -335,68 +352,72 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
                 return false;
             }
 
-            if ((((rssChannel)obj).copyright == this.copyright)
-                && (((rssChannel)obj).description == this.description)
-                && (((rssChannel)obj).language == this.language)
-                && (((rssChannel)obj).link == this.link)
-                && (((rssChannel)obj).pubDate == this.pubDate)
-                && (((rssChannel)obj).title == this.title))
+            // compare properties
+            if ((((rssChannel)obj).copyright != this.copyright)
+                || (((rssChannel)obj).description != this.description)
+                || (((rssChannel)obj).language != this.language)
+                || (((rssChannel)obj).link != this.link)
+                || (((rssChannel)obj).pubDate != this.pubDate)
+                || (((rssChannel)obj).title != this.title))
             {
+                return false;
+            }
 
-                // verify that array'd objects are either both null or both have values
-                if ((((((rssChannel)obj).item == null) && (this.item !=null)) || ((((rssChannel)obj).item != null) && (this.item ==null)))
-                    || (((((rssChannel)obj).image == null) && (this.image != null)) || ((((rssChannel)obj).image != null) && (this.image == null))))
+            // both collections are null
+            if (((((rssChannel)obj).item == null) && this.item == null)
+                && ((((rssChannel)obj).image == null) && this.image == null))
+            {
+                return true;
+            }
+
+            // one collection is null, the other isn't
+            if (((((rssChannel)obj).item == null) && this.item != null)
+                || ((((rssChannel)obj).item != null) && this.item == null))
+            {
+                return false;
+            }
+
+            // one collection is null, the other isn't
+            if (((((rssChannel)obj).image == null) && this.image != null)
+                || ((((rssChannel)obj).image != null) && this.image == null))
+            {
+                return false;
+            }
+
+            // count of collections is different
+            if (((rssChannel)obj).item.Length != this.item.Length)
+            {
+                return false;
+            }
+
+            // count of collections is different
+            if (((rssChannel)obj).image.Length != this.image.Length)
+            {
+                return false;
+            }
+
+                    
+            // items 
+            rssChannelItem[] thisList = this.item;
+            rssChannelItem[] testList = ((rssChannel)obj).item;
+
+            for (int i = 0; i < this.item.Length; i++)
+            {
+                if (!thisList[i].Equals(testList[i]))
                 {
                     return false;
                 }
-
-                if (((((rssChannel)obj).item != null) && (this.item != null)))
-                {
-
-                    // verify that array'd objects have some length
-                    if (((rssChannel)obj).item.Length != this.item.Length) 
-                    {
-                        return false;
-                    }                    
-                    
-                    // items 
-                    rssChannelItem[] thisList = this.item;
-                    rssChannelItem[] testList = ((rssChannel)obj).item;
-
-                    for (int i = 0; i < this.item.Length; i++)
-                    {
-                        if (!thisList[i].Equals(testList[i]))
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                if (((((rssChannel)obj).image != null) && (this.image != null)))
-                {
-
-                    // verify that array'd objects have some length
-                    if (((rssChannel)obj).image.Length != this.image.Length)
-                    {
-                        return false;
-                    }   
-                    
-                    // images 
-                    rssChannelImage[] thisList2 = this.image;
-                    rssChannelImage[] testList2 = ((rssChannel)obj).image;
-                    for (int i = 0; i < this.image.Length; i++)
-                    {
-                        if (!thisList2[i].Equals(testList2[i]))
-                        {
-                            return false;
-                        }
-                    }
-                }
-
             }
-            else
+
+            // images 
+            rssChannelImage[] thisList2 = this.image;
+            rssChannelImage[] testList2 = ((rssChannel)obj).image;
+            for (int i = 0; i < this.image.Length; i++)
             {
-                return false;
+                if (!thisList2[i].Equals(testList2[i]))
+                {
+                    return false;
+                }
             }
 
             return true;
