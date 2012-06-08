@@ -5,7 +5,7 @@ using Wp7AzureMgmt.DashboardIssues.DataSources;
 using System.Reflection;
 
 
-namespace TestProject1
+namespace Wp7AzureMgmt.DashboardIssues.Test
 {
     
     

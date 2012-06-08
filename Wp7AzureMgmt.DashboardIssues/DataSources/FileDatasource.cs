@@ -21,7 +21,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
     /// <summary>
     /// This datasource fetches the issue list from a file on disk
     /// </summary>
-    internal class FileDatasource : IRssIssueDataSource
+    public class FileDatasource : IRssIssueDataSource
     {
         /// <summary>
         /// DashboardConfiguration is required as class object for tracing
@@ -163,7 +163,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
                 }
                 else
                 {
-                    throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist");
+                    throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist - " + serializedFile);
                 }
             }
             catch(Exception ex)

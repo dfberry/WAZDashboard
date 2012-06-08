@@ -25,7 +25,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
     /// <summary>
     /// This datasource fetches the issue list from Windows Azure Dashboard Service web page
     /// </summary>
-    internal class UriDatasource : IRssIssueDataSource
+    public class UriDatasource : IRssIssueDataSource
     {
         /// <summary>
         /// Default Parallel Options to no limit

@@ -19,7 +19,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
     /// This fake datasource is used for testing both library
     /// and mvc app.
     /// </summary>
-    internal class FakeDatasource : IRssIssueDataSource
+    public class FakeDatasource : IRssIssueDataSource
     {
         /// <summary>
         /// Default Parallel Options to no limit

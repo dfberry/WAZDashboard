@@ -53,7 +53,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
 
             if (!File.Exists(pathToFilename + "IssueFileDatasource"))
             {
-                Setup.RunBeforeTests_FeedListFile();
+                Setup.RunBeforeTests_IssueListFile();
             }
 
             RssIssues actual;
@@ -70,6 +70,9 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             List<RssIssue> issuesList = target.RssIssues.Issues.ToList();
             
             Assert.GreaterOrEqual(issuesList.Count(), 0);
+
+            // Cleanup
+            File.Delete(pathToFilename + "IssueFileDatasource");
         }
 
         /// <summary>
@@ -85,6 +88,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // so if it is ever propped to server, it doesn't have permission
             // problems
             string serializedFile = Setup.GetDataPath() + "GetTest_params";
+
+            if (File.Exists(Setup.GetDataPath() + "GetTest_params"))
+            {
+                File.Delete(Setup.GetDataPath() + "GetTest_params");
+            }
 
             if (!File.Exists(Setup.GetDataPath() + "IssueFileDatasource"))
             {
@@ -112,7 +120,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.GreaterOrEqual(issuesList.Count(), 0);
 
             // cleanup
-            File.Delete(pathToFilename);
+            File.Delete(pathToFilename + "GetTest_params");
+            File.Delete(pathToFilename + "IssueFileDatasource");
         }
 
         /// <summary>

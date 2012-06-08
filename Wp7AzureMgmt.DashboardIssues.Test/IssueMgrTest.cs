@@ -70,11 +70,19 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             IssueMgr issueMgr = new IssueMgr(context);
             IssueConfiguration issueConfig = new IssueConfiguration(context);
 
+            if (File.Exists(pathToFiles + issueConfig.SerializedIssueListFile))
+            {
+                File.Delete(pathToFiles + issueConfig.SerializedIssueListFile);
+            }
+
             // act
             issueMgr.SetRssIssuesFromUri(pathToFiles);
 
             // assert
             Assert.IsTrue(File.Exists(pathToFiles + issueConfig.SerializedIssueListFile));
+
+            // cleanup
+            File.Delete(pathToFiles + issueConfig.SerializedIssueListFile);
         }
 
         /// <summary>
@@ -89,6 +97,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             IssueMgr target = new IssueMgr(context); // TODO: Initialize to an appropriate value
             string pathToFiles = Setup.GetDataPath();
 
+            if (!File.Exists(pathToFiles + "IssueFileDatasource"))
+            {
+                Setup.RunBeforeTests_IssueListFile();
+            }
+
             RssIssues actual;
 
             // act
@@ -102,7 +115,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // the lower level tests aren't going to catch and then make sure this one does
             // example: datetime diffs
 
-
+            // cleanup
+            File.Exists(pathToFiles + "IssueFileDatasource");
 
         }
     }
