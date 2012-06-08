@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ObjectPropertiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Wp7AzureMgmt.Core\Wp7AzureMgmt.Core.csproj">

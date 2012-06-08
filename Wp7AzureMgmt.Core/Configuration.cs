@@ -6,12 +6,12 @@
 namespace Wp7AzureMgmt.Core
 {
     using System;
+    using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
     using System.Net;
     using System.Net.Configuration;
     using System.Web;
-    using System.Collections.Specialized;
     using System.Web.Configuration;
 
     /// <summary>
@@ -23,15 +23,15 @@ namespace Wp7AzureMgmt.Core
         /// HttpContext determines where to get config settings. Web app looks in 
         /// web config.
         /// </summary>
-        protected HttpContextBase httpContext;
+        private HttpContextBase httpContext;
 
         /// <summary>
         /// Configuration file of current loading assembly
         /// </summary>
-        protected System.Configuration.Configuration config;
+        private System.Configuration.Configuration config;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="Configuration" /> class.
         /// If httpContext is null, calls ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
         /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
         /// </summary>
@@ -51,7 +51,7 @@ namespace Wp7AzureMgmt.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="Configuration" /> class.
         /// If httpContext is null, calls ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
         /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
         /// configFileName is any "other" config file besides the default.
@@ -72,7 +72,6 @@ namespace Wp7AzureMgmt.Core
                 this.config = WebConfigurationManager.OpenWebConfiguration("~", "Default Web Site", configFileName);
             }
         }
-
 
         /// <summary>
         /// Gets or sets SmtpSection in config file

@@ -10,14 +10,16 @@ namespace Wp7AzureMgmt.DashboardIssues
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Web;
-    using Wp7AzureMgmt.DashboardIssues.Models;
-    using Wp7AzureMgmt.DashboardIssues.DataSources;
-    using Wp7AzureMgmt.Core;
-using Wp7AzureMgmt.DashboardFeeds.Models;
     using System.Threading.Tasks;
+    using System.Web;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardIssues.DataSources;
+    using Wp7AzureMgmt.DashboardIssues.Models;
     
-    
+    /// <summary>
+    /// Entry point for Issue management from MVC app.
+    /// </summary>
     public class IssueMgr
     {
         /// <summary>
@@ -36,7 +38,7 @@ using Wp7AzureMgmt.DashboardFeeds.Models;
         private HttpContextBase httpContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardMgr" /> class.
+        /// Initializes a new instance of the <see cref="IssueMgr" /> class.
         /// </summary>
         /// <param name="context">HttpContextBase tells library where to get config settings</param>
         public IssueMgr(HttpContextBase context)
@@ -58,7 +60,6 @@ using Wp7AzureMgmt.DashboardFeeds.Models;
 
             // get from file
             return fileDatasource.Get();
-
         }
 
         /// <summary>

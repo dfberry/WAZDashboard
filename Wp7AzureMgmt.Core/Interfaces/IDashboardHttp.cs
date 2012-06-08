@@ -30,6 +30,11 @@ namespace Wp7AzureMgmt.Core.Interfaces
         /// <returns>html response as string</returns>
         string GetRequest();
 
+        /// <summary>
+        /// Get XmlRequest and deserialize into generic object T.
+        /// </summary>
+        /// <typeparam name="T">generic T as model for xml</typeparam>
+        /// <returns>T is model for xml</returns>
         T GetXmlRequest<T>();
 
         /// <summary>

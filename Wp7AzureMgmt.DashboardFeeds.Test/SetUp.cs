@@ -15,8 +15,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Text.RegularExpressions;
     using System.Web;
     using NUnit.Framework;
-    using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>

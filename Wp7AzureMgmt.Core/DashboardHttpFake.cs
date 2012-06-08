@@ -66,6 +66,12 @@ namespace Wp7AzureMgmt.Core
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not implemented. 
+        /// </summary>
+        /// <typeparam name="T">generic T of Xml model</typeparam>
+        /// <returns>exceptions only for now</returns>
+        /// <exception cref="NotImplementedException">This method currently not implemented.</exception>
         public T GetXmlRequest<T>()
         {
             throw new NotImplementedException();

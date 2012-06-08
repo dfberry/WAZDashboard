@@ -1,23 +1,26 @@
-﻿using Wp7AzureMgmt.DashboardIssues.Models;
-using NUnit.Framework;
-using System;
-using System.Reflection;
-using Wp7AzureMgmt.DashboardIssues.DataSources;
-
+﻿// -----------------------------------------------------------------------
+// <copyright file="RssChannelImageTest.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 namespace Wp7AzureMgmt.DashboardIssues.Test
 {
-    
+    using System;
+    using System.Reflection;
+    using NUnit.Framework;
+    using Wp7AzureMgmt.DashboardIssues.DataSources;
+    using Wp7AzureMgmt.DashboardIssues.Models;
     
     /// <summary>
-    ///This is a test class for rssChannelImageTest and is intended
-    ///to contain all rssChannelImageTest Unit Tests
-    ///</summary>
+    /// This is a test class for rssChannelImageTest and is intended
+    /// to contain all rssChannelImageTest Unit Tests
+    /// </summary>
     [TestFixture]
-    public class rssChannelImageTest
+    public class RssChannelImageTest
     {
         /// <summary>
-        ///A test for Equals
-        ///</summary>
+        /// A test for Equals
+        /// </summary>
         [Test]
         public void EqualsTest_empty()
         {
@@ -31,6 +34,9 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Tests if two just-created objects are the equal (not the same).
+        /// </summary>
         [Test]
         public void EqualsTest_equal()
         {
@@ -48,6 +54,10 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Expect two objects created with different lengths to 
+        /// not be equal. Tests object's Equal method.
+        /// </summary>
         [Test]
         public void EqualsTest_notequallength()
         {

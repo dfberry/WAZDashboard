@@ -1,29 +1,29 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardMgrTest.cs" company="DFBerry">
+// <copyright file="FileDatasourceTest.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
 namespace Wp7AzureMgmt.DashboardIssues.Test
 {
-    using Wp7AzureMgmt.DashboardIssues.DataSources;
-    using NUnit.Framework;
     using System;
-    using System.Web;
-    using System.Linq;
-    using Wp7AzureMgmt.DashboardIssues.Models;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Web;
+    using NUnit.Framework;
+    using Wp7AzureMgmt.DashboardIssues.DataSources;
+    using Wp7AzureMgmt.DashboardIssues.Models;
     
     /// <summary>
-    ///This is a test class for FileDatasourceTest and is intended
-    ///to contain all FileDatasourceTest Unit Tests
-    ///</summary>
+    /// This is a test class for FileDatasourceTest and is intended
+    /// to contain all FileDatasourceTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class FileDatasourceTest
     {
         /// <summary>
-        ///A test for FileDatasource Constructor
-        ///</summary>
+        /// A test for FileDatasource Constructor
+        /// </summary>
         [Test]
         public void FileDatasourceConstructorTest()
         {
@@ -41,8 +41,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         }
 
         /// <summary>
-        ///A test for Get
-        ///</summary>
+        /// A test for Get
+        /// </summary>
         [Test]
         public void GetTest()
         {
@@ -78,7 +78,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         /// <summary>
         /// A test for GetIssues - make sure any filename can be used for
         /// serialized data source file name. Rename file using FileInfo.MoveTo.
-        ///</summary>
+        /// </summary>
         [Test]
         public void GetTest_params()
         {
@@ -98,6 +98,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             {
                 Setup.RunBeforeTests_IssueListFile();
             }
+
             FileInfo fileInfo = new FileInfo(Setup.GetDataPath() + "IssueFileDatasource");
             fileInfo.MoveTo(serializedFile);
 
@@ -125,8 +126,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         }
 
         /// <summary>
-        ///A test for Set. Use a fake here.
-        ///</summary>
+        /// A test for Set. Use a fake here.
+        /// </summary>
         [Test]
         public void SetTest_wParams()
         {
@@ -157,8 +158,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         }
 
         /// <summary>
-        ///A test for Set
-        ///</summary>
+        /// A test for Set
+        /// </summary>
         [Test]
         public void SetTest()
         {

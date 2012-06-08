@@ -12,15 +12,15 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
     using System.Web;
-    using Wp7AzureMgmt.DashboardIssues.Interfaces;
-    using Wp7AzureMgmt.DashboardIssues.Utiliites;
-    using Wp7AzureMgmt.DashboardIssues.Models;
     using Wp7AzureMgmt.Core;
     using Wp7AzureMgmt.Core.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using System.Threading.Tasks;
+    using Wp7AzureMgmt.DashboardIssues.Interfaces;
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
     
     /// <summary>
     /// This datasource fetches the issue list from Windows Azure Dashboard Service web page
@@ -65,27 +65,21 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
         /// <summary>
         /// URI containing Feedlist
         /// </summary>
-        private Uri dashboardURI = null;
+        private Uri dashboardURI;
 
         /// <summary>
-        /// Http response content pulled from URI
+        /// Path to serialized feeds file - should be in /App_Data
         /// </summary>
-        private string uricontent = null;
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private string pathToSerializedFeeds = null;
+        private string pathToSerializedFeeds;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UriDatasource" /> class.
         /// </summary>
         /// <param name="http">DashboardHttp object containing request</param>
         /// <param name="httpContext">Http web context or null if not a web request</param>
+        /// <param name="pathToFeedsFileSource">Path but not file name</param>
         public UriDatasource(DashboardHttp http, HttpContextBase httpContext, string pathToFeedsFileSource)
         {
-            //this.configuration = new IssueConfiguration(httpContext);
             this.configurationContext = httpContext;
             this.httpRequest = http;
             this.pathToSerializedFeeds = pathToFeedsFileSource;
@@ -156,14 +150,6 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
             }
         }
 
-        private RssFeeds GetRssFeeds()
-        {
-            // get RssFeeds
-            FeedConfiguration feedConfiguration = new FeedConfiguration(configurationContext);
-            DashboardMgr feedMgr = new DashboardMgr(configurationContext);
-            return feedMgr.GetStoredRssFeeds(this.pathToSerializedFeeds);
-        }
-
         /// <summary>
         /// Get RssIssues from uris specified in RssFeeds 
         /// </summary>
@@ -173,9 +159,11 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
             RssFeeds rssFeeds = this.GetRssFeeds();
             List<RssIssue> issues = new List<RssIssue>();
 
-            Parallel.ForEach(rssFeeds.Feeds, this.options, feed =>
+            Parallel.ForEach(
+                rssFeeds.Feeds, 
+                this.options, 
+                feed =>
             {
-
                 if (!string.IsNullOrEmpty(feed.FeedCode))
                 {
                     Uri uri = new Uri(String.Format("http://www.microsoft.com/windowsazure/support/status/RSSFeed.aspx?RSSFeedCode={0}", feed.FeedCode));
@@ -195,12 +183,12 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
 
             if ((issues != null) && (issues.Count > 0))
             {
-                rssIssues = new RssIssues();
-                rssIssues.Issues = issues;
-                rssIssues.RetrievalDate = DateTime.UtcNow;
+                this.rssIssues = new RssIssues();
+                this.rssIssues.Issues = issues;
+                this.rssIssues.RetrievalDate = DateTime.UtcNow;
             }
 
-            return rssIssues;
+            return this.rssIssues;
         }
 
         /// <summary>
@@ -222,11 +210,19 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
         private void GetConfigSettings()
         {
             this.configuration = new IssueConfiguration(this.configurationContext);
+            this.serializedFilename = this.configuration.SerializedIssueListFile;
+        }
 
-            // need an http requester - this can always be overwritten
-            this.serializedFilename = configuration.SerializedIssueListFile;
-            //this.dashboardURI = new Uri(this.configuration.AzureUri);
-            //this.httpRequest = new DashboardHttp(this.httpRequest);
+        /// <summary>
+        /// Gets RssFeeds from web based on Uri in config file.
+        /// </summary>
+        /// <returns>RssFeeds from the web</returns>
+        private RssFeeds GetRssFeeds()
+        {
+            // get RssFeeds
+            FeedConfiguration feedConfiguration = new FeedConfiguration(this.configurationContext);
+            DashboardMgr feedMgr = new DashboardMgr(this.configurationContext);
+            return feedMgr.GetStoredRssFeeds(this.pathToSerializedFeeds);
         }
     }
 }

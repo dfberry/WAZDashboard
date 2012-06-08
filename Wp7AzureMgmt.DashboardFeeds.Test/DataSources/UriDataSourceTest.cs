@@ -13,14 +13,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using Moq;
     using NUnit.Framework;
     using UnityAutoMoq;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.Core.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Enums;
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.Core;
-    using Wp7AzureMgmt.Core.Interfaces;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// Tests for UriDataSource

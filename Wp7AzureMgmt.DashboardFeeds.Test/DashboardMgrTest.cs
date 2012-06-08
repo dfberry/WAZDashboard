@@ -12,9 +12,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Text.RegularExpressions;
     using System.Web;
     using NUnit.Framework;
+    using Wp7AzureMgmt.Core;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// This is a test class for DashboardMgrTest and is intended

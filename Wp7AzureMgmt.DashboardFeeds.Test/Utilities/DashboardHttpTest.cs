@@ -10,9 +10,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Net;
     using System.Web;
     using NUnit.Framework;
-    using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.Core;
-    
+    using Wp7AzureMgmt.DashboardFeeds;
+
     /// <summary>
     /// This is a test class for HTTPTest and is intended
     /// to contain all HTTPTest Unit Tests
@@ -27,8 +27,8 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         {
             HttpContextBase context = null;
 
-            DashboardConfiguration = new FeedConfiguration(context);
-            DashboardHttp = new DashboardHttp(new Uri(DashboardConfiguration.DefaultUri));
+            this.DashboardConfiguration = new FeedConfiguration(context);
+            this.DashboardHttp = new DashboardHttp(new Uri(this.DashboardConfiguration.DefaultUri));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         [Test] public void HttpWebRequestTest()
         {
             // arrange
-            Uri getUri = new Uri(DashboardConfiguration.DefaultUri);
+            Uri getUri = new Uri(this.DashboardConfiguration.DefaultUri);
             DashboardHttp http = new DashboardHttp(getUri); 
 
             // act
@@ -110,7 +110,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             // at Windows Azure
             int fileLength = 689;
                         
-            Uri getUri = new Uri(DashboardConfiguration.DefaultUri);
+            Uri getUri = new Uri(this.DashboardConfiguration.DefaultUri);
             DashboardHttp target = new DashboardHttp(getUri); 
             string filename = DateTime.Now.Ticks + ".html";
 

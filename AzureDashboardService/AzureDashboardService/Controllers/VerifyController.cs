@@ -12,7 +12,6 @@ namespace AzureDashboardService.Controllers
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// Used to verify build

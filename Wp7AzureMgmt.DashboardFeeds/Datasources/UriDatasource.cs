@@ -14,13 +14,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using System.Text;
     using System.Web;
     using HtmlAgilityPack;
+    using Wp7AzureMgmt.Core;
+    using Wp7AzureMgmt.Core.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Enums;
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
-    using Wp7AzureMgmt.Core;
-    using Wp7AzureMgmt.Core.Interfaces;
     
     /// <summary>
     /// This datasource fetches the feed list from Windows Azure Dashboard Service web page

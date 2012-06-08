@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
+﻿// -----------------------------------------------------------------------
+// <copyright file="FeedIssueController.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 namespace AzureDashboardService.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// MVC controller for FeedIssues
+    /// </summary>
     public class FeedIssueController : DashboardBaseController
     {
-        //
-        // GET: /FeedIssue/
-
+        /// <summary>
+        /// Index page for FeedIssue
+        /// </summary>
+        /// <returns>default view for Index</returns>
         public ActionResult Index()
         {
             return View();
@@ -116,5 +125,6 @@ namespace AzureDashboardService.Controllers
             this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
 
             this.DashboardIssueModel.RssIssues = this.IssueMgr.GetStoredRssIssues(this.PathToFiles);
-        }}
+        }
+    }
 }

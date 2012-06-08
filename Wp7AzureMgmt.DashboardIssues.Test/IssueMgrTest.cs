@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardMgrTest.cs" company="DFBerry">
+// <copyright file="IssueMgrTest.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -8,26 +8,28 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Web;
     using NUnit.Framework;
-    using Wp7AzureMgmt.DashboardIssues.Utiliites;
-    using Wp7AzureMgmt.DashboardIssues.Models;
     using Wp7AzureMgmt.Core;
-    using System.IO;
-    
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
+
+    /// <summary>
+    /// Tests for IssueMgr.
+    /// </summary>
     [TestFixture]
     public class IssueMgrTest
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DashboardMgrTest" /> class.
+        /// Initializes a new instance of the <see cref="IssueMgrTest" /> class.
         /// </summary>
         public IssueMgrTest()
         {
             HttpContextBase httpContext = null;
             this.Configuration = new IssueConfiguration(httpContext);
-            //this.DashboardHttp = new DashboardHttp(new Uri(this.Configuration.AzureUri));
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         /// <summary>
         /// A test for GetStoredRssIssues 
         /// DFB:TBD fix this - this test hits the live Azure site - 
-        ///</summary>
+        /// </summary>
         [Test]
         public void GetStoredRssIssuesTest()
         {
@@ -110,14 +112,13 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // assert
             Assert.IsNotNull(actual);
             Assert.IsNotNull(actual.Issues);
-            
+
             // DFB:TBD - this is not a great test - need to figure out what
             // the lower level tests aren't going to catch and then make sure this one does
             // example: datetime diffs
 
             // cleanup
             File.Exists(pathToFiles + "IssueFileDatasource");
-
         }
     }
 }

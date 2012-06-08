@@ -15,8 +15,8 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
     using System.Threading.Tasks;
     using System.Web;
     using Wp7AzureMgmt.DashboardIssues.Interfaces;
-    using Wp7AzureMgmt.DashboardIssues.Utiliites;
     using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
 
     /// <summary>
     /// This datasource fetches the issue list from a file on disk
@@ -33,7 +33,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
         /// web config.
         /// </summary>
         private HttpContextBase configurationContext;
-      
+
         /// <summary>
         /// Path and filename of RssIssues datasource. 
         /// </summary>
@@ -127,7 +127,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
             {
                 Wp7AzureMgmt.Core.Serializer.Serialize(filename, issues);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("FileDatasource::Set - serialization of FileDatasource failed. " + ex.InnerException);
             }
@@ -166,7 +166,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
                     throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist - " + serializedFile);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed. " + ex.InnerException);
             }

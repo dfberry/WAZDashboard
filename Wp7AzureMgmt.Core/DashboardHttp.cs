@@ -204,16 +204,15 @@ namespace Wp7AzureMgmt.Core
         }
 
         /// <summary>
-        /// 
+        /// Get request whose response should contain serializable Xml.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">generic model of Xml</typeparam>
+        /// <returns>T as generic object</returns>
         public T GetXmlRequest<T>()
         {
             try
             {
-                using (HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
+                using (HttpWebResponse httpWebResponse = (HttpWebResponse)this.httpWebRequest.GetResponse())
                 {
                     using (StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
@@ -256,6 +255,5 @@ namespace Wp7AzureMgmt.Core
                 throw;
             }
         }
-
     }
 }

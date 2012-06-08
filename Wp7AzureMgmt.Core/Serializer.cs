@@ -10,10 +10,10 @@ namespace Wp7AzureMgmt.Core
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
     using System.Xml.Serialization;
     
     /// <summary>
@@ -81,12 +81,12 @@ namespace Wp7AzureMgmt.Core
         }
 
         /// <summary>
-        /// 
+        /// Deserializes xml string into model, based on encoding provided.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="xml"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">generic model of Xml</typeparam>
+        /// <param name="xml">Xml as string text</param>
+        /// <param name="encoding">encoding found in top of xml string</param>
+        /// <returns>Xml deserialized into object T</returns>
         public static T XmlDeserialize<T>(string xml, Encoding encoding)
         {
             try
@@ -95,14 +95,13 @@ namespace Wp7AzureMgmt.Core
 
                 XmlSerializer serializer = new XmlSerializer(obj.GetType());
 
-
                 using (MemoryStream memoryStream = new MemoryStream(encoding.GetBytes(xml)))
                 {
                     T temp = (T)serializer.Deserialize(memoryStream);
                     return temp;
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 // DFB: XML was malformed 
                 // return default object so code can keep going

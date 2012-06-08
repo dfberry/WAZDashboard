@@ -1,21 +1,24 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using Wp7AzureMgmt.DashboardFeeds.Models;
-using Wp7AzureMgmt.DashboardIssues.Models;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RssIssue.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Wp7AzureMgmt.DashboardIssues.Models
 {
+    using System;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using Wp7AzureMgmt.DashboardFeeds.Models;
+    using Wp7AzureMgmt.DashboardIssues.Models;
+    
+    /// <summary>
+    /// Model of RssIssue with can be serialized and 
+    /// deserialized.
+    /// </summary>
     [Serializable()]
     public class RssIssue : ISerializable
     {
-
-        public RssFeed RssFeed { get; set; }
-
-        public DateTime DateTime { get; set; }
-
-        public RssIssueXml RssIssueXml { get; set; }
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="RssIssue" /> class.
         /// </summary>
@@ -24,12 +27,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RssFeed" /> class.
+        /// Initializes a new instance of the <see cref="RssIssue" /> class.
         /// </summary>
-        /// <param name="service">service name</param>
-        /// <param name="location">location name</param>
-        /// <param name="code">feed code of service</param>
-        /// <param name="partialuri">uri to feed code</param>
+        /// <param name="rssFeed">rssFeed value</param>
+        /// <param name="datetime">datetime value</param>
+        /// <param name="rssIssueXml">rssIssueXml value</param>
         public RssIssue(RssFeed rssFeed, DateTime datetime, RssIssueXml rssIssueXml)
         {
             this.RssFeed = rssFeed;
@@ -51,6 +53,21 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         }
 
         /// <summary>
+        /// Gets or sets RssFeed, defines the issue category.
+        /// </summary>
+        public RssFeed RssFeed { get; set; }
+
+        /// <summary>
+        /// Gets or sets DateTime of issue construction.
+        /// </summary>
+        public DateTime DateTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets RssIssueXml, defines issues.
+        /// </summary>
+        public RssIssueXml RssIssueXml { get; set; }
+
+        /// <summary>
         /// Add data to serialization string
         /// </summary>
         /// <param name="info">SerializationInfo of RssIssue</param>
@@ -60,7 +77,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             info.AddValue("RssFeed", this.RssFeed);
             info.AddValue("DateTime", this.DateTime);
             info.AddValue("RssIssueXml", this.RssIssueXml);
-
         }
 
         /// <summary>
@@ -70,7 +86,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         public override int GetHashCode()
         {
             return this.RssFeed.GetHashCode() + this.DateTime.GetHashCode() + this.RssIssueXml.GetHashCode();
-
         }
 
         /// <summary>
@@ -87,8 +102,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             }
 
             if ((((RssIssue)obj).DateTime == this.DateTime)
-                && (((RssIssue)obj).RssFeed.Equals(this.RssFeed))
-                && (((RssIssue)obj).RssIssueXml.Equals(this.RssIssueXml)))
+                && ((RssIssue)obj).RssFeed.Equals(this.RssFeed)
+                && ((RssIssue)obj).RssIssueXml.Equals(this.RssIssueXml))
             {
                 return true;
             }

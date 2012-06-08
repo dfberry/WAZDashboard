@@ -15,7 +15,6 @@ namespace AzureDashboardService.Controllers
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// Feed List (rss feeds) api controller

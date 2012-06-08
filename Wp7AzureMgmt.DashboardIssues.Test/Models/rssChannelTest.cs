@@ -1,24 +1,27 @@
-﻿using Wp7AzureMgmt.DashboardIssues.Models;
-using System;
-using NUnit.Framework;
-using Wp7AzureMgmt.DashboardIssues.DataSources;
-using System.Reflection;
-
+﻿// -----------------------------------------------------------------------
+// <copyright file="RssChannelTest.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Wp7AzureMgmt.DashboardIssues.Test
 {
-    
+    using System;
+    using System.Reflection;
+    using NUnit.Framework;
+    using Wp7AzureMgmt.DashboardIssues.DataSources;
+    using Wp7AzureMgmt.DashboardIssues.Models;
     
     /// <summary>
-    ///This is a test class for rssChannelTest and is intended
-    ///to contain all rssChannelTest Unit Tests
-    ///</summary>
+    /// This is a test class for rssChannelTest and is intended
+    /// to contain all rssChannelTest Unit Tests
+    /// </summary>
     [TestFixture]
-    public class rssChannelTest
+    public class RssChannelTest
     {
         /// <summary>
-        ///A test for Equals
-        ///</summary>
+        /// A test for Equals
+        /// </summary>
         [Test]
         public void EqualsTest_empty()
         {
@@ -32,6 +35,10 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Test that object's Equal method works 
+        /// when two objects are equal (not same).
+        /// </summary>
         [Test]
         public void EqualsTest_equal()
         {
@@ -49,6 +56,10 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Tests that two objects that contain arrays of different
+        /// length are not equal. Uses object's Equal method.
+        /// </summary>
         [Test]
         public void EqualsTest_notequallength()
         {
@@ -90,6 +101,5 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // assert
             Assert.IsFalse(actual);
         }
-
     }
 }

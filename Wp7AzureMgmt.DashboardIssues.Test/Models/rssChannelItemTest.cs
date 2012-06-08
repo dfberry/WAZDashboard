@@ -1,24 +1,28 @@
-﻿
+﻿// -----------------------------------------------------------------------
+// <copyright file="RssChannelItemTest.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Wp7AzureMgmt.DashboardIssues.Test
 {
-    using Wp7AzureMgmt.DashboardIssues.Models;
     using System;
+    using System.Reflection;
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardIssues.DataSources;
-    using System.Reflection;
+    using Wp7AzureMgmt.DashboardIssues.Models;
 
-    
-    
     /// <summary>
-    ///This is a test class for rssChannelItemTest and is intended
-    ///to contain all rssChannelItemTest Unit Tests
-    ///</summary>
+    /// This is a test class for rssChannelItemTest and is intended
+    /// to contain all rssChannelItemTest Unit Tests
+    /// </summary>
     [TestFixture]
-    public class rssChannelItemTest
+    public class RssChannelItemTest
     {
         /// <summary>
-        ///A test for Equals
-        ///</summary>
+        /// Tests that two just-created objects are equal (not same).
+        /// Uses object's Equal method.
+        /// </summary>
         [Test]
         public void EqualsTest_empty()
         {
@@ -32,6 +36,10 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Tests that two just-created objects of same length are equal.
+        /// Uses object's Equal method.
+        /// </summary>
         [Test]
         public void EqualsTest_equal()
         {
@@ -49,6 +57,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             Assert.IsTrue(actual);
         }
 
+        /// <summary>
+        /// Tests that two object created with different contained array lengths
+        /// are not equal.
+        /// Uses object's Equal method.
+        /// </summary>
         [Test]
         public void EqualsTest_notequallength()
         {
@@ -68,8 +81,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         }
 
         /// <summary>
+        /// Tests that two objects are not equal if one property value 
+        /// is different.
         /// Only testing one field since all fields should be
-        /// used to determine eqaulity
+        /// used to determine eqaulity.
+        /// Uses object's Equal method.
         /// </summary>
         [Test]
         public void EqualsTest_notequalcontent()

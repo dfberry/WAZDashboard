@@ -1,4 +1,10 @@
-﻿using System.Reflection;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

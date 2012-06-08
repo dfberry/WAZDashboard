@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
+﻿// -----------------------------------------------------------------------
+// <copyright file="IssueConfiguration.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Wp7AzureMgmt.DashboardIssues.Utiliites
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Web;
+    
+    /// <summary>
+    /// Configuration class for Issues. 
+    /// </summary>
     public class IssueConfiguration : Wp7AzureMgmt.Core.Configuration
     {
-        private string serializedIssueList;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeedConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="IssueConfiguration" /> class.
         /// If httpContext is null, calls ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
         /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
         /// </summary>
@@ -22,7 +29,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Utiliites
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FeedConfiguration" /> class.
+        /// Initializes a new instance of the <see cref="IssueConfiguration" /> class.
         /// If httpContext is null, calls ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
         /// otherwise calls WebConfigurationManager.OpenWebConfiguration("~");
         /// configFileName is any "other" config file besides the default.
@@ -31,10 +38,13 @@ namespace Wp7AzureMgmt.DashboardIssues.Utiliites
         /// <param name="httpContext">httpContext of calling assembly</param>
         /// <param name="configFileName">name of non-default config file</param>
         public IssueConfiguration(HttpContextBase httpContext, string configFileName)
-            :base(httpContext, configFileName)
+            : base(httpContext, configFileName)
         {
         }
 
+        /// <summary>
+        /// Gets or sets SerializedIssueListFile stored in config file.
+        /// </summary>
         public string SerializedIssueListFile
         {
             get
@@ -46,7 +56,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Utiliites
             {
                 this.Save("SerializedIssueListFile", value);
             }
-
         }
     }
 }

@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Threading.Tasks;
-using Wp7AzureMgmt.DashboardFeeds;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RssIssues.cs" company="DFBerry">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Wp7AzureMgmt.DashboardIssues.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Wp7AzureMgmt.DashboardFeeds;
+
     /// <summary>
     /// Main Data Class containing information of the dashboard issues
     /// </summary>
@@ -30,13 +36,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         private IEnumerable<RssIssue> issues;
 
         /// <summary>
-        /// Gets or sets date of generation of Feed list - when the list was
-        /// generated from the Azure Service Dashboard website.
-        /// </summary>
-        /// <returns>DateTime of Feed list generation</returns>
-        public DateTime RetrievalDate { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RssIssues" /> class.
         /// Need a zero param constructor.
         /// </summary>
@@ -56,6 +55,13 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         }
 
         /// <summary>
+        /// Gets or sets date of generation of Feed list - when the list was
+        /// generated from the Azure Service Dashboard website.
+        /// </summary>
+        /// <returns>DateTime of Feed list generation</returns>
+        public DateTime RetrievalDate { get; set; }
+
+        /// <summary>
         /// Gets or sets Feeds list
         /// </summary>
         public IEnumerable<RssIssue> Issues
@@ -63,7 +69,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             get { return this.issues; }
             set { this.issues = value; }
         }
-        
 
         /// <summary>
         /// Get object from serialized data
@@ -74,7 +79,6 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
         {
             info.AddValue("Issues", this.issues);
             info.AddValue("RetrievalDate", this.RetrievalDate);
-
         }
 
         /// <summary>
@@ -110,6 +114,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             {
                 return false;
             }
+
             // compare properties
             if (((RssIssues)obj).RetrievalDate != this.RetrievalDate)
             {
@@ -149,7 +154,5 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
 
             return true;
         }
-
-
     }
 }

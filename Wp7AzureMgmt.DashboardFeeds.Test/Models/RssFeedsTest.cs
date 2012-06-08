@@ -12,7 +12,6 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using NUnit.Framework;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
     
     /// <summary>
     /// RssFeeds Model Test

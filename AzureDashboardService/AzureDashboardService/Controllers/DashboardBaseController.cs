@@ -19,8 +19,6 @@ namespace AzureDashboardService.Controllers
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardIssues;
 
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
-
     /// <summary>
     /// BaseController for all controllers
     /// in this web app.
@@ -32,25 +30,30 @@ namespace AzureDashboardService.Controllers
         /// </summary>
         private string pathToFiles;
 
+        /// <summary>
+        /// Issue manager.
+        /// </summary>
         private IssueMgr issueMgr;
-
 
         /// <summary>
         /// Dashboard data model 
         /// </summary>
         private DashboardModel feedModel;
 
+        /// <summary>
+        /// Issue model specific to web app. 
+        /// </summary>
         private DashboardIssueModel issueModel;
 
         /// <summary>
-        /// Dashboard factory manager 
+        /// Feed manager.
         /// </summary>
         private DashboardMgr feedMgr;
 
         /// <summary>
         /// DashboardConfiguration - entry into web.config appSettings
         /// </summary>
-        private FeedConfiguration dbFeedConfig;
+        private FeedConfiguration feedConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardBaseController" /> class.
@@ -59,14 +62,13 @@ namespace AzureDashboardService.Controllers
         /// </summary>
         public DashboardBaseController()
         {
-            this.dbFeedConfig = new FeedConfiguration(this.HttpContext);
+            this.feedConfiguration = new FeedConfiguration(this.HttpContext);
 
             this.feedMgr = new DashboardMgr(this.HttpContext);
             this.issueMgr = new IssueMgr(this.HttpContext);
             
             this.feedModel = new DashboardModel();
             this.issueModel = new DashboardIssueModel();
-
 
             // DFB-todo: set this only once on app start up or check at each request?
             // answer: for now - check at each request
@@ -174,12 +176,12 @@ namespace AzureDashboardService.Controllers
         {
             get
             {
-                return this.dbFeedConfig;
+                return this.feedConfiguration;
             }
 
             set
             {
-                this.dbFeedConfig = value;
+                this.feedConfiguration = value;
             }
         }
 

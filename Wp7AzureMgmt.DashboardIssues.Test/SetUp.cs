@@ -15,9 +15,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
     using System.Text.RegularExpressions;
     using System.Web;
     using NUnit.Framework;
-    using Wp7AzureMgmt.DashboardFeeds;
     using Wp7AzureMgmt.Core;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
+    using Wp7AzureMgmt.DashboardFeeds;
 
     /// <summary>
     /// Grab RSS feeds page from Windows Azure
@@ -27,14 +26,13 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
     /// </summary>
     public static class Setup
     {
-        ///// <summary>
-        ///// Pull Html file from Windows Azure only once, store it,
-        ///// save file name.
-        ///// </summary>
-        ///// <returns>filename as string</returns>
+        /// <summary>
+        /// Pull Html file from Windows Azure only once, store it,
+        /// save file name.
+        /// </summary>
+        /// <returns>filename as string</returns>
         public static string RunBeforeTests_FeedListFile()
         {
-
             HttpContextBase httpContext = null;
             DashboardMgr dashboardMgr = new DashboardMgr(httpContext);
 
@@ -43,11 +41,11 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             return string.Empty;
         }
 
-        ///// <summary>
-        ///// Pull Html file from Windows Azure only once, store it,
-        ///// save file name.
-        ///// </summary>
-        ///// <returns>filename as string</returns>
+        /// <summary>
+        /// Pull Html file from Windows Azure only once, store it,
+        /// save file name.
+        /// </summary>
+        /// <returns>filename as string</returns>
         public static string RunBeforeTests_IssueListFile()
         {
             HttpContextBase httpContext = null;

@@ -15,12 +15,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
     using System.Threading.Tasks;
     using System.Web;
     using HtmlAgilityPack;
+    using Wp7AzureMgmt.Core;
     using Wp7AzureMgmt.DashboardFeeds.Enums;
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.Core;
-    //using Wp7AzureMgmt.DashboardFeeds.Utilities;
 
     /// <summary>
     /// This datasource fetches the feed list from a file on disk

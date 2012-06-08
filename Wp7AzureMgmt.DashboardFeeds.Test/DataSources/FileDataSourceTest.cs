@@ -13,9 +13,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using System.Text;
     using System.Web;
     using NUnit.Framework;
+    using Wp7AzureMgmt.Core;
     using Wp7AzureMgmt.DashboardFeeds.DataSources;
     using Wp7AzureMgmt.DashboardFeeds.Models;
-    using Wp7AzureMgmt.Core;
 
     /// <summary>
     /// Tests for FileDataSource class
