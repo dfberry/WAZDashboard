@@ -12,19 +12,21 @@
     <!--jqGrid Code - refer http://www.trirand.com/blog/jqgrid/jqgrid.html -->
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#feedissuegroupgrid").jqGrid({
+            jQuery("#issuelistgroupgrid").jqGrid({
                 url: '/FeedIssue/DynamicGridData/',
                 datatype: 'json',
                 mtype: 'POST',
-                colNames: ['Id', 'Service', 'Location', 'Feed Code', 'RSS Link'],
+                colNames: ['Id', 'Service', 'Location', 'Status', 'Date', 'Title', 'Description'],
                 colModel: [
    		            { name: 'Id', index: 'Id' },
    		            { name: 'ServiceName', index: 'ServiceName' },
    		            { name: 'LocationName', index: 'LocationName' },
-   		            { name: 'FeedCode', index: 'FeedCode' },
-                    { name: 'RSSLink', index: 'RSSLink' }
+   		            { name: 'IssueStatus', index: 'IssueStatus' },
+   		            { name: 'IssueDate', index: 'IssueDate' },
+   		            { name: 'IssueTitle', index: 'IssueTitle' },
+                    { name: 'IssueDescription', index: 'IssueDescription' }
    	            ],
-                pager: '#feedlistgroupgridpager',
+                pager: '#issuelistgroupgridpager',
                 rowNum: 100,
                 rowList: [10, 50, 100],
                 sortname: 'Id',
@@ -45,15 +47,15 @@
                 },
                 gridview: true,
                 loadonce: true,
-                caption: "Windows Azure Service Dashboard RSS Feeds"
+                caption: "Windows Azure Service Dashboard RSS Feed Issues"
             });
             jQuery("#chngroup").change(function () {
                 var vl = $(this).val();
                 if (vl) {
                     if (vl == "clear") {
-                        jQuery("#feedlistgroupgrid").jqGrid('groupingRemove', true);
+                        jQuery("#issuelistgroupgrid").jqGrid('groupingRemove', true);
                     } else {
-                        jQuery("#feedlistgroupgrid").jqGrid('groupingGroupBy', vl);
+                        jQuery("#issuelistgroupgrid").jqGrid('groupingGroupBy', vl);
                     }
                 }
             });
@@ -72,8 +74,8 @@ Group By:
     <option value="clear">Remove Grouping</option>
 </select>
 </p>
-<table id="feedlistgroupgrid">
+<table id="issuelistgroupgrid">
 </table>
-<div id="feedlistgroupgridpager" class="scroll" style="text-align: center;">
+<div id="issuelistgroupgridpager" class="scroll" style="text-align: center;">
 </div>
 

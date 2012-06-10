@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.DashboardIssue
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.Core.Test", "Wp7AzureMgmt.Core.Test\Wp7AzureMgmt.Core.Test.csproj", "{054DD1D9-7759-422B-AB70-BD4163AE55FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureDashboardService.Test", "AzureDashboardService.Test\AzureDashboardService.Test.csproj", "{F1C4FA45-BA96-4583-BA17-F94B356F9C94}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AzureDashboardMVCWeb.vsmdi
@@ -151,6 +153,21 @@ Global
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|x86.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.TraceDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.TraceDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.TraceDebug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.TraceDebug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1C4FA45-BA96-4583-BA17-F94B356F9C94}.TraceDebug|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

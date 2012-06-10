@@ -16,6 +16,7 @@ namespace Wp7AzureMgmt.DashboardIssues
     using Wp7AzureMgmt.DashboardFeeds.Models;
     using Wp7AzureMgmt.DashboardIssues.DataSources;
     using Wp7AzureMgmt.DashboardIssues.Models;
+    using Wp7AzureMgmt.DashboardIssues.Utiliites;
     
     /// <summary>
     /// Entry point for Issue management from MVC app.
@@ -80,6 +81,18 @@ namespace Wp7AzureMgmt.DashboardIssues
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
             fileDatasource.RssIssues = issues;
             fileDatasource.Set();
+        }
+
+        /// <summary>
+        /// Gets Issues file name in /App_Data
+        /// </summary>
+        public string DatasourceFilename
+        {
+            get
+            {
+                IssueConfiguration issueConfiguration = new IssueConfiguration(httpContext);
+                return issueConfiguration.SerializedIssueListFile;
+            }
         }
     }
 }

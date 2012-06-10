@@ -71,5 +71,17 @@ namespace Wp7AzureMgmt.DashboardFeeds
             fileDatasource.RssFeeds = feeds;
             fileDatasource.Set();
         }
+
+        /// <summary>
+        /// Gets Feeds file name in /App_Data
+        /// </summary>
+        public string DatasourceFilename
+        {
+            get
+            {
+                FeedConfiguration feedConfiguration = new FeedConfiguration(httpContext);
+                return feedConfiguration.SerializedFeedListFile;
+            }
+        }
     }
 }

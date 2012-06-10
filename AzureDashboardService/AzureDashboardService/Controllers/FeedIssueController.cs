@@ -7,9 +7,12 @@ namespace AzureDashboardService.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using AzureDashboardService.Factories;
+    using System.Diagnostics;
 
     /// <summary>
     /// MVC controller for FeedIssues
@@ -17,22 +20,13 @@ namespace AzureDashboardService.Controllers
     public class FeedIssueController : DashboardBaseController
     {
         /// <summary>
-        /// Index page for FeedIssue
-        /// </summary>
-        /// <returns>default view for Index</returns>
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// Display list of grouped issues in grid
         /// using jqGrid.
         /// </summary>
         /// <returns>feedlist as table in ViewResult</returns>
         public ViewResult IssueListGrid()
         {
-            this.InternalBuild();
+            this.InternalRead();
 
             if ((this.DashboardIssueModel != null)
                 && (this.DashboardIssueModel.RssIssues != null)
@@ -57,7 +51,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>JsonResult specific to jqGrid</returns>
         public JsonResult DynamicGridData(string sidx, string sord, int page, int rows)
         {
-            this.InternalBuild();
+            this.InternalRead();
 
             if ((this.DashboardIssueModel != null)
                 && (this.DashboardIssueModel.RssIssues != null)
@@ -67,37 +61,51 @@ namespace AzureDashboardService.Controllers
             }
 
             // Order data by service and location
-            var issuesSorted = from issue in this.DashboardIssueModel.RssIssues.Issues
-                              orderby issue.RssFeed.ServiceName, issue.RssFeed.LocationName
-                              select issue;
+            //var issuesSorted = from issue in this.DashboardIssueModel.RssIssues.Issues
+            //                  orderby issue.RssFeed.ServiceName, issue.RssFeed.LocationName
+            //                  select issue;
 
-            // Paging 
-            int pageIndex = Convert.ToInt32(page) - 1;
-            int pageSize = rows;
-            int totalRecords = issuesSorted.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
-
-            // feeds paged subset
-            var issuesPaged = issuesSorted.Skip(pageIndex * pageSize).Take(pageSize);
-
-            int rowId = 0;
-
-            // build response specific to jgGrid
-            var jsonData = new
+            try
             {
-                total = totalPages,
-                page,
-                records = totalRecords,
-                rows = (
-                    from issue in issuesSorted
-                    select new
-                    {
-                        i = rowId++,
-                        cell = new string[] { rowId.ToString(), issue.RssFeed.ServiceName, issue.RssFeed.LocationName, issue.RssFeed.FeedCode, issue.RssFeed.RSSLink }
-                    }).ToArray()
-            };
+                var issuesSorted = from issue in IssuesFactory.ToIssueModel(this.DashboardIssueModel.RssIssues)
+                                   orderby issue.ServiceName, issue.LocationName
+                                   select issue;
 
-            return Json(jsonData);
+                // Paging 
+                int pageIndex = Convert.ToInt32(page) - 1;
+                int pageSize = rows;
+                int totalRecords = issuesSorted.Count();
+                int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+                // feeds paged subset
+                var issuesPaged = issuesSorted.Skip(pageIndex * pageSize).Take(pageSize);
+
+                int rowId = 0;
+
+                // build response specific to jgGrid
+                var jsonData = new
+                {
+                    total = totalPages,
+                    page,
+                    records = totalRecords,
+                    rows = (
+                        from issue in issuesSorted
+                        select new
+                        {
+                            i = rowId++,
+                            cell = new string[] { rowId.ToString(), issue.ServiceName, issue.LocationName, issue.IssueStatus, issue.IssueDate, issue.IssueTitle, issue.IssueDescription }
+                        }).ToArray()
+                };
+
+                return Json(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceInformation("ex = " + ex.InnerException);
+            }
+            // want to grab RssIssueXml.channel[i].
+
+            return null;
         }
 
         /// <summary>
@@ -122,9 +130,30 @@ namespace AzureDashboardService.Controllers
         {
             // build new file - should also have a new feeddata as well
             // to verify new file
-            this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
+            if (System.IO.File.Exists(this.PathToFiles + this.DashboardMgr.DatasourceFilename))
+            {
+                this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
+            }
 
-            this.DashboardIssueModel.RssIssues = this.IssueMgr.GetStoredRssIssues(this.PathToFiles);
+            this.InternalRead();
+        }
+
+        /// <summary>
+        /// Serialized file exists, grab model from serialized file.
+        /// </summary>
+        public void InternalRead()
+        {
+            if (System.IO.File.Exists(this.PathToFiles + this.IssueMgr.DatasourceFilename))
+            {
+                if (this.DashboardIssueModel.RssIssues == null)
+                {
+                    this.DashboardIssueModel.RssIssues = this.IssueMgr.GetStoredRssIssues(this.PathToFiles);
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Issue Datasource file not found");
+            }
         }
     }
 }

@@ -141,11 +141,13 @@
     <Compile Include="Controllers\FeedListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VerifyController.cs" />
+    <Compile Include="Factories\IssuesFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DashboardIssueModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
+    <Compile Include="Models\Issue.cs" />
     <Compile Include="Notifications\NotificationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

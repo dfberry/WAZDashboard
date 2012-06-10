@@ -430,6 +430,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlRoot(IsNullable = true)]
     public partial class rssChannelImage : ISerializable
     {
 
@@ -534,6 +535,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlRoot(IsNullable = true)]
     public partial class rssChannelItem : ISerializable
     {
 
