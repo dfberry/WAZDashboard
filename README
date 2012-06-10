@@ -1,7 +1,3 @@
 This Visual Studio C# project parses the Windows Azure Service Dashboard into a collection of objects.
 
 The download includes an MVC app to view the results, the code library to generate the objects, and the NUnit test project of the library. 
-
-Current uri for service dashboard is http://www.windowsazurestatus.com/windowsazure/support/status/servicedashboardcontent.aspx.
-
-Hosted at: http://wazdashboard.apphb.com/
