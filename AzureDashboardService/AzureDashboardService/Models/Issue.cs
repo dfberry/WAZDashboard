@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="DashboardIssueModel.cs" company="DFBerry">
+// <copyright file="Issue.cs" company="DFBerry">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -14,39 +14,38 @@ namespace AzureDashboardService.Models
     public class Issue
     {
         /// <summary>
-        /// Azure service name
+        /// Gets or sets Azure service name
         /// </summary>
         public string ServiceName { get; set; }
 
         /// <summary>
-        /// Azure location name
+        /// Gets or sets Azure location name
         /// </summary>
         public string LocationName { get; set; }
 
         /// <summary>
-        /// Azure feedcode, combination of service and location
+        /// Gets or sets Azure feedcode, combination of service and location
         /// </summary>
         public string FeedCode { get; set; }
 
         /// <summary>
-        /// Azure Issue date (utc?)
+        /// Gets or sets Azure Issue date (utc?)
         /// </summary>
         public string IssueDate { get; set; }
 
         /// <summary>
-        /// Azure Issue Title (raw)
+        /// Gets or sets Azure Issue Title (raw)
         /// </summary>
         public string IssueTitle { get; set; }
 
         /// <summary>
-        /// Azure Issue Description (deal with encoded/unencoded html)
+        /// Gets or sets Azure Issue Description (deal with encoded/unencoded html)
         /// </summary>
         public string IssueDescription { get; set; }
 
         /// <summary>
-        /// Azure Issue Status
+        /// Gets or sets Azure Issue Status
         /// </summary>
         public string IssueStatus { get; set; }
-
     }
 }

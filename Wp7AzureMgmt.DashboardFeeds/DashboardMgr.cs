@@ -40,6 +40,18 @@ namespace Wp7AzureMgmt.DashboardFeeds
         }
 
         /// <summary>
+        /// Gets Feeds file name in /App_Data
+        /// </summary>
+        public string DatasourceFilename
+        {
+            get
+            {
+                FeedConfiguration feedConfiguration = new FeedConfiguration(this.httpContext);
+                return feedConfiguration.SerializedFeedListFile;
+            }
+        }
+
+        /// <summary>
         /// Deserialize RssFeeds from disk
         /// </summary>
         /// <param name="pathToFiles">location on disk for serialized files</param>
@@ -70,18 +82,6 @@ namespace Wp7AzureMgmt.DashboardFeeds
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
             fileDatasource.RssFeeds = feeds;
             fileDatasource.Set();
-        }
-
-        /// <summary>
-        /// Gets Feeds file name in /App_Data
-        /// </summary>
-        public string DatasourceFilename
-        {
-            get
-            {
-                FeedConfiguration feedConfiguration = new FeedConfiguration(httpContext);
-                return feedConfiguration.SerializedFeedListFile;
-            }
         }
     }
 }

@@ -7,11 +7,14 @@ namespace AzureDashboardService.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using System.IO;
     
+    /// <summary>
+    /// Setup - any functions that need to happen before a particular test.
+    /// </summary>
     public static class Setup
     {
         /// <summary>

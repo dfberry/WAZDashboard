@@ -7,12 +7,12 @@ namespace AzureDashboardService.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Factories;
-    using System.Diagnostics;
 
     /// <summary>
     /// MVC controller for FeedIssues
@@ -60,11 +60,6 @@ namespace AzureDashboardService.Controllers
                 return null;
             }
 
-            // Order data by service and location
-            //var issuesSorted = from issue in this.DashboardIssueModel.RssIssues.Issues
-            //                  orderby issue.RssFeed.ServiceName, issue.RssFeed.LocationName
-            //                  select issue;
-
             try
             {
                 var issuesSorted = from issue in IssuesFactory.ToIssueModel(this.DashboardIssueModel.RssIssues)
@@ -103,7 +98,6 @@ namespace AzureDashboardService.Controllers
             {
                 Trace.TraceInformation("ex = " + ex.InnerException);
             }
-            // want to grab RssIssueXml.channel[i].
 
             return null;
         }

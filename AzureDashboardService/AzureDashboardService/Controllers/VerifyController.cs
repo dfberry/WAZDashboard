@@ -85,9 +85,7 @@ namespace AzureDashboardService.Controllers
         public ActionResult Trace()
         {
             //string traceData = TraceLogToFile.Get(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
-
             //ViewData["TraceData"] = traceData;
-
             return View();
         }
 

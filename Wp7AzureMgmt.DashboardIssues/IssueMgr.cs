@@ -51,6 +51,18 @@ namespace Wp7AzureMgmt.DashboardIssues
         }
 
         /// <summary>
+        /// Gets Issues file name in /App_Data
+        /// </summary>
+        public string DatasourceFilename
+        {
+            get
+            {
+                IssueConfiguration issueConfiguration = new IssueConfiguration(this.httpContext);
+                return issueConfiguration.SerializedIssueListFile;
+            }
+        }
+
+        /// <summary>
         /// Deserialize RssIssues from disk
         /// </summary>
         /// <param name="pathToFiles">location on disk for serialized files</param>
@@ -81,18 +93,6 @@ namespace Wp7AzureMgmt.DashboardIssues
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
             fileDatasource.RssIssues = issues;
             fileDatasource.Set();
-        }
-
-        /// <summary>
-        /// Gets Issues file name in /App_Data
-        /// </summary>
-        public string DatasourceFilename
-        {
-            get
-            {
-                IssueConfiguration issueConfiguration = new IssueConfiguration(httpContext);
-                return issueConfiguration.SerializedIssueListFile;
-            }
         }
     }
 }
