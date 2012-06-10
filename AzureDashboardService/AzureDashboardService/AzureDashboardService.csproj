@@ -211,7 +211,6 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\jqGrid\ui.jqgrid.css" />
     <Content Include="Content\jqGrid\ui.multiselect.css" />
-    <Content Include="App_Data\Trace.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jqGrid\grid.base.js" />
@@ -370,9 +369,6 @@
     <Content Include="Views\Verify\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\FileDatasource" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\FeedList\NoFeeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +391,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\FeedIssue\IssueListGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
