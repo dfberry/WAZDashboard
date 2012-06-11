@@ -28,37 +28,37 @@ namespace AzureDashboardService.Controllers
             if (Request.QueryString["build"] != null)
             {
                 this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
+                this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
             }
 
-            string filePath = this.PathToFiles + this.FeedConfiguration.SerializedFeedListFile;
+            string filePathFeeds = this.PathToFiles + this.DashboardMgr.DatasourceFilename;
+            string filePathIssues = this.PathToFiles + this.IssueMgr.DatasourceFilename;
 
             // Fully qualify File so it doesn't use MVC version
-            bool fileExists = System.IO.File.Exists(filePath);
+            bool fileExistsFeeds = System.IO.File.Exists(filePathFeeds);
+            bool fileExistsIssues = System.IO.File.Exists(filePathIssues);
 
-            if (fileExists)
+            if (fileExistsFeeds)
             {
-                FileInfo info = new FileInfo(filePath);
+                FileInfo infoFeeds = new FileInfo(filePathFeeds);
 
-                ViewData["CreationTime"] = info.CreationTime;
-                ViewData["FullName"] = info.FullName;
-                ViewData["LastWriteTime"] = info.LastWriteTime;
-                ViewData["Length"] = info.Length;
+                ViewData["Feeds-CreationTime"] = infoFeeds.CreationTime;
+                ViewData["Feeds-FullName"] = infoFeeds.FullName;
+                ViewData["Feeds-LastWriteTime"] = infoFeeds.LastWriteTime;
+                ViewData["Feeds-Length"] = infoFeeds.Length;
             }
 
-            ViewData["FilePath"] = filePath;
-            ViewData["DataFileExists"] = fileExists.ToString();
+            ViewData["Feeds-FilePath"] = filePathFeeds;
 
-#if HideExceptions
-            VewData["HideExceptions"] = true;
-#else
-            ViewData["HideExceptions"] = false;
-#endif
+            if (fileExistsIssues)
+            {
+                FileInfo infoIssues = new FileInfo(filePathIssues);
 
-#if Trace
-            ViewData["Trace"] = true;
-#else
-            ViewData["Trace"] = false;
-#endif
+                ViewData["Issues-CreationTime"] = infoIssues.CreationTime;
+                ViewData["Issues-FullName"] = infoIssues.FullName;
+                ViewData["Issues-LastWriteTime"] = infoIssues.LastWriteTime;
+                ViewData["Issues-Length"] = infoIssues.Length;
+            }
 
             return View();
         }

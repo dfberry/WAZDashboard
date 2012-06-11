@@ -4,14 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-FileExists =    '@ViewData["DataFileExists"]'<br />
-<p>
-FullName =      '@ViewData["FullName"]'<br /> 
-CreationTime =  '@ViewData["CreationTime"]'<br /> 
-LastWriteTime = '@ViewData["LastWriteTime"]'<br /> 
-Length =        '@ViewData["Length"]'<br /> 
-</p>
-<h2>Custom Config Settings</h2>
-HideExceptions = '@ViewData["HideExceptions"]'</br>
-Trace = '@ViewData["Trace"]'</br>
+<h2>Feeds Datasource</h2>
+Creation: '@ViewData["Feeds-CreationTime"]'<br />
+Creation: '@ViewData["Feeds-FullName"]'<br />
+Creation: '@ViewData["Feeds-LastWriteTime"]'<br />
+Creation: '@ViewData["Feeds-Length"]'<br />
+
+<h2>Issues Datasource</h2>
+Creation: '@ViewData["Issues-CreationTime"]'<br />
+Creation: '@ViewData["Issues-FullName"]'<br />
+Creation: '@ViewData["Issues-LastWriteTime"]'<br />
+Creation: '@ViewData["Issues-Length"]'<br />
