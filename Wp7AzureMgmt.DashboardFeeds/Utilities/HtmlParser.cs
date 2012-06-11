@@ -12,7 +12,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using System.Threading.Tasks;
     using HtmlAgilityPack;
     using Wp7AzureMgmt.DashboardFeeds.Enums;
-    using Wp7AzureMgmt.DashboardFeeds.Models;    
+    using Wp7AzureMgmt.DashboardFeeds.Models;
 
     /// <summary>
     /// Main parsing class that moves data between an HTML file into RssFeeds
@@ -24,7 +24,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// </summary>
 #if DEBUG
         private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 1 };
-#else  
+#else
         private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = -1 }; // no limit to parallelism
 #endif
 
@@ -258,7 +258,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// <returns>RSSFeed converted from Feed data items</returns>
         public RssFeed ConvertFeedItemListToRSSFeed(List<HTMLParserFeedItem> list)
         {
-            if (list != null)
+            if ((list != null) && (list.Count == 4))
             {
                 return new RssFeed
                 {
@@ -268,8 +268,10 @@ namespace Wp7AzureMgmt.DashboardFeeds
                     ServiceName = this.FindParseFeedItemValue(list, HTMLParserFeedItemType.ServiceName)
                 };
             }
-
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -292,7 +294,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// <returns>string of feedItemType's data item value</returns>
         public string FindParseFeedItemValue(List<HTMLParserFeedItem> list, HTMLParserFeedItemType feedItemType)
         {
-            if ((list != null) && (list.Count > 0))
+            if ((list != null) && (list.Count == 4))
             {
                 return list.Find(item => item.Name == feedItemType).Value;
             }

@@ -36,7 +36,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// web config.
         /// </summary>
         private HttpContextBase configurationContext;
-      
+
         /// <summary>
         /// Path and filename of RssFeeds datasource. 
         /// </summary>
@@ -155,9 +155,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
             {
                 Serializer.Serialize(filename, feeds);
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed.");
+                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed. " + ex.InnerException);
             }
         }
 
@@ -194,9 +194,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                     throw new ArgumentNullException("FileDatasource::GetFeeds - " + "serializedFile doesn't exist");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed.");
+                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed. " + ex.InnerException);
             }
         }
     }

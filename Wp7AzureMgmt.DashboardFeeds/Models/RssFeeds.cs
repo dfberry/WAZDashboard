@@ -14,7 +14,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
-    
+
     /// <summary>
     /// Main Data Class containing information of the dashboard feeds
     /// </summary>
@@ -26,7 +26,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         /// </summary>
 #if DEBUG
         private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 1 }; // no parallelism
-#else  
+#else
         private ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = -1 }; // no limit to parallelism
 #endif
 
@@ -84,7 +84,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         {
             get { return this.uriPrefix; }
             set { this.uriPrefix = value; }
-        }        
+        }
 
         /// <summary>
         /// Get object from serialized data
@@ -112,17 +112,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            Parallel.ForEach(
-                this.feeds,
-                this.options,
-                feed =>
-                {
-                    string feedOutline = opmlOutline.Replace("$$name", HttpUtility.HtmlEncode(feed.ServiceName));
-                    feedOutline = feedOutline.Replace("$$location", HttpUtility.HtmlEncode(feed.LocationName));
-                    feedOutline = feedOutline.Replace("$$code", HttpUtility.HtmlEncode(feed.FeedCode));
+            foreach (RssFeed feed in this.feeds)
+            {
+                string feedOutline = opmlOutline.Replace("$$name", HttpUtility.HtmlEncode(feed.ServiceName));
+                feedOutline = feedOutline.Replace("$$location", HttpUtility.HtmlEncode(feed.LocationName));
+                feedOutline = feedOutline.Replace("$$code", HttpUtility.HtmlEncode(feed.FeedCode));
 
-                    stringBuilder.Append(feedOutline);
-                });
+                stringBuilder.Append(feedOutline);
+            }
 
             opml = opml.Replace("$$content", stringBuilder.ToString());
 
