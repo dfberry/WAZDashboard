@@ -1,0 +1,20 @@
+﻿@model System.Collections.Generic.IEnumerable<AzureDashboardService.Models.Issue>
+@{
+    ViewBag.Title = "AllIssues";
+}
+
+<h2>AllIssues: @Model.Count()</h2>
+<table>
+@foreach (var item in Model) {     
+    <tr> 
+        <td valign=top>@item.ServiceName</td> 
+        <td valign=top>@item.LocationName</td> 
+        <td valign=top>@item.FeedCode</td> 
+        <td valign=top>@item.IssueDate</td> 
+        <td valign=top>@item.IssueTitle</td> 
+        <td valign=top>@item.IssueStatus</td> 
+        <td valign=top>@item.IssueDescription</td> 
+    </tr> 
+} 
+</table>
+

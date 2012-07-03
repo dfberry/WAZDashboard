@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Ajax";
+}
+@section AddToHead{
+    <script src="@Url.Content("~/Scripts/jquery.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $.ajax({
+            type: "GET",
+            url: "/Verify/JsonTest",
+            success:
+            function (msg) {
+                alert("Data:" + msg);
+            }
+        });
+    </script>
+}
+<h2>Test Ajax Json retrieval</h2>
+<div id="result
+" class="scroll" style="text-align: center;">
+</div>

@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "HighChart";
+}
+@section AddToHead{
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/excanvas.min.js"></script><![endif]-->
+    <script type="text/javascript" src="~/Scripts/graph/Highcharts-2.2.5/js/highcharts.js"></script>
+    <script type="text/javascript" src="~/Scripts/graph/Highcharts-2.2.5/js/modules/exporting.js"></script>
+    <script type="text/javascript" src="~/Scripts/dfb/dfb-highchart.js"></script>
+
+  <script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/jquery.min.js"></script>
+  <script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/jquery.jqplot.min.js"></script>
+  <script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/plugins/jqplot.pieRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/plugins/jqplot.donutRenderer.min.js"></script>
+  <script language="javascript" type="text/javascript" src="~/Scripts/graph/jqPlot/plugins/jqplot.json2.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="~/Scripts/graph/jqPlot/jquery.jqplot.min.css" />
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+
+}
+<form id='filter' action="">
+    <select id="ctlFilter1" >
+        <option value="Service" >Service</option>
+        <option value="Location" >Location</option>
+        <option value="Status" >Status</option>
+    </select>
+    
+    <select id="ctlFilter2">
+        <option value="3">3 day</option>
+        <option value="7" >7 days</option>
+        <option value="14">14 days</option>
+        <option value="30">30 days</option>
+    </select>
+    <input id="form-submit" type="submit" value="Submit" />    
+</form>
+<div id="Chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<div id="Table" style="height:500px; width:900px;"></div>
