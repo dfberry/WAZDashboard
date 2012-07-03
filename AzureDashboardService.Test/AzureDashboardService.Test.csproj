@@ -121,6 +121,7 @@
     <Compile Include="IssuesFactoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="VerifyControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AzureDashboardService\AzureDashboardService\AzureDashboardService.csproj">
@@ -142,6 +143,50 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="QUnit\addons\canvas\README.md" />
+    <None Include="QUnit\addons\close-enough\README.md" />
+    <None Include="QUnit\addons\composite\README.md" />
+    <None Include="QUnit\addons\phantomjs\README.md" />
+    <None Include="QUnit\addons\step\README.md" />
+    <None Include="QUnit\addons\themes\README.md" />
+    <None Include="QUnit\History.md" />
+    <None Include="QUnit\package.json" />
+    <None Include="QUnit\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="QUnit\.gitignore" />
+    <Content Include="QUnit\addons\canvas\canvas-test.js" />
+    <Content Include="QUnit\addons\canvas\canvas.html" />
+    <Content Include="QUnit\addons\canvas\qunit-canvas.js" />
+    <Content Include="QUnit\addons\close-enough\close-enough-test.js" />
+    <Content Include="QUnit\addons\close-enough\close-enough.html" />
+    <Content Include="QUnit\addons\close-enough\qunit-close-enough.js" />
+    <Content Include="QUnit\addons\composite\composite-demo-test.html" />
+    <Content Include="QUnit\addons\composite\index.html" />
+    <Content Include="QUnit\addons\composite\qunit-composite.css" />
+    <Content Include="QUnit\addons\composite\qunit-composite.js" />
+    <Content Include="QUnit\addons\junitlogger\index.html" />
+    <Content Include="QUnit\addons\junitlogger\junitlogger.js" />
+    <Content Include="QUnit\addons\phantomjs\runner.js" />
+    <Content Include="QUnit\addons\step\qunit-step.js" />
+    <Content Include="QUnit\addons\step\step-test.js" />
+    <Content Include="QUnit\addons\step\step.html" />
+    <Content Include="QUnit\addons\themes\gabe.css" />
+    <Content Include="QUnit\addons\themes\gabe.html" />
+    <Content Include="QUnit\addons\themes\nv.css" />
+    <Content Include="QUnit\addons\themes\nv.html" />
+    <Content Include="QUnit\grunt.js" />
+    <Content Include="QUnit\qunit\qunit.css" />
+    <Content Include="QUnit\qunit\qunit.js" />
+    <Content Include="QUnit\test\deepEqual.js" />
+    <Content Include="QUnit\test\headless.html" />
+    <Content Include="QUnit\test\index.html" />
+    <Content Include="QUnit\test\logs.html" />
+    <Content Include="QUnit\test\logs.js" />
+    <Content Include="QUnit\test\narwhal-test.js" />
+    <Content Include="QUnit\test\node-test.js" />
+    <Content Include="QUnit\test\swarminject.js" />
+    <Content Include="QUnit\test\test.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

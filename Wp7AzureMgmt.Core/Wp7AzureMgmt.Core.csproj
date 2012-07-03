@@ -45,6 +45,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="DashboardHttp.cs" />
     <Compile Include="DashboardHttpFake.cs" />
+    <Compile Include="DateTimeConversion.cs" />
     <Compile Include="Interfaces\IDashboardHttp.cs" />
     <Compile Include="Interfaces\INotification.cs" />
     <Compile Include="Interfaces\ISmtpClient.cs" />

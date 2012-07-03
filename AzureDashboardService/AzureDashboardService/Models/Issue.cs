@@ -31,7 +31,7 @@ namespace AzureDashboardService.Models
         /// <summary>
         /// Gets or sets Azure Issue date (utc?)
         /// </summary>
-        public string IssueDate { get; set; }
+        public DateTime IssueDate { get; set; }
 
         /// <summary>
         /// Gets or sets Azure Issue Title (raw)

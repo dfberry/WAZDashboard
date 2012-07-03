@@ -41,7 +41,7 @@ namespace AzureDashboardService.Factories
                                             ServiceName = issue.RssFeed.ServiceName,
                                             LocationName = issue.RssFeed.LocationName,
                                             FeedCode = issue.RssFeed.FeedCode,
-                                            IssueDate = item.pubDate,
+                                            IssueDate = Wp7AzureMgmt.Core.DateTimeConversion.FromRssPubDateToDateTime(item.pubDate),
                                             IssueTitle = item.title,
                                             IssueDescription = item.description,
                                             IssueStatus = item.status

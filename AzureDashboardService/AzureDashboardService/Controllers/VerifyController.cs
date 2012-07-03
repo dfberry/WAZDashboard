@@ -12,12 +12,57 @@ namespace AzureDashboardService.Controllers
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using System.Collections.Specialized;
+    using AzureDashboardService.Models;
+    using AzureDashboardService.Factories;
     
     /// <summary>
     /// Used to verify build
     /// </summary>
     public class VerifyController : DashboardBaseController
     {
+        public ViewResult Issues()
+        {
+            return View();
+        }
+        
+        public ViewResult Ajax()
+        {
+            return View();
+        }
+        public ViewResult jqGrid()
+        {
+            return View();
+        }
+        public ViewResult jqPlot()
+        {
+            return View();
+        }
+
+        public ViewResult HighChart()
+        {
+            var majorFilter = Request.QueryString["majorfilter"];
+            var minorFilter = Request.QueryString["minorfilter"];
+
+
+            return View();
+        }
+
+        /// <summary>
+        /// Test returning Json 2D array of data
+        /// </summary>
+        /// <returns>JsonResult 2D array</returns>
+        public JsonResult JsonTest()
+        {
+
+            var json = new[] { 
+                new object[] {"Pending", 1 }, 
+                new object[] {"Completed", 5 } 
+            }; 
+
+            return Json(json,JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Index to show basic build requirements
         /// </summary>
@@ -27,8 +72,15 @@ namespace AzureDashboardService.Controllers
             // if 'build' querystring key found, ignore value and build
             if (Request.QueryString["build"] != null)
             {
-                this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
-                this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
+                if (Request.QueryString["feeds"] != null)
+                {
+                    this.DashboardMgr.SetRssFeedsFromUri(this.PathToFiles);
+                }
+
+                if (Request.QueryString["issues"] != null)
+                {
+                    this.IssueMgr.SetRssIssuesFromUri(this.PathToFiles);
+                }
             }
 
             string filePathFeeds = this.PathToFiles + this.DashboardMgr.DatasourceFilename;
@@ -125,6 +177,27 @@ namespace AzureDashboardService.Controllers
             this.Notify("/Verify/Email", toReturn);
 
             return View();
+        }
+
+        /// <summary>
+        /// Show all loaded Rss issues
+        /// </summary>
+        /// <returns>ActionResult showing all issues</returns>
+        public ActionResult AllIssues()
+        {
+            if (System.IO.File.Exists(this.PathToFiles + this.IssueMgr.DatasourceFilename))
+            {
+                if (this.DashboardIssueModel.RssIssues == null)
+                {
+                    this.DashboardIssueModel.RssIssues = this.IssueMgr.GetStoredRssIssues(this.PathToFiles);
+                }
+            }
+            var flattenedIssues = (from issue in IssuesFactory.ToIssueModel(this.DashboardIssueModel.RssIssues)
+                                   where issue.IssueDate > DateTime.Today.AddDays(-30)
+                                   orderby issue.IssueDate descending, issue.ServiceName, issue.LocationName
+                                  select issue);
+
+            return View(flattenedIssues);
         }
     }
 } 
