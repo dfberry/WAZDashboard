@@ -26,7 +26,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         {
             // arrange
             HttpContextBase httpContext = null; 
-            string configFileName = String.Empty;
+            string configFileName = string.Empty;
             string serializedIssueListFile = "IssueFileDatasource";
 
             // act

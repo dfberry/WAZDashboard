@@ -7,17 +7,13 @@
 namespace Wp7AzureMgmt.DashboardIssues
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Web;
     using Wp7AzureMgmt.Core;
-    using Wp7AzureMgmt.DashboardFeeds.Models;
     using Wp7AzureMgmt.DashboardIssues.DataSources;
     using Wp7AzureMgmt.DashboardIssues.Models;
     using Wp7AzureMgmt.DashboardIssues.Utiliites;
-    
+
     /// <summary>
     /// Entry point for Issue management from MVC app.
     /// </summary>

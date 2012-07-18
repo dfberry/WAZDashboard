@@ -6,11 +6,8 @@
 
 namespace AzureDashboardService.Factories
 {
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Web;
     using AzureDashboardService.Models;
     using Wp7AzureMgmt.DashboardIssues.Models;
 

@@ -13,6 +13,7 @@ namespace Wp7AzureMgmt.DashboardFeeds
     using HtmlAgilityPack;
     using Wp7AzureMgmt.DashboardFeeds.Enums;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+using System.Diagnostics;
 
     /// <summary>
     /// Main parsing class that moves data between an HTML file into RssFeeds
@@ -294,14 +295,23 @@ namespace Wp7AzureMgmt.DashboardFeeds
         /// <returns>string of feedItemType's data item value</returns>
         public string FindParseFeedItemValue(List<HTMLParserFeedItem> list, HTMLParserFeedItemType feedItemType)
         {
-            if ((list != null) && (list.Count == 4))
+            try
             {
-                return list.Find(item => item.Name == feedItemType).Value;
+                if ((list != null) && (list.Count == 4))
+                {
+                    return list.Find(item => item.Name == feedItemType).Value;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                Trace.TraceInformation(ex.Message);
             }
+
+            return null;
         }
 
         /// <summary>

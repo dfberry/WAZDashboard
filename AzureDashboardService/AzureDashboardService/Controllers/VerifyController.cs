@@ -7,13 +7,9 @@
 namespace AzureDashboardService.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using System.Collections.Specialized;
-    using AzureDashboardService.Models;
     using AzureDashboardService.Factories;
     
     /// <summary>
@@ -21,46 +17,34 @@ namespace AzureDashboardService.Controllers
     /// </summary>
     public class VerifyController : DashboardBaseController
     {
-        public ViewResult Issues()
-        {
-            return View();
-        }
-        
+        /// <summary>
+        /// Playing with Ajax
+        /// </summary>
+        /// <returns>ViewResult of default view</returns>
         public ViewResult Ajax()
         {
             return View();
         }
-        public ViewResult jqGrid()
-        {
-            return View();
-        }
-        public ViewResult jqPlot()
-        {
-            return View();
-        }
-
-        public ViewResult HighChart()
-        {
-            var majorFilter = Request.QueryString["majorfilter"];
-            var minorFilter = Request.QueryString["minorfilter"];
-
-
-            return View();
-        }
 
         /// <summary>
-        /// Test returning Json 2D array of data
+        /// Test returning anon Json 2D array of data
         /// </summary>
         /// <returns>JsonResult 2D array</returns>
         public JsonResult JsonTest()
         {
-
-            var json = new[] { 
-                new object[] {"Pending", 1 }, 
-                new object[] {"Completed", 5 } 
+            var json = new[] 
+            { 
+                new object[] 
+                { 
+                    "Pending", 1 
+                }, 
+                new object[] 
+                { 
+                    "Completed", 5 
+                } 
             }; 
 
-            return Json(json,JsonRequestBehavior.AllowGet);
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -116,41 +100,6 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
-        /// Adds test to tracefile. Underlying Trace call depends on Trace config settings.
-        /// </summary>
-        /// <returns>ActionResult of Trace View</returns>
-        public ActionResult TraceTest()
-        {
-            if (Request.QueryString["test"] != null)
-            {
-                string test = Request.QueryString["test"];
-            }
-
-            return this.Trace();
-        }
-
-        /// <summary>
-        /// Print trace file contents to web page. View handles html coding between
-        /// newline for text file and new line for html file.
-        /// </summary>
-        /// <returns>ActionResult of Trace View</returns>
-        public ActionResult Trace()
-        {
-            //string traceData = TraceLogToFile.Get(this.PathToFiles + this.DashboardConfiguration.TraceLogFileName);
-            //ViewData["TraceData"] = traceData;
-            return View();
-        }
-
-        /// <summary>
-        /// Deletes existing tracefile.
-        /// </summary>
-        /// <returns>ActionResult of Trace View</returns>
-        public ActionResult DeleteTraceFile()
-        {
-            return this.Trace();
-        }
-
-        /// <summary>
         /// Send email with Server Variables and Request header information
         /// </summary>
         /// <returns>ActionResult containing both sets of information</returns>
@@ -192,10 +141,11 @@ namespace AzureDashboardService.Controllers
                     this.DashboardIssueModel.RssIssues = this.IssueMgr.GetStoredRssIssues(this.PathToFiles);
                 }
             }
-            var flattenedIssues = (from issue in IssuesFactory.ToIssueModel(this.DashboardIssueModel.RssIssues)
+
+            var flattenedIssues = from issue in IssuesFactory.ToIssueModel(this.DashboardIssueModel.RssIssues)
                                    where issue.IssueDate > DateTime.Today.AddDays(-30)
                                    orderby issue.IssueDate descending, issue.ServiceName, issue.LocationName
-                                  select issue);
+                                  select issue;
 
             return View(flattenedIssues);
         }

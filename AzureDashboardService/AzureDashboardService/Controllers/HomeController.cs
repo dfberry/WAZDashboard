@@ -5,15 +5,8 @@
 // -----------------------------------------------------------------------
 namespace AzureDashboardService.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using AzureDashboardService.Models;
-    using Wp7AzureMgmt.DashboardFeeds;
-    using Wp7AzureMgmt.DashboardFeeds.Models;
-    
+
     /// <summary>
     /// Home controller page of the web site
     /// </summary>
@@ -33,7 +26,7 @@ namespace AzureDashboardService.Controllers
         /// <returns>Home page content as ActionResult</returns>
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Show", "Issues");
         }
 
         /// <summary>

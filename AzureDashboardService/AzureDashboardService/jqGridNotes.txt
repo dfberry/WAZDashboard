@@ -18,3 +18,5 @@ to figure out grouping
 
 http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs
 documentation
+
+http://www.cutterscrossing.com/index.cfm/jqGrid

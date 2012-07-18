@@ -5,18 +5,11 @@
 // -----------------------------------------------------------------------
 namespace AzureDashboardService.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
     using AzureDashboardService.Models;
-    using AzureDashboardService.Notifications;
     using Wp7AzureMgmt.Core.Notifications;
     using Wp7AzureMgmt.DashboardFeeds;
-    using Wp7AzureMgmt.DashboardFeeds.DataSources;
-    using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardIssues;
 
     /// <summary>

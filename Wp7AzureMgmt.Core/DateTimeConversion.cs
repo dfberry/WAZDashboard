@@ -7,9 +7,6 @@
 namespace Wp7AzureMgmt.Core
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Globalization;
     
     /// <summary>
@@ -26,15 +23,16 @@ namespace Wp7AzureMgmt.Core
         /// <returns>DateTime of rssPubDate</returns>
         public static DateTime FromRssPubDateToDateTime(string rssPubDate)
         {
-            String tempDateTime = rssPubDate;
+            string tempDateTime = rssPubDate;
             string format1 = "yyyy-MM-dd HH:mm";
 
-            if (!String.IsNullOrEmpty(tempDateTime))
+            if (!string.IsNullOrEmpty(tempDateTime))
             {
                 // DFB: this is the final format I want but it isn't the format that comes back from azure
-
                 tempDateTime = tempDateTime.Replace("T", " ");
-                tempDateTime = tempDateTime.Substring(0, 16); //cut off the seconds
+
+                // cut off the seconds
+                tempDateTime = tempDateTime.Substring(0, 16); 
 
                 // DFB: not sure if the cultureinfo.invariantculture is the right choice
                 return DateTime.ParseExact(tempDateTime, format1, CultureInfo.InvariantCulture);

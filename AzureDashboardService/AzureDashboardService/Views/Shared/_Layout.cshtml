@@ -1,3 +1,8 @@
+@helper ActionImage(string action, object routeValues, string imagePath, string alt) { 
+    <a href="@Url.Action(action, routeValues)"> 
+        <img src="@Url.Content(imagePath)" alt="@alt" style="border: inherit" > 
+    </a> 
+} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,7 @@
     <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("Enjoy Azure", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("Dashboard", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -25,9 +30,10 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@ActionImage("RSS", "Issues", "../../Content/images/Rss_New.png", "")</li>
+                            <li>@Html.ActionLink("Issues", "Show", "Issues")</li>
+                            <li>@Html.ActionLink("Feeds", "Show", "Feeds")</li>
+                            <li>@Html.ActionLink("OPML", "Download", "Feeds")</li>
                         </ul>
                     </nav>
                 </div>
@@ -42,11 +48,11 @@
     <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - dina at berryintl.com</p>
+                    
                 </div>
                 <div class="float-right">
                     <ul id="social">
-                        <li><a href="http://twitter.com/dfberry" class="twitter">dfberry on Twitter</a></li>
+                        <li><a href="mailto:dina@berryintl.com">email</a> <a href="http://twitter.com/dfberry" class="twitter">dfberry on Twitter</a></li>
                     </ul>
                 </div>
             </div>

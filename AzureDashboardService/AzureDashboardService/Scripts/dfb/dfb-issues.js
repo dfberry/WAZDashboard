@@ -6,7 +6,7 @@
 function getChart(data, title, chartname) {
 
     
-    alert("getChart function");
+//    alert("getChart function");
 
     var i = 0;
 
@@ -56,7 +56,7 @@ function getChart(data, title, chartname) {
 
 function getTable(groupSelected, daysSelected, htmlTableObjectName, htmlPageObjectName) {
 
-    alert("getTable function");
+//    alert("getTable function");
 
     var urlForJsonCall = '/FeedIssue/DynamicGridData/?majorfilter=' + groupSelected + '&minorfilter=' + daysSelected;
 
@@ -87,7 +87,7 @@ function getTable(groupSelected, daysSelected, htmlTableObjectName, htmlPageObje
             imgpath: '',
             grouping: true,
             groupingView: {
-                groupField: ['ServiceName'],
+                groupField: [groupSelected],
                 groupColumnShow: [false],
                 groupText: ['<b>{0} - {1} Items(s)</b>'],
                 groupCollapse: false,
@@ -99,14 +99,31 @@ function getTable(groupSelected, daysSelected, htmlTableObjectName, htmlPageObje
             caption: 'Issues',
             loadComplete: function () {
                 var ret;
-                alert("This function is executed immediately after\n data is loaded.");
-                //ret = jQuery("#list15").jqGrid('getRowData', "13");
+                //                alert("This function is executed immediately after\n data is loaded.");
+                //                //ret = jQuery("#list15").jqGrid('getRowData', "13");
+
+                $("#dfbHtmlTable").jqGrid('groupingGroupBy', groupSelected);
+
+                if (groupSelected == "clear") { // remove grouping
+                    jQuery("#issuelistgroupgrid").jqGrid('groupingRemove', true);
+//                    jQuery("#issuelistgroupgrid").jqGrid('sortname', 'Id');
+////                    jQuery("#issuelistgroupgrid").jqGrid('sortorder', 'asc');
+                } else if (groupSelected == "IssueDate") { // deal with dates differently
+                    jQuery("#issuelistgroupgrid").jqGrid('groupingGroupBy', groupSelected);
+//                    jQuery("#issuelistgroupgrid").jqGrid('groupingGroupBy', groupSelected);
+////                    jQuery("#issuelistgroupgrid").jqGrid('sortname', 'IssueDate');
+////                    jQuery("#issuelistgroupgrid").jqGrid('groupingView', { groupOrder: ['desc'] });
+                } else { // default sort is issue date
+                    jQuery("#issuelistgroupgrid").jqGrid('groupingGroupBy', groupSelected);
+//                    jQuery("#issuelistgroupgrid").jqGrid('sortname', 'IssueDate');
+////                    jQuery("#issuelistgroupgrid").jqGrid('sortorder', 'desc');
+                }
             }
 
         });
     }
     catch (err) {
-        alert("getTable:: " +err);
+//        alert("getTable:: " +err);
     }
 
     var x = 1;
@@ -115,7 +132,7 @@ function getTable(groupSelected, daysSelected, htmlTableObjectName, htmlPageObje
 // Either page request or form submission - grab data and build chart
 function getGraph(groupSelected, daysSelected, htmlObjectName) {
 
-    alert("getGraph function");
+//    alert("getGraph function");
 
     var urlForJsonCall = '/FeedIssue/IssueSummary/?majorfilter=' + groupSelected + '&minorfilter=' + daysSelected;
     
@@ -130,7 +147,7 @@ function getGraph(groupSelected, daysSelected, htmlObjectName) {
 
 function loadPage(graphHtmlObjectName, tableHtmlObjectName) {
 
-    alert("loadPage function");
+//    alert("loadPage function");
 
     // get drop down list selection
     daysSelected = $('#ctlFilter2').children("option:selected").val();
@@ -152,13 +169,13 @@ function loadPage(graphHtmlObjectName, tableHtmlObjectName) {
 
 $(document).ready(function () {
 
-    alert("document ready");
+//    alert("document ready");
 
     try {
 
         $('#filter').submit(function (e) {
 
-            alert("form submit");
+//            alert("form submit");
 
             loadPage();
 
@@ -181,7 +198,7 @@ $(document).ready(function () {
     }
     catch (err) {
 
-        alert(err);
+//        alert(err);
 
     }
 });

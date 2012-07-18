@@ -6,10 +6,6 @@
 
 namespace AzureDashboardService.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using Wp7AzureMgmt.DashboardIssues.Models;
     
     /// <summary>
