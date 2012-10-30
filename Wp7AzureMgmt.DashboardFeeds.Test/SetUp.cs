@@ -37,7 +37,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             Trace.TraceInformation("RunBeforeAnyTests a");
 
             // if there is a file with today's date, don't do anything
-            string fileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
+            string fileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\Html_634871865298370572.html";
             HttpContextBase httpContext = null;
 
             // file built today not found so go build it

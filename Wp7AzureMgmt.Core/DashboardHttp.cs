@@ -40,7 +40,7 @@ namespace Wp7AzureMgmt.Core
         /// <summary>
         /// Response Content 
         /// </summary>
-        private string responseContent = null;
+        public string responseContent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DashboardHttp" /> class.

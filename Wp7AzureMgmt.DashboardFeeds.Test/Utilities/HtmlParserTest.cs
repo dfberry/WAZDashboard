@@ -30,7 +30,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// <summary>
         /// Last known value of feed count
         /// </summary>
-        private int currentFeedCount = 72;
+        private int currentFeedCount = 88;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HtmlParserTest" /> class.
@@ -60,7 +60,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             Assert.IsNotNull(actual);
             Assert.AreEqual("RSSCode", actual.FeedCode);
             Assert.AreEqual("LocationName", actual.LocationName);
-            Assert.AreEqual("<a href='RSSLink'>rss</a>", actual.RSSLink);
+            Assert.AreEqual(@"<a href='https://www.windowsazurestatus.com/windowsazure/support/status/RSSLink'>rss</a>", actual.RSSLink);
             Assert.AreEqual("ServiceName", actual.ServiceName);
         }
 
@@ -166,21 +166,21 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// example Id: "ctl00_MainContent_gvStatusToday_ctl02_hdnRSSFeedCode"
         /// </summary>
         [Test]
-        public void GetRSSFeedPropertyDefinitionTest_Success1()
+        public void GetRSSFeedPropertyDefinitionTest_FeedCode_Success()
         {
             // arrange
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hdnRSSFeedCode";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue };
+            string itemAttributeName = "MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRSSFeedCode_0";
+            HTMLParserFeedItemDefinition[] definitionList = target.HtmlDefinitions;
             HTMLParserFeedItemDefinition actual;
 
             // act
-            actual = target.GetRSSFeedPropertyDefinition(target.HtmlDefinitions.ToList(), itemAttributeName);
+            actual = target.GetRSSFeedPropertyDefinition(definitionList.ToList(), itemAttributeName);
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(definitionList[5], actual);
         }
 
         /// <summary>
@@ -188,21 +188,21 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Example Id: "ctl00_MainContent_gvStatusToday_ctl02_lblServiceName"
         /// </summary>
         [Test]
-        public void GetRSSFeedPropertyDefinitionTest_Success2()
+        public void GetRSSFeedPropertyDefinitionTest_ServiceName_Success()
         {
             // arrange
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_lblServiceName";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml };
+            string itemAttributeName = "MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblServiceName_0";
+            HTMLParserFeedItemDefinition[] definitionList = target.HtmlDefinitions; 
             HTMLParserFeedItemDefinition actual;
 
             // act
-            actual = target.GetRSSFeedPropertyDefinition(target.HtmlDefinitions.ToList(), itemAttributeName);
+            actual = target.GetRSSFeedPropertyDefinition(definitionList.ToList(), itemAttributeName);
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(definitionList[2], actual);
         }
 
         /// <summary>
@@ -210,21 +210,20 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Example Id: "ctl00_MainContent_gvStatusToday_ctl02_hyperlinkRSS"
         /// </summary>
         [Test]
-        public void GetRSSFeedPropertyDefinitionTest_Success3()
+        public void GetRSSFeedPropertyDefinitionTest_hyperlinkRS_Success()
         {
             // arrange
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hyperlinkRSS";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue };
+            string itemAttributeName = "MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hyperlinkRSS_0";
             HTMLParserFeedItemDefinition actual;
 
             // act
             actual = target.GetRSSFeedPropertyDefinition(target.HtmlDefinitions.ToList(), itemAttributeName);
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(target.HtmlDefinitions[4], actual);
         }
 
         /// <summary>
@@ -232,21 +231,21 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// Example Id: "ctl00_MainContent_gvStatusToday_ctl02_lblRegionName"
         /// </summary>
         [Test]
-        public void GetRSSFeedPropertyDefinitionTest_Success4()
+        public void GetRSSFeedPropertyDefinitionTest_RegionName_Success4()
         {
             // arrange
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_lblRegionName";
-            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml };
+            string itemAttributeName = "MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblRegionName_0";
+            HTMLParserFeedItemDefinition expected = new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "RegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml };
             HTMLParserFeedItemDefinition actual;
 
             // act
             actual = target.GetRSSFeedPropertyDefinition(target.HtmlDefinitions.ToList(), itemAttributeName);
 
             // assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(target.HtmlDefinitions[3], actual);
         }
 
         /// <summary>
@@ -260,7 +259,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hdnServiceId";
+            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hdnTerviceId";
             HTMLParserFeedItemDefinition actual = null;
 
             // act
@@ -272,7 +271,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
         /// <summary>
         /// A test for GetRSSFeedPropertyDefinition
-        /// Example Id: "ctl00_MainContent_gvStatusToday_ctl02_hdnRegionId"
+        /// Example Id: "ctl00_MainContent_gvStatusToday_ctl02_hdnTegionId"
         /// </summary>
         [Test]
         public void GetRSSFeedPropertyDefinitionTest_Failure2()
@@ -281,7 +280,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             string uriPrefix = string.Empty;
             HtmlParser target = new HtmlParser(uriPrefix);
 
-            string itemAttributeName = "ctl00_MainContent_gvStatusToday_ctl02_hdnRegionId";
+            string itemAttributeName = "MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnTegionId_0";
             HTMLParserFeedItemDefinition actual = null;
 
             // act
@@ -440,7 +439,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
         /// A test for ParseFeedNodeItems
         /// </summary>
         [Test]
-        public void ParseFeedNodeItemsTest_Success1()
+        public void ParseFeedNodeItemsTest_ServiceName_Success()
         {
             // arrange
             string uriPrefix = string.Empty;
@@ -451,7 +450,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             HtmlNode tdnode = doc.CreateElement("td");
             doc.OptionUseIdAttribute = true;
             tdnode.Name = "td";
-            tdnode.InnerHtml = RSSFeedResponseResource.TestTDSuccess_cellStyleTodayDetails;
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems1;
 
             // setup Test Object
             HtmlParser target = new HtmlParser(uriPrefix);
@@ -462,14 +461,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // assert
             Assert.IsNotNull(actual);
-            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.RSSLink && item.Value == "RSSFeed.aspx?RSSFeedCode=DSSSCU").Count());
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.ServiceName && item.Value == "Access Control 1.0").Count());
         }
 
-        /// <summary>
-        /// A test for ParseFeedNodeItems
-        /// </summary>
         [Test]
-        public void ParseFeedNodeItemsTest_Success2()
+        public void ParseFeedNodeItemsTest_RegionName_Success()
         {
             // arrange
             string uriPrefix = string.Empty;
@@ -480,7 +476,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             HtmlNode tdnode = doc.CreateElement("td");
             doc.OptionUseIdAttribute = true;
             tdnode.Name = "td";
-            tdnode.InnerHtml = RSSFeedResponseResource.TestTDSuccess_cellStyleTodayService;
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems2;
 
             // setup Test Object
             HtmlParser target = new HtmlParser(uriPrefix);
@@ -491,9 +487,107 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // assert
             Assert.IsNotNull(actual);
-            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.ServiceName && item.Value == "SQL Azure Data Sync").Count());
-            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.LocationName && item.Value == "South Central US").Count());
-            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.RSSCode && item.Value == "DSSSCU").Count());
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.LocationName && item.Value == "East Asia").Count());
+        }
+
+        public void ParseFeedNodeItemsTest_ServiceId_Success()
+        {
+            // arrange
+            string uriPrefix = string.Empty;
+
+            // setup HTML Model
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(this.htmlFileContents);
+            HtmlNode tdnode = doc.CreateElement("td");
+            doc.OptionUseIdAttribute = true;
+            tdnode.Name = "td";
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems3;
+
+            // setup Test Object
+            HtmlParser target = new HtmlParser(uriPrefix);
+            List<HTMLParserFeedItem> actual;
+
+            // act
+            actual = target.ParseFeedNodeItems(tdnode);
+
+            // assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.ServiceId && item.Value == "6").Count());
+        }
+
+        public void ParseFeedNodeItemsTest_RegionId_Success()
+        {
+            // arrange
+            string uriPrefix = string.Empty;
+
+            // setup HTML Model
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(this.htmlFileContents);
+            HtmlNode tdnode = doc.CreateElement("td");
+            doc.OptionUseIdAttribute = true;
+            tdnode.Name = "td";
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems4;
+
+            // setup Test Object
+            HtmlParser target = new HtmlParser(uriPrefix);
+            List<HTMLParserFeedItem> actual;
+
+            // act
+            actual = target.ParseFeedNodeItems(tdnode);
+
+            // assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.ServiceId && item.Value == "7").Count());
+        }
+
+        public void ParseFeedNodeItemsTest_Feedcode_Success()
+        {
+            // arrange
+            string uriPrefix = string.Empty;
+
+            // setup HTML Model
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(this.htmlFileContents);
+            HtmlNode tdnode = doc.CreateElement("td");
+            doc.OptionUseIdAttribute = true;
+            tdnode.Name = "td";
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems5;
+
+            // setup Test Object
+            HtmlParser target = new HtmlParser(uriPrefix);
+            List<HTMLParserFeedItem> actual;
+
+            // act
+            actual = target.ParseFeedNodeItems(tdnode);
+
+            // assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.RSSCode && item.Value == "NSACSEA").Count());
+        }
+
+        public void ParseFeedNodeItemsTest_hyperlinkRSS_Success()
+        {
+            // arrange
+            string uriPrefix = string.Empty;
+
+            // setup HTML Model
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(this.htmlFileContents);
+            HtmlNode tdnode = doc.CreateElement("td");
+            doc.OptionUseIdAttribute = true;
+            tdnode.Name = "td";
+            tdnode.InnerHtml = RSSFeedResponseResource.ParseFeedNodeItems6;
+
+            // setup Test Object
+            HtmlParser target = new HtmlParser(uriPrefix);
+            List<HTMLParserFeedItem> actual;
+
+            // act
+            actual = target.ParseFeedNodeItems(tdnode);
+
+            // assert
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(1, actual.Where(item => item.Name == HTMLParserFeedItemType.RSSCode && item.Value == "RSSFeed.aspx?RSSFeedCode=NSACSEA").Count());
         }
 
         /// <summary>

@@ -132,7 +132,8 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         public void SetTest_wParams()
         {
             // arrange
-            string pathToFilename = Setup.GetDataPath(); 
+            string pathToFilename = Setup.GetDataPath();
+
             HttpContextBase httpContext = null; 
             FileDatasource target = new FileDatasource(pathToFilename, httpContext); 
 
@@ -166,6 +167,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
             // arrange
             string pathToFilename = Setup.GetDataPath() + "FileDatasource_SetTest";
             HttpContextBase httpContext = null;
+
             FileDatasource target = new FileDatasource(pathToFilename, httpContext);
 
             // grab a fake

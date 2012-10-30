@@ -32,8 +32,19 @@ namespace Wp7AzureMgmt.DashboardFeeds.Enums
         LocationName,
 
         /// <summary>
+        /// Global location of data warehouse
+        /// </summary>
+        RegionId,
+
+        /// <summary>
         /// Windows Azure Service
         /// </summary>
-        ServiceName
+        ServiceName,
+
+        /// <summary>
+        /// Windows Azure Service
+        /// </summary>
+        ServiceId
+
     }
 }

@@ -31,7 +31,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <summary>
         /// Location (path and file) of Windows Azure Rss feeds as html page
         /// </summary>
-        private string htmlFileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
+        private string htmlFileName = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\Html_634871865298370572.html";
 
         /// <summary>
         /// Location (path and file) of opml file

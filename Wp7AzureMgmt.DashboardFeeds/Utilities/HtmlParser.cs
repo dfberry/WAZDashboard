@@ -33,17 +33,21 @@ using System.Diagnostics;
         /// Where to find Azure Rss Feeds - base of Uri. Rest of Uri is in 
         /// each RssFeed.
         /// </summary>
-        private string uriPrefix;
+        private string uriPrefix = @"https://www.windowsazurestatus.com/windowsazure/support/status/";
 
         /// <summary>
         /// Build definitions - how to parse html
+        /// 
+        /// 2012/11 - page contains two sets of lists -the long attribute name means to only grab the first one
         /// </summary>
         private HTMLParserFeedItemDefinition[] htmlDefinitions = new HTMLParserFeedItemDefinition[] 
         {
-            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml },
-            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml },
-            new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue },
-            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue } 
+            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "gvAllStatusToday_hdnServiceId", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.ServiceId, ContentType = ContentTag.AttributeValue },
+            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "gvAllStatusToday_hdnRegionId", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RegionId, ContentType = ContentTag.AttributeValue},
+            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "gvAllStatusToday_lblServiceName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.ServiceName, ContentType = ContentTag.InnerHtml },
+            new HTMLParserFeedItemDefinition() { Tag = "span", AttributeName = "gvAllStatusToday_lblRegionName", ReturnAttributeName = null, Name = HTMLParserFeedItemType.LocationName, ContentType = ContentTag.InnerHtml },
+            new HTMLParserFeedItemDefinition() { Tag = "a", AttributeName = "gvAllStatusToday_hyperlinkRSS", ReturnAttributeName = "href", Name = HTMLParserFeedItemType.RSSLink, ContentType = ContentTag.AttributeValue },
+            new HTMLParserFeedItemDefinition() { Tag = "input", AttributeName = "gvAllStatusToday_hdnRSSFeedCode", ReturnAttributeName = "value", Name = HTMLParserFeedItemType.RSSCode, ContentType = ContentTag.AttributeValue } 
         };
 
         /// <summary>
@@ -63,7 +67,10 @@ using System.Diagnostics;
         /// <param name="uriPrefix">prefix of Uri to rss issues</param>
         public HtmlParser(string uriPrefix)
         {
-            this.uriPrefix = uriPrefix;
+            if (!string.IsNullOrEmpty(uriPrefix))
+            {
+                this.uriPrefix = uriPrefix;
+            }
         }
 
         /// <summary>
@@ -88,16 +95,16 @@ using System.Diagnostics;
             }
         }
 
-        /// <summary>
-        /// Sets uriPrefix
-        /// </summary>
-        public string UriPrefix
-        {
-            set
-            {
-                this.uriPrefix = value;
-            }
-        }
+        ///// <summary>
+        ///// Sets uriPrefix
+        ///// </summary>
+        //public string UriPrefix
+        //{
+        //    set
+        //    {
+        //        this.uriPrefix = value;
+        //    }
+        //}
 
         /// <summary>
         /// Hunt for containing tags and grab RSS feed details
@@ -164,14 +171,20 @@ using System.Diagnostics;
                 {
                     if ((tdNode != null)
                         && (tdNode.Name == "td")
-                        && (tdNode.Attributes["class"] != null)
-                        && (tdNode.Attributes["class"].Value != string.Empty)
-                        && ((tdNode.Attributes["class"].Value == "cellStyleTodayStatus") || (tdNode.Attributes["class"].Value == "cellStyleTodayService")))
+                        && (tdNode.Attributes["class"] != null))
+                        //&& (tdNode.Attributes["class"].Value != string.Empty))
+                        //&& ((tdNode.Attributes["class"].Value.ToLower() == "currentstatusrss") || (tdNode.Attributes["class"].Value.ToLower() == "currentstatusservice")))
                     {
-                        List<HTMLParserFeedItem> innerlist = ParseFeedNodeItems(tdNode);
-                        if ((innerlist != null) && (innerlist.Count > 0))
+                        string nodeAttributeValue = tdNode.Attributes["class"].Value.ToLower();
+
+                        if ((nodeAttributeValue == "currentstatusrss") || (nodeAttributeValue == "currentstatusservice"))
                         {
-                            returnedlist.AddRange(innerlist);
+
+                            List<HTMLParserFeedItem> innerlist = ParseFeedNodeItems(tdNode);
+                            if ((innerlist != null) && (innerlist.Count > 0))
+                            {
+                                returnedlist.AddRange(innerlist);
+                            }
                         }
                     }
                 });
@@ -211,25 +224,39 @@ using System.Diagnostics;
 
                     switch (node.Name.ToLower())
                     {
-                        case "div":
-                            HtmlNodeCollection divNodeChildNodes = node.ChildNodes;
-
-                            Parallel.ForEach(
-                                divNodeChildNodes,
-                                this.options,
-                                divChildNode =>
-                                {
-                                    if ((divChildNode.Name == "span") || (divChildNode.Name == "a"))
-                                    {
-                                        HTMLParserFeedItem item2 = GetRSSFeedProperty(divChildNode, defintionlist);
-                                        if (item2 != null)
-                                        {
-                                            list.Add(item2);
-                                        }
-                                    }
-                                });
+                        case "span": // service name, location name
+                            item = GetRSSFeedProperty(node, defintionlist);
+                            if (item != null)
+                            {
+                                list.Add(item);
+                            }
                             break;
-                        case "input":
+                        case "a": // service name, location name
+                            item = GetRSSFeedProperty(node, defintionlist);
+                            if (item != null) // "RSSFeed.aspx?RSSFeedCode=NSACSEA"
+                            {
+                                list.Add(item);
+                            }
+                            break;
+                        //case "div": // rss feed
+                        //    HtmlNodeCollection divNodeChildNodes = node.ChildNodes;
+
+                        //    Parallel.ForEach(
+                        //        divNodeChildNodes,
+                        //        this.options,
+                        //        divChildNode =>
+                        //        {
+                        //            if ((divChildNode.Name == "span") || (divChildNode.Name == "a"))
+                        //            {
+                        //                HTMLParserFeedItem item2 = GetRSSFeedProperty(divChildNode, defintionlist);
+                        //                if (item2 != null)
+                        //                {
+                        //                    list.Add(item2);
+                        //                }
+                        //            }
+                        //        });
+                        //    break;
+                        case "input": //regionid, serviceid, code
                             item = GetRSSFeedProperty(node, defintionlist);
                             if (item != null)
                             {
@@ -259,7 +286,7 @@ using System.Diagnostics;
         /// <returns>RSSFeed converted from Feed data items</returns>
         public RssFeed ConvertFeedItemListToRSSFeed(List<HTMLParserFeedItem> list)
         {
-            if ((list != null) && (list.Count == 4))
+            if ((list != null) && (list.Count >= 4))
             {
                 return new RssFeed
                 {
@@ -297,7 +324,7 @@ using System.Diagnostics;
         {
             try
             {
-                if ((list != null) && (list.Count == 4))
+                if ((list != null) && (list.Count >= 4))
                 {
                     return list.Find(item => item.Name == feedItemType).Value;
                 }

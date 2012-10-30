@@ -61,6 +61,11 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
         /// <summary>
         /// A test for RequestGET
+        /// 
+        /// this test just makes sure an Http Get returns an Html string successfully
+        /// 
+        /// using a random url 
+        /// 
         /// </summary>
         [Test] public void RequestGETTest()
         {
@@ -68,7 +73,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             HttpContextBase context = null;
 
             FeedConfiguration dashboardConfiguration = new FeedConfiguration(context);
-            Uri getUri = new Uri(dashboardConfiguration.DefaultUri);
+            Uri getUri = new Uri(@"http://www.microsoft.com");
             DashboardHttp target = new DashboardHttp(getUri);
             string actual = string.Empty; 
 
@@ -108,13 +113,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
             // this number will be wrong if the file used is different, 
             // ie, there are more, less, or different Rss feeds
             // at Windows Azure
-            int fileLength = 689;
+            int fileLength = 14;
                         
             Uri getUri = new Uri(this.DashboardConfiguration.DefaultUri);
-            DashboardHttp target = new DashboardHttp(getUri); 
+            DashboardHttp target = new DashboardHttp(getUri);
+            target.responseContent = "this is a test";
+            
             string filename = DateTime.Now.Ticks + ".html";
-
-            string responsecontent = target.GetRequest();
 
             // act
             filename = target.SaveResponseContentToFile(filename);

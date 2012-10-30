@@ -29,7 +29,7 @@ namespace Wp7AzureMgmt.Core
         /// <returns>string as mock html response</returns>
         public string GetRequest()
         {
-            string filename = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\servicedashboardcontent.html";
+            string filename = @"..\..\..\Wp7AzureMgmt.DashboardFeeds.Test\Html_634871865298370572.html";
             string response = string.Empty;
 
             if (File.Exists(filename))

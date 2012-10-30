@@ -20,6 +20,7 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     using Wp7AzureMgmt.DashboardFeeds.Factories;
     using Wp7AzureMgmt.DashboardFeeds.Interfaces;
     using Wp7AzureMgmt.DashboardFeeds.Models;
+    using System.IO;
     
     /// <summary>
     /// Tests for UriDataSource
@@ -27,6 +28,12 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
     [TestFixture]
     public class UriDataSourceTest
     {
+
+        /// <summary>
+        /// Last known value of feed count
+        /// </summary>
+        private int currentFeedCount = 88;
+
         /// <summary>
         /// Test for Get
         /// </summary>
@@ -53,26 +60,26 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // assert
             Assert.IsNotNull(actual);
-            Assert.IsTrue(actual.Feeds.Count() == 72);
+            Assert.AreEqual(this.currentFeedCount, actual.Feeds.Count());
 
             // Simple check each field since there are other tests that do
             // deeper checking of RssFeeds
-            var foundNSACSEAFeeds = actual.Feeds.Where(f => f.FeedCode == "NSACSEA");
-            var foundEastAsiaFeeds = actual.Feeds.Where(f => f.LocationName == "East Asia");
-            var foundAccessControl = actual.Feeds.Where(f => f.ServiceName == "Access Control");
-            var foundLinks = actual.Feeds.Where(f => f.RSSLink.Contains(@"<a href"));
+            var foundNSACSEAFeeds = actual.Feeds.Where(f => f.FeedCode == "NSACSEA").ToList();
+            var foundEastAsiaFeeds = actual.Feeds.Where(f => f.LocationName == "East Asia").ToList();
+            var foundAccessControl = actual.Feeds.Where(f => f.ServiceName == "Access Control").ToList();
+            var foundLinks = actual.Feeds.Where(f => f.RSSLink.Contains(@"<a href")).ToList();
 
             // only 1 NSACSEA feed
             Assert.AreEqual(1, foundNSACSEAFeeds.Count());
 
             // several east asia feeds
-            Assert.AreEqual(10, foundEastAsiaFeeds.Count());
+            Assert.AreEqual(11, foundEastAsiaFeeds.Count());
 
             // several access control feeds
-            Assert.AreEqual(10, foundEastAsiaFeeds.Count());
+            Assert.AreEqual(11, foundEastAsiaFeeds.Count());
 
             // each/all should have a well-formed url
-            Assert.AreEqual(72, foundLinks.Count());
+            Assert.AreEqual(88, foundLinks.Count());
         }
 
         /// <summary>
@@ -92,6 +99,9 @@ namespace Wp7AzureMgmt.DashboardFeeds.Test
 
             // act
             string actual = uriDatasource.GetHtml();
+
+            // save to file
+            File.WriteAllText("Html_" + DateTime.Now.Ticks + ".html", actual);
 
             // assert
 

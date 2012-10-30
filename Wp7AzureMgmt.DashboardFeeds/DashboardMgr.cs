@@ -79,6 +79,12 @@ namespace Wp7AzureMgmt.DashboardFeeds
 
             UriDatasource uriDataSource = new UriDatasource(httpRequest, this.httpContext);
             RssFeeds feeds = uriDataSource.Get();
+
+            if (feeds == null)
+            {
+                throw new Exception("feeds == null");
+            }
+
             FileDatasource fileDatasource = new FileDatasource(pathToFiles, this.httpContext);
             fileDatasource.RssFeeds = feeds;
             fileDatasource.Set();

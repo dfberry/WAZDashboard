@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ParseFeedNodeItems1" xml:space="preserve">
+    <value>               &lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblServiceName_0"&gt;Access Control 1.0&lt;/span&gt;</value>
+  </data>
+  <data name="ParseFeedNodeItems2" xml:space="preserve">
+    <value>&lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblRegionName_0"&gt;East Asia&lt;/span&gt;</value>
+  </data>
+  <data name="ParseFeedNodeItems3" xml:space="preserve">
+    <value>&lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnServiceId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnServiceId_0" value="6" /&gt;</value>
+  </data>
+  <data name="ParseFeedNodeItems4" xml:space="preserve">
+    <value>&lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRegionId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRegionId_0" value="7" /&gt;</value>
+  </data>
+  <data name="ParseFeedNodeItems5" xml:space="preserve">
+    <value>&lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRSSFeedCode" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRSSFeedCode_0" value="NSACSEA" /&gt;</value>
+  </data>
+  <data name="ParseFeedNodeItems6" xml:space="preserve">
+    <value>&lt;a id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hyperlinkRSS_0" href="RSSFeed.aspx?RSSFeedCode=NSACSEA" target="_parent"&gt;&lt;img src="Images/Rss_New.png" alt="" /&gt;&lt;/a&gt;</value>
+  </data>
   <data name="TestFail2" xml:space="preserve">
     <value>
                     &lt;td&gt;
@@ -129,28 +147,31 @@
                         &lt;span id="ctl00_MainContent_lblPageLastUpdated"&gt;Page Last Updated:   6 Apr 2012 11:08 PM UTC&lt;/span&gt;
                     &lt;/td&gt;</value>
   </data>
-  <data name="TestTDSuccess_cellStyleTodayDetails" xml:space="preserve">
-    <value>                            &lt;div class="centerAlign"&gt;
-                                &lt;a id="ctl00_MainContent_gvStatusToday_ctl30_hyperlinkRSS" href="RSSFeed.aspx?RSSFeedCode=DSSSCU" target="_parent"&gt;&lt;img src="Images/Rss_New.png" border="0" /&gt;&lt;/a&gt;&lt;/div&gt;</value>
-  </data>
   <data name="TestTDSuccess_cellStyleTodayService" xml:space="preserve">
-    <value>&lt;div class="leftAlign"&gt;
-                                &lt;span id="ctl00_MainContent_gvStatusToday_ctl30_lblServiceName"&gt;SQL Azure Data Sync&lt;/span&gt;
-                                [&lt;span id="ctl00_MainContent_gvStatusToday_ctl30_lblRegionName"&gt;South Central US&lt;/span&gt;]
-                            &lt;/div&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl30$hdnServiceId" id="ctl00_MainContent_gvStatusToday_ctl30_hdnServiceId" value="17" /&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl30$hdnRegionId" id="ctl00_MainContent_gvStatusToday_ctl30_hdnRegionId" value="2" /&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl30$hdnRSSFeedCode" id="ctl00_MainContent_gvStatusToday_ctl30_hdnRSSFeedCode" value="DSSSCU" /&gt;
-                            &lt;div id="ctl00_MainContent_gvStatusToday_ctl30_Panel1"&gt;
-				
+    <value>&lt;img id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_imgStatus_0" src="/windowsazure/support/status/Images/green.png" /&gt;
+                            
+                            &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnStatusColor" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnStatusColor_0" value="Green" /&gt;
+                        &lt;/td&gt;&lt;td class="currentStatusService"&gt;
+                                &lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblServiceName_0"&gt;Access Control 1.0&lt;/span&gt;
+                                [&lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblRegionName_0"&gt;East Asia&lt;/span&gt;]
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnServiceId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnServiceId_0" value="6" /&gt;
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRegionId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRegionId_0" value="7" /&gt;
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRSSFeedCode" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRSSFeedCode_0" value="NSACSEA" /&gt;
+                            &lt;div id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_Panel1_0"&gt;
+								
                                 
                             
-			&lt;/div&gt;
-                            &lt;div id="ctl00_MainContent_gvStatusToday_ctl30_Panel2"&gt;
-				
+							&lt;/div&gt;
+                            &lt;div id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_Panel2_0"&gt;
+								
                                 
                             
-			&lt;/div&gt;</value>
+							&lt;/div&gt;
+                        &lt;/td&gt;&lt;td class="currentStatusDetails"&gt;
+                            &lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblDetails_0"&gt;Service is running normally.&lt;/span&gt;
+                            
+                        &lt;/td&gt;&lt;td class="currentStatusRSS"&gt;
+                            &lt;a id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hyperlinkRSS_0" href="RSSFeed.aspx?RSSFeedCode=NSACSEA" target="_parent"&gt;&lt;img src="Images/Rss_New.png" alt="" /&gt;&lt;/a&gt;</value>
   </data>
   <data name="TestTRFail1" xml:space="preserve">
     <value>
@@ -171,38 +192,31 @@
 		</value>
   </data>
   <data name="TestTRSuccess1" xml:space="preserve">
-    <value>			&lt;td class="cellStyleTodayStatus"&gt;
-                            &lt;div class="centerAlign"&gt;
-                                &lt;img id="ctl00_MainContent_gvStatusToday_ctl03_imgStatus" src="/windowsazure/support/status/Images/green.png" border="0" /&gt;
-                            &lt;/div&gt;
+    <value>&lt;td class="currentStatusStatus"&gt;
+                                &lt;img id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_imgStatus_0" src="/windowsazure/support/status/Images/green.png" /&gt;
                             
-                            &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl03$hdnStatusColor" id="ctl00_MainContent_gvStatusToday_ctl03_hdnStatusColor" value="Green" /&gt;
-                        &lt;/td&gt;&lt;td class="cellStyleTodayService"&gt;
-                            &lt;div class="leftAlign"&gt;
-                                &lt;span id="ctl00_MainContent_gvStatusToday_ctl03_lblServiceName"&gt;Access Control&lt;/span&gt;
-                                [&lt;span id="ctl00_MainContent_gvStatusToday_ctl03_lblRegionName"&gt;North Central US&lt;/span&gt;]
-                            &lt;/div&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl03$hdnServiceId" id="ctl00_MainContent_gvStatusToday_ctl03_hdnServiceId" value="6" /&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl03$hdnRegionId" id="ctl00_MainContent_gvStatusToday_ctl03_hdnRegionId" value="1" /&gt;
-                                &lt;input type="hidden" name="ctl00$MainContent$gvStatusToday$ctl03$hdnRSSFeedCode" id="ctl00_MainContent_gvStatusToday_ctl03_hdnRSSFeedCode" value="NSACSNCUS" /&gt;
-                            &lt;div id="ctl00_MainContent_gvStatusToday_ctl03_Panel1"&gt;
-				
+                            &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnStatusColor" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnStatusColor_0" value="Green" /&gt;
+                        &lt;/td&gt;&lt;td class="currentStatusService"&gt;
+                                &lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblServiceName_0"&gt;Access Control 1.0&lt;/span&gt;
+                                [&lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblRegionName_0"&gt;East Asia&lt;/span&gt;]
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnServiceId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnServiceId_0" value="6" /&gt;
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRegionId" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRegionId_0" value="7" /&gt;
+                                &lt;input type="hidden" name="ctl00$MainContent$tcStatus$tpAllStatusToday$gvAllStatusToday$ctl02$hdnRSSFeedCode" id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hdnRSSFeedCode_0" value="NSACSEA" /&gt;
+                            &lt;div id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_Panel1_0"&gt;
+								
                                 
                             
-			&lt;/div&gt;
-                            &lt;div id="ctl00_MainContent_gvStatusToday_ctl03_Panel2"&gt;
-				
+							&lt;/div&gt;
+                            &lt;div id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_Panel2_0"&gt;
+								
                                 
                             
-			&lt;/div&gt;
-                        &lt;/td&gt;&lt;td class="cellStyleTodayDetails"&gt;
-                            &lt;div class="leftAlign"&gt;
-                                &lt;span id="ctl00_MainContent_gvStatusToday_ctl03_lblDetails"&gt;Service is running normally.&lt;/span&gt;&lt;/div&gt;
+							&lt;/div&gt;
+                        &lt;/td&gt;&lt;td class="currentStatusDetails"&gt;
+                            &lt;span id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_lblDetails_0"&gt;Service is running normally.&lt;/span&gt;
                             
-                        &lt;/td&gt;&lt;td class="cellStyleTodayStatus"&gt;
-                            &lt;div class="centerAlign"&gt;
-                                &lt;a id="ctl00_MainContent_gvStatusToday_ctl03_hyperlinkRSS" href="RSSFeed.aspx?RSSFeedCode=NSACSNCUS" target="_parent"&gt;&lt;img src="Images/Rss_New.png" border="0" /&gt;&lt;/a&gt;&lt;/div&gt;
-                        &lt;/td&gt;
-	</value>
+                        &lt;/td&gt;&lt;td class="currentStatusRSS"&gt;
+                            &lt;a id="MainContent_tcStatus_tpAllStatusToday_gvAllStatusToday_hyperlinkRSS_0" href="RSSFeed.aspx?RSSFeedCode=NSACSEA" target="_parent"&gt;&lt;img src="Images/Rss_New.png" alt="" /&gt;&lt;/a&gt;
+                        &lt;/td&gt;</value>
   </data>
 </root>
