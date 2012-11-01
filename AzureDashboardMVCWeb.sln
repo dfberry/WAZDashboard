@@ -6,6 +6,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66A4BB28-A8FA-41D8-BEE5-CC1C6D90261F}"
 	ProjectSection(SolutionItems) = preProject
 		AzureDashboardMVCWeb.vsmdi = AzureDashboardMVCWeb.vsmdi
+		ConvertToAzure.txt = ConvertToAzure.txt
 		HostedAt.txt = HostedAt.txt
 		AzureDashboardService\AzureDashboardService\jqGridNotes.txt = AzureDashboardService\AzureDashboardService\jqGridNotes.txt
 		Local.testsettings = Local.testsettings
@@ -30,6 +31,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.DashboardIssues.Test", "Wp7AzureMgmt.DashboardIssues.Test\Wp7AzureMgmt.DashboardIssues.Test.csproj", "{8F8D7A71-DC3E-419A-82B2-44604E4C6B21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wp7AzureMgmt.Core.Test", "Wp7AzureMgmt.Core.Test\Wp7AzureMgmt.Core.Test.csproj", "{054DD1D9-7759-422B-AB70-BD4163AE55FE}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "WindowsAzureDeployment", "WindowsAzureDeployment\WindowsAzureDeployment.ccproj", "{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -152,6 +155,21 @@ Global
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{054DD1D9-7759-422B-AB70-BD4163AE55FE}.TraceDebug|x86.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.Release|x86.ActiveCfg = Release|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.TraceDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.TraceDebug|Any CPU.Build.0 = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.TraceDebug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.TraceDebug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{44BEEF4B-F50A-48B1-81E2-B3A65E824B9C}.TraceDebug|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
