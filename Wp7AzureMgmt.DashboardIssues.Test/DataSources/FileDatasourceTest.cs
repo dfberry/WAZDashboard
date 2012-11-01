@@ -44,7 +44,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         /// A test for Get
         /// </summary>
         [Test]
-        public void GetTest()
+        public void GetFeedResponsesFromSerializedFileTest()
         {
             // arrange
             string pathToFilename = Setup.GetDataPath(); 

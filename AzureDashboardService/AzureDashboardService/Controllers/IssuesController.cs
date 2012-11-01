@@ -33,6 +33,34 @@ namespace AzureDashboardService.Controllers
         }
 
         /// <summary>
+        /// Request to/from the phone
+        /// </summary>
+        /// <param name="sidx"></param>
+        /// <param name="sord"></param>
+        /// <param name="page"></param>
+        /// <param name="rows"></param>
+        /// <returns></returns>
+        public JsonResult Get(string sidx, string sord, int page, int rows, int issueage)
+        {
+            this.InternalRead();
+            DashboardResponse jsonResponse = IssuesFactory.ToPhoneModel(this.DashboardIssueModel.RssIssues.Issues, issueage);
+
+            //jsonResponse.AppVersion = "1.0.0.0";
+            //jsonResponse.FetchAllIncludingEmpties = 1;
+            //jsonResponse.IssueAge = 30;
+            //jsonResponse.PhoneId = "emulator";
+            //jsonResponse.PhoneMaker = "emulator";
+            //jsonResponse.Summary = false;
+            //jsonResponse.TrialRemaining = 30;
+            //jsonResponse.UserId = "emulatoruser";
+
+            HttpContext.Response.AddHeader("Cache-Control", "no-cache");
+
+            return Json(jsonResponse, JsonRequestBehavior.AllowGet);       
+        
+        }
+
+        /// <summary>
         /// Build new Rss issue list and then show View
         /// that contains the datetime stamp
         /// verifying the new datetime

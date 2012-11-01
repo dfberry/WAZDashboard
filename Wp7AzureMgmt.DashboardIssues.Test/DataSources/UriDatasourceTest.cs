@@ -51,7 +51,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Test
         /// A test for Get
         /// </summary>
         [Test]
-        public void GetTest()
+        public void GetFeedResponsesFromFeedRssUrisTest()
         {
             // arrange
             DashboardHttp http = null; 

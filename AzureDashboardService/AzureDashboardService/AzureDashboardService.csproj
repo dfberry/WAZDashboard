@@ -149,6 +149,7 @@
     <Compile Include="Models\DashboardIssueModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\Issue.cs" />
+    <Compile Include="Models\JsonPhoneResponseModels.cs" />
     <Compile Include="Notifications\NotificationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

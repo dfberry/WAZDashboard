@@ -50,7 +50,7 @@ namespace Wp7AzureMgmt.DashboardIssues.Models
             this.RssFeed = (RssFeed)info.GetValue("RssFeed", typeof(RssFeed));
             this.DateTime = (DateTime)info.GetValue("DateTime", typeof(DateTime));
             this.RssIssueXml = (RssIssueXml)info.GetValue("RssIssueXml", typeof(RssIssueXml));
-        }
+        }   
 
         /// <summary>
         /// Gets or sets RssFeed, defines the issue category.

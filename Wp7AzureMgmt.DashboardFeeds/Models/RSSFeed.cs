@@ -68,10 +68,14 @@ namespace Wp7AzureMgmt.DashboardFeeds.Models
         /// </summary>
         public string FeedCode { get; set; }
 
+        public String ServiceId { get; set; }
+        public String RegionId { get; set; }
+
         /// <summary>
         /// Gets or sets URI as string where Dashboard Service Issues can be fetched
         /// </summary>
         public string RSSLink { get; set; }
+        public DateTime DateStamp { get; set; }
 
         /// <summary>
         /// Add data to serialization string
