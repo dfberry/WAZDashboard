@@ -123,14 +123,7 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
                 throw new ArgumentNullException("FileDatasource::Set - " + "string filename");
             }
 
-            try
-            {
-                Wp7AzureMgmt.Core.Serializer.Serialize(filename, issues);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("FileDatasource::Set - serialization of FileDatasource failed. " + ex.InnerException);
-            }
+            Wp7AzureMgmt.Core.Serializer.Serialize(filename, issues);
         }
 
         /// <summary>
@@ -154,21 +147,14 @@ namespace Wp7AzureMgmt.DashboardIssues.DataSources
                 throw new ArgumentNullException("FileDatasource::GetIssues - " + "string serializedFile");
             }
 
-            try
+            if (File.Exists(serializedFile))
             {
-                if (File.Exists(serializedFile))
-                {
-                    this.issues = Wp7AzureMgmt.Core.Serializer.Deserialize<RssIssues>(serializedFile);
-                    return this.issues;
-                }
-                else
-                {
-                    throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist - " + serializedFile);
-                }
+                this.issues = Wp7AzureMgmt.Core.Serializer.Deserialize<RssIssues>(serializedFile);
+                return this.issues;
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception("FileDatasource::GetFeeds - deserialization of FileDatasource failed. " + ex.InnerException);
+                throw new ArgumentNullException("FileDatasource::GetIssues - " + "serializedFile doesn't exist - " + serializedFile);
             }
         }
     }

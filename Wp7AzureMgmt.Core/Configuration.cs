@@ -110,19 +110,10 @@ namespace Wp7AzureMgmt.Core
         {
             if (string.IsNullOrEmpty(key))
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("string.IsNullOrEmpty(key)");
             }
 
-            string value = string.Empty;
-
-            try
-            {
-                return this.config.AppSettings.Settings[key].Value;
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            return this.config.AppSettings.Settings[key].Value;
         }
 
         /// <summary>

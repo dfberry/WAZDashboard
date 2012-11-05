@@ -16,7 +16,7 @@ namespace AzureDashboardService.Controllers
     /// BaseController for all controllers
     /// in this web app.
     /// </summary>
-    public class DashboardBaseController : Controller
+    public class DashboardBaseController : StorageLocationBaseController
     {
         /// <summary>
         /// Path to files used for app
@@ -62,25 +62,9 @@ namespace AzureDashboardService.Controllers
             
             this.feedModel = new DashboardModel();
             this.issueModel = new DashboardIssueModel();
-
-            // DFB-todo: set this only once on app start up or check at each request?
-            // answer: for now - check at each request
-            this.pathToFiles = this.HttpContext.Server.MapPath("~/App_Data") + @"\";
         }
 
-        /// <summary>
-        /// Gets HttpContext to pass into Dashboard library.
-        /// http://stackoverflow.com/questions/223317/httpcontext-on-instances-of-controllers-are-null-in-asp-net-mvc
-        /// </summary>
-        public new HttpContextBase HttpContext
-        {
-            get
-            {
-                HttpContextWrapper context =
-                    new HttpContextWrapper(System.Web.HttpContext.Current);
-                return (HttpContextBase)context;
-            }
-        }
+
 
         /// <summary>
         /// Gets or sets the path.

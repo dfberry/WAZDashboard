@@ -145,21 +145,15 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
         /// <returns>RssFeeds from parsed html from uri</returns>
         public RssFeeds Get()
         {
-            try
-            {
-                // get raw html
-                this.uricontent = this.GetHtml();
 
-                string uriPrefix = this.configuration.AzureFeedUriPrefix;
+            // get raw html
+            this.uricontent = this.GetHtml();
 
-                // parse content into object
-                HtmlParser htmlParser = new HtmlParser(uriPrefix);
-                this.rssFeeds = htmlParser.ParseHtmlForFeeds(this.uricontent);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("DashboardFeeds.UriFileDatasource::Get - " + ex.InnerException);
-            }
+            string uriPrefix = this.configuration.AzureFeedUriPrefix;
+
+            // parse content into object
+            HtmlParser htmlParser = new HtmlParser(uriPrefix);
+            this.rssFeeds = htmlParser.ParseHtmlForFeeds(this.uricontent);
 
             return this.rssFeeds;
         }
@@ -177,19 +171,13 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 throw new NullReferenceException("httpRequest");
             }
 
-            try
-            {
-                this.dashboardURI = uri;
-                this.httpRequest.SetUri(this.dashboardURI);
-                this.httpRequest.BuildHttpGet();
-                this.uricontent = this.httpRequest.GetRequest();
 
-                return this.uricontent;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("DashboardFeeds.UriFileDatasource::GetHtml(Uri uri) - " + ex.InnerException);
-            }
+            this.dashboardURI = uri;
+            this.httpRequest.SetUri(this.dashboardURI);
+            this.httpRequest.BuildHttpGet();
+            this.uricontent = this.httpRequest.GetRequest();
+
+            return this.uricontent;
         }
 
         /// <summary>
@@ -203,16 +191,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 throw new ArgumentNullException();
             }
 
-            try
-            {
-                this.uricontent = this.httpRequest.GetRequest();
 
-                return this.uricontent;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("DashboardFeeds.UriFileDatasource::GetHtml - " + ex.InnerException);
-            }
+            this.uricontent = this.httpRequest.GetRequest();
+
+            return this.uricontent;
         }
 
         /// <summary>
@@ -241,16 +223,10 @@ namespace Wp7AzureMgmt.DashboardFeeds.DataSources
                 throw new NullReferenceException("filename");
             }
 
-            try
-            {
-                string html = this.GetHtml(this.DashboardUri);
 
-                File.WriteAllText(filename, html);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("DashboardFeeds.UriFileDatasource::GetAndSaveHtml - " + ex.InnerException);
-            }
+            string html = this.GetHtml(this.DashboardUri);
+
+            File.WriteAllText(filename, html);
         }
 
         /// <summary>

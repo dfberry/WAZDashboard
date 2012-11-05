@@ -50,6 +50,9 @@
     <Reference Include="Elmah">
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah.Mvc">
+      <HintPath>..\..\packages\Elmah.MVC.2.0.1\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -152,6 +155,7 @@
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StorageLocationBaseController.cs" />
     <Compile Include="Controllers\VerifyController.cs" />
     <Compile Include="Factories\FeedResult.cs" />
     <Compile Include="Factories\IssuesFactory.cs" />
@@ -164,7 +168,6 @@
     <Compile Include="Models\JsonPhoneResponseModels.cs" />
     <Compile Include="Notifications\NotificationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
