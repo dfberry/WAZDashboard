@@ -16,13 +16,8 @@ namespace AzureDashboardService.Controllers
     /// BaseController for all controllers
     /// in this web app.
     /// </summary>
-    public class DashboardBaseController : StorageLocationBaseController
+    public class DashboardBaseController : Controller
     {
-        /// <summary>
-        /// Path to files used for app
-        /// </summary>
-        private string pathToFiles;
-
         /// <summary>
         /// Issue manager.
         /// </summary>
@@ -73,13 +68,22 @@ namespace AzureDashboardService.Controllers
         {
             get
             {
-                return this.pathToFiles;
+                return this.HttpContext.Server.MapPath("~/App_Data") + @"\";
             }
+        }
 
-            set
-            {
-                this.pathToFiles = value;
-            }
+        /// <summary>        
+        /// Gets HttpContext to pass into Dashboard library.        
+        /// http://stackoverflow.com/questions/223317/httpcontext-on-instances-of-controllers-are-null-in-asp-net-mvc        
+        /// </summary>        
+        public new HttpContextBase HttpContext        
+        {            
+            get            
+            {                
+                HttpContextWrapper context =                    
+                    new HttpContextWrapper(System.Web.HttpContext.Current);                
+                return (HttpContextBase)context;            
+            }        
         }
 
         /// <summary>

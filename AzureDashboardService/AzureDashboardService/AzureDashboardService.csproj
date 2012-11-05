@@ -147,7 +147,6 @@
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StorageLocationBaseController.cs" />
     <Compile Include="Controllers\VerifyController.cs" />
     <Compile Include="Factories\FeedResult.cs" />
     <Compile Include="Factories\IssuesFactory.cs" />
