@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Wp7AzureMgmt.Core;
-using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace AzureDashboardService.Controllers
 {
@@ -21,43 +20,12 @@ namespace AzureDashboardService.Controllers
         public string pathToFiles;
 
         /// <summary>
-        /// Named Azure local storage (not Azure Table Storage)
-        /// </summary>
-        private const string azureLocalStorageName = "LocalStorage1";
-
-        /// <summary>
         /// Determine where serialized files are: app_data or azure local storage
         /// </summary>
         public StorageLocationBaseController()
         {
             // default value
             this.pathToFiles = this.HttpContext.Server.MapPath("~/App_Data") + @"\";
-
-            // make sure we have an http context
-            if (this.HttpContext != null)
-            {
-                config = new Configuration(this.HttpContext);
-
-                // Web.config contains "location" key with value of "app_data" or anything else
-                string webdotconfig_location = config.Get("location");
-
-                // storage is in app_data, used for debug & testing
-                if (webdotconfig_location != "app_data")
-                {
-                    this.pathToFiles = this.GetLocalAzureResource();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get path to Azure Local storage
-        /// </summary>
-        /// <returns></returns>
-        public string GetLocalAzureResource()
-        {
-            LocalResource localResource = RoleEnvironment.GetLocalResource(azureLocalStorageName);
-
-            return localResource.RootPath;
         }
 
         /// <summary>

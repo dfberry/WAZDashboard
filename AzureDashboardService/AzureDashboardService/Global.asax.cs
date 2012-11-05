@@ -14,8 +14,6 @@ namespace AzureDashboardService
     using System.Web.Optimization;
     using System.Web.Routing;
     using AzureDashboardService.Controllers;
-    using Microsoft.WindowsAzure;
-    using Microsoft.WindowsAzure.ServiceRuntime;
 
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
