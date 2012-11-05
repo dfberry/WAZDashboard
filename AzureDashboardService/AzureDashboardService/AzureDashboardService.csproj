@@ -162,6 +162,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Elmah\placeholder.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\dfb\dfb-opml-download1.JPG" />
     <Content Include="Content\dfb\dfb-opml-download2.JPG" />
@@ -442,6 +443,9 @@
     <Content Include="Views\Verify\AllIssues.cshtml" />
     <Content Include="Views\Issues\Combined.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\AWS EC2 DFBAzure.pubxml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -459,7 +463,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50113</DevelopmentServerPort>
+          <DevelopmentServerPort>14269</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

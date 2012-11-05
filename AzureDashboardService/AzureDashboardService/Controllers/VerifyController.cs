@@ -149,5 +149,10 @@ namespace AzureDashboardService.Controllers
 
             return View(flattenedIssues);
         }
+
+        public ActionResult ThrowException()
+        {
+            throw new Exception("testing exception handling");
+        }
     }
 } 
